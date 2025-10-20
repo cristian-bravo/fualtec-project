@@ -47,3 +47,4 @@ Route::middleware(['auth:sanctum', 'role:cliente', 'can:estado-aprobado'])->pref
     Route::get('documents/{pdf}/download', [DocumentController::class, 'download']);
     Route::get('publications', [PublicationController::class, 'index']);
 });
+

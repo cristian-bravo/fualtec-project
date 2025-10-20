@@ -5,7 +5,7 @@ import { AdminLayout } from '../layouts/admin-layout';
 import { HomePage } from '../features/public/pages/home-page';
 import { ServicesPage } from '../features/public/pages/services-page';
 import { DownloadsPage } from '../features/public/pages/downloads-page';
-import { SupportPage } from '../features/public/pages/support-page';
+import { ComplaintsAppealsPage} from '../features/public/pages/quejas-apelaciones';
 import { ContactPage } from '../features/public/pages/contact-page';
 import { SatisfactionPage } from '../features/public/pages/satisfaction-page';
 import { HistoryPage } from '../features/public/pages/history-page';
@@ -35,9 +35,9 @@ const routes: RouteObject[] = [
       { index: true, element: <HomePage /> },
       { path: 'servicios', element: <ServicesPage /> },
       { path: 'descargas', element: <DownloadsPage /> },
-      { path: 'atencion-cliente', element: <SupportPage /> },
+      { path: 'quejas-y-apelaciones', element: <ComplaintsAppealsPage  /> },
       { path: 'contacto', element: <ContactPage /> },
-      { path: 'satisfaccion', element: <SatisfactionPage /> },
+      { path: '/formulario-de-satisfaccion', element: <SatisfactionPage /> },
       { path: 'historia', element: <HistoryPage /> }
     ]
   },
