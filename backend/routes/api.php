@@ -43,37 +43,36 @@ Route::middleware(['auth:sanctum', 'role:admin'])
     ->prefix('admin')
     ->group(function () {
 
-        // Aprobaciones de usuarios
-        Route::get('approvals', [ApprovalController::class, 'index']);
-        Route::post('approvals/{user}/approve', [ApprovalController::class, 'approve']);
-        Route::post('approvals/{user}/reject', [ApprovalController::class, 'reject']);
+        // 📌 rutas SIN parámetros primero
+        Route::get('pdfs', [AdminPdfController::class, 'index']);
+        Route::post('pdfs/upload', [AdminPdfController::class, 'upload']);
+        Route::delete('pdfs/bulk', [AdminPdfController::class, 'bulkDestroy']);
 
-        // Gestión de usuarios
+        // luego rutas con parámetro
+        Route::get('pdfs/{pdf}/download', [AdminPdfController::class, 'download']);
+        Route::get('pdfs/{pdf}/view', [AdminPdfController::class, 'view']);
+        Route::post('pdfs/{pdf}/assign', [AdminPdfController::class, 'assign']);
+        Route::delete('pdfs/{pdf}', [AdminPdfController::class, 'destroy']);
+
+        // usuarios
         Route::get('usuarios', [UserController::class, 'index']);
         Route::post('usuarios', [UserController::class, 'store']);
         Route::patch('usuarios/{user}', [UserController::class, 'update']);
 
-        // PDFs
-        Route::get('pdfs', [AdminPdfController::class, 'index']);
-        Route::post('pdfs/upload', [AdminPdfController::class, 'upload']);
-        Route::post('pdfs/{pdf}/assign', [AdminPdfController::class, 'assign']);
+        // aprobaciones
+        Route::get('approvals', [ApprovalController::class, 'index']);
+        Route::post('approvals/{user}/approve', [ApprovalController::class, 'approve']);
+        Route::post('approvals/{user}/reject', [ApprovalController::class, 'reject']);
 
-        // 👇 download, view, delete dentro del mismo grupo
-        Route::get('pdfs/{pdf}/download', [AdminPdfController::class, 'download']);
-
-        Route::delete('pdfs/{pdf}', [AdminPdfController::class, 'destroy']);
-
-        // Grupos
+        // grupos
         Route::post('groups', [GroupController::class, 'store']);
         Route::post('groups/{group}/items', [GroupController::class, 'addItems']);
         Route::post('groups/{group}/publish', [GroupController::class, 'publish']);
 
-        // Auditoría
+        // auditoría
         Route::get('audit/downloads', [AuditController::class, 'index']);
-
-        //endpoint visualizacion pdf
-        Route::get('pdfs/{pdf}/view', [AdminPdfController::class, 'view']);
     });
+
 
 
 # =====================================

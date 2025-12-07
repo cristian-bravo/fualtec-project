@@ -7,6 +7,8 @@ use App\Models\Pdf;
 use App\Services\PdfService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
 
 class PdfController extends Controller
 {
@@ -134,4 +136,23 @@ class PdfController extends Controller
 
         return response()->json(['message' => 'PDF eliminado correctamente']);
     }
+
+public function bulkDestroy(Request $request)
+{
+    $ids = $request->input('ids', []);
+    $pdfs = Pdf::whereIn('id', $ids)->get();
+
+    foreach ($pdfs as $pdf) {
+        $this->pdfService->deletePdf($pdf);
+    }
+
+    return response()->json([
+        'message' => 'PDFs eliminados correctamente.'
+    ]);
+}
+
+
+
+
+
 }
