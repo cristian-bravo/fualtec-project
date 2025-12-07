@@ -1,5 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import hero1 from "../../../assets/images/hero/hero1.webp";
+import hero2 from "../../../assets/images/hero/hero2.webp";
+import hero3 from "../../../assets/images/hero/hero3.webp";
+
+
 
 const SLIDE_INTERVAL_MS = 5000;
 
@@ -7,9 +12,9 @@ const SLIDE_INTERVAL_MS = 5000;
 function HeroSlider() {
   const slides = useMemo(
     () => [
-      { src: 'https://images.unsplash.com/photo-1542601098-8fc114e148e8?q=80&w=1920&auto=format&fit=crop', alt: 'Líneas de transmisión' },
-      { src: 'https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?q=80&w=1920&auto=format&fit=crop', alt: 'Plataforma petrolera' },
-      { src: 'https://images.unsplash.com/photo-1581094478370-1e7eab5228d1?q=80&w=1920&auto=format&fit=crop', alt: 'Inspección técnica' },
+      { src: hero1, alt: 'Líneas de transmisión' },
+      { src: hero2, alt: 'Plataforma petrolera' },
+      { src: hero3, alt: 'Inspección técnica' },
     ],
     []
   );

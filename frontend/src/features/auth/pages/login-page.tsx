@@ -38,12 +38,12 @@ export const LoginPage = () => {
       <Link
         to="/"
         title="Volver al inicio"
-        className="absolute left-6 top-6 rounded-full bg-yellow-500 p-3 text-[#0A1F44] shadow-lg transition hover:bg-yellow-400"
+        className="absolute left-6 top-6 z-20 inline-flex items-center gap-2 rounded-md border border-[#FFC107] bg-[#FFC107] px-3 py-2 text-[#0A1F44] font-semibold shadow transition hover:bg-[#ffcf3a]"
       >
-        {/* ícono flecha (SVG inline para evitar dependencias) */}
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
           <path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
         </svg>
+        Volver
       </Link>
 
       {/* Card glass */}
@@ -155,9 +155,9 @@ export const LoginPage = () => {
       </div>
 
       {/* Créditos (opcional) */}
-      {/* <div className="absolute bottom-4 text-center text-xs text-slate-300/80">
-        © {new Date().getFullYear()} Fualtec Energía
-      </div> */}
+      <div className="absolute bottom-4 text-center text-xs text-slate-300/80">
+        © {new Date().getFullYear()} Fualtec
+      </div>
     </div>
   );
 };

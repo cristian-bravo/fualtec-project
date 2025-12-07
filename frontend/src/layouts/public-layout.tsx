@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { Outlet, NavLink } from 'react-router-dom';
+import logoLight from '../assets/images/logo/fualtec.webp';
+import logoDark from '../assets/images/logo/fualtec-dark.webp';
+
 
 const navItems = [
   { to: '/', label: 'Inicio' },
@@ -70,15 +73,17 @@ const scheduleClose = () => {
       >
         <nav className="mx-auto flex w-full max-w-[90rem] items-center justify-between px-8 py-5">
           {/* Logo */}
-          <NavLink
-            to="/"
-            className={[
-              'text-2xl font-bold transition-colors',
-              isScrolled ? 'text-white' : 'text-[#0A1F44]',
-            ].join(' ')}
-          >
-            Fualtec Energía
-          </NavLink>
+          <nav className="flex items-center justify-between h-[80px] px-8 py-0">
+            <NavLink to="/" className="flex items-center leading-none">
+            <img
+              src={isScrolled ? logoDark : logoLight}
+              alt="Fualtec logo"
+              className="block h-[115px] w-auto object-contain m-0 p-0 transition-all duration-300"
+            />
+            </NavLink>
+          </nav>
+
+
 
           {/* Navegación Desktop */}
           <div className="hidden items-center gap-3 md:flex">
@@ -119,7 +124,7 @@ const scheduleClose = () => {
                 <div
                   role="menu"
                   className={[
-                    'absolute left-0 mt-3 w-[340px] rounded-2xl border p-2 shadow-2xl',
+                    'absolute left-0 mt-3 w-[340px] rounded-2xl border p-2 shadow-2xl z-50',
                     isScrolled
                       ? 'border-white/15 bg-[rgba(10,31,68,0.92)] backdrop-blur-md'
                       : 'border-[#0A1F44]/15 bg-white',
@@ -257,7 +262,7 @@ const scheduleClose = () => {
                   md:[grid-template-columns:1.8fr_1fr_1fr_1fr]">
     {/* 1. Identidad (columna amplia) */}
     <div className="space-y-4 pr-2">
-      <h2 className="text-2xl font-semibold text-white">Fualtec Energía</h2>
+      <h2 className="text-2xl font-semibold text-white">Fualtec</h2>
       <p className="text-sm leading-relaxed text-slate-300">
         Soluciones integrales para la industria petrolera con foco en seguridad, eficiencia y cumplimiento.
       </p>
@@ -312,7 +317,7 @@ const scheduleClose = () => {
 
   <div className="relative z-10 mt-12 border-t border-white/10"></div>
   <div className="relative z-10 text-center mt-6 text-sm text-slate-400">
-    © {new Date().getFullYear()} Fualtec Energía. Todos los derechos reservados.
+    © {new Date().getFullYear()} Fualtec. Todos los derechos reservados.
   </div>
 </footer>
 

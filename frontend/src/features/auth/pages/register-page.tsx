@@ -57,7 +57,7 @@ export const RegisterPage = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center bg-[#0A1F44] overflow-hidden">
+    <div className="relative min-h-screen flex items-center justify-center bg-[#0A1F44] overflow-hidden px-6 py-12">
       {/* Fondo */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_28%,rgba(0,115,255,0.14),transparent_70%),radial-gradient(circle_at_82%_72%,rgba(255,0,80,0.10),transparent_60%)]" />
       <div className="pointer-events-none absolute inset-0 opacity-10">
@@ -67,20 +67,21 @@ export const RegisterPage = () => {
         </svg>
       </div>
 
-      {/* Botón volver → Login */}
+      {/* Botón volver → Login (mismo estilo que olvidé contraseña) */}
       <Link
         to="/client-access/login"
         title="Volver al inicio de sesión"
-        className="absolute left-6 top-6 rounded-full bg-yellow-500 p-3 text-[#0A1F44] shadow-lg transition hover:bg-yellow-400"
+        className="absolute left-6 top-6 z-20 inline-flex items-center gap-2 rounded-md border border-[#FFC107] bg-[#FFC107] px-3 py-2 text-[#0A1F44] font-semibold shadow transition hover:bg-[#ffcf3a]"
         aria-label="Volver al inicio de sesión"
       >
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
           <path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
         </svg>
+        Volver
       </Link>
 
       {/* Layout 7/5 (form centrado), texto izq NO centrado */}
-      <div className="relative z-10 mx-auto w-full max-w-6xl px-6">
+      <div className="relative z-10 mx-auto w-full max-w-6xl px-0 md:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           {/* Panel izquierdo con imagen y texto alineado abajo-izquierda */}
           <div className="relative rounded-2xl overflow-hidden border border-white/10 lg:col-span-7">
@@ -154,14 +155,22 @@ export const RegisterPage = () => {
                       await authApi.register({
                         nombre: values.nombre,
                         email: values.email,
-                        cedula: values.cedula, // por si tu API espera 'cédula'
+                        cedula: values.cedula,
                         password: values.password,
                       } as any);
-                      showToast({ title: 'Registro enviado', description: 'Espera la aprobación de un administrador.', tone: 'success' });
+                      showToast({
+                        title: 'Registro enviado',
+                        description: 'Espera la aprobación de un administrador.',
+                        tone: 'success',
+                      });
                       setSent(true);
                       actions.resetForm();
                     } catch {
-                      showToast({ title: 'No se pudo completar el registro', description: 'Intente nuevamente o contacte a soporte.', tone: 'error' });
+                      showToast({
+                        title: 'No se pudo completar el registro',
+                        description: 'Intente nuevamente o contacte a soporte.',
+                        tone: 'error',
+                      });
                     } finally {
                       actions.setSubmitting(false);
                     }
@@ -265,6 +274,11 @@ export const RegisterPage = () => {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Créditos */}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-center text-xs text-slate-300/80">
+        © {new Date().getFullYear()} Fualtec — Plataforma de acceso seguro
       </div>
     </div>
   );

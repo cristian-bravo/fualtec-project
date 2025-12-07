@@ -1,15 +1,29 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Admin\ApprovalController;
 use App\Http\Controllers\Admin\AuditController;
 use App\Http\Controllers\Admin\GroupController;
 use App\Http\Controllers\Admin\PdfController as AdminPdfController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Client\DocumentController;
 use App\Http\Controllers\Client\PublicationController;
-use Illuminate\Support\Facades\Route;
 
+/*
+|--------------------------------------------------------------------------
+| API Routes
+|--------------------------------------------------------------------------
+| Estructura:
+| - /auth/...        → rutas de autenticación (login, logout, etc.)
+| - /admin/...       → rutas solo para administradores
+| - /client/...      → rutas solo para clientes aprobados
+|--------------------------------------------------------------------------
+*/
+
+# =====================================
+# 🔐 AUTENTICACIÓN (AuthController)
+# =====================================
 Route::prefix('auth')->group(function () {
     Route::post('register', [AuthController::class, 'register']);
     Route::post('login', [AuthController::class, 'login']);
@@ -22,29 +36,58 @@ Route::prefix('auth')->group(function () {
     });
 });
 
-Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin')->group(function () {
-    Route::get('approvals', [ApprovalController::class, 'index']);
-    Route::post('approvals/{user}/approve', [ApprovalController::class, 'approve']);
-    Route::post('approvals/{user}/reject', [ApprovalController::class, 'reject']);
+# =====================================
+# 🛠️ RUTAS DE ADMINISTRADOR
+# =====================================
+Route::middleware(['auth:sanctum', 'role:admin'])
+    ->prefix('admin')
+    ->group(function () {
 
-    Route::get('usuarios', [UserController::class, 'index']);
-    Route::post('usuarios', [UserController::class, 'store']);
-    Route::patch('usuarios/{user}', [UserController::class, 'update']);
+        // Aprobaciones de usuarios
+        Route::get('approvals', [ApprovalController::class, 'index']);
+        Route::post('approvals/{user}/approve', [ApprovalController::class, 'approve']);
+        Route::post('approvals/{user}/reject', [ApprovalController::class, 'reject']);
 
-    Route::get('pdfs', [AdminPdfController::class, 'index']);
-    Route::post('pdfs/upload', [AdminPdfController::class, 'upload']);
-    Route::post('pdfs/{pdf}/assign', [AdminPdfController::class, 'assign']);
+        // Gestión de usuarios
+        Route::get('usuarios', [UserController::class, 'index']);
+        Route::post('usuarios', [UserController::class, 'store']);
+        Route::patch('usuarios/{user}', [UserController::class, 'update']);
 
-    Route::post('groups', [GroupController::class, 'store']);
-    Route::post('groups/{group}/items', [GroupController::class, 'addItems']);
-    Route::post('groups/{group}/publish', [GroupController::class, 'publish']);
+        // PDFs
+        Route::get('pdfs', [AdminPdfController::class, 'index']);
+        Route::post('pdfs/upload', [AdminPdfController::class, 'upload']);
+        Route::post('pdfs/{pdf}/assign', [AdminPdfController::class, 'assign']);
 
-    Route::get('audit/downloads', [AuditController::class, 'index']);
-});
+        // 👇 download, view, delete dentro del mismo grupo
+        Route::get('pdfs/{pdf}/download', [AdminPdfController::class, 'download']);
 
-Route::middleware(['auth:sanctum', 'role:cliente', 'can:estado-aprobado'])->prefix('client')->group(function () {
-    Route::get('documents', [DocumentController::class, 'index']);
-    Route::get('documents/{pdf}/download', [DocumentController::class, 'download']);
-    Route::get('publications', [PublicationController::class, 'index']);
-});
+        Route::delete('pdfs/{pdf}', [AdminPdfController::class, 'destroy']);
+
+        // Grupos
+        Route::post('groups', [GroupController::class, 'store']);
+        Route::post('groups/{group}/items', [GroupController::class, 'addItems']);
+        Route::post('groups/{group}/publish', [GroupController::class, 'publish']);
+
+        // Auditoría
+        Route::get('audit/downloads', [AuditController::class, 'index']);
+
+        //endpoint visualizacion pdf
+        Route::get('pdfs/{pdf}/view', [AdminPdfController::class, 'view']);
+    });
+
+
+# =====================================
+# 📄 RUTAS DE CLIENTE (solo aprobados)
+# =====================================
+Route::middleware(['auth:sanctum', 'role:cliente', 'can:estado-aprobado'])
+    ->prefix('client')
+    ->group(function () {
+
+        // Documentos y descargas
+        Route::get('documents', [DocumentController::class, 'index']);
+        Route::get('documents/{pdf}/download', [DocumentController::class, 'download']);
+
+        // Publicaciones
+        Route::get('publications', [PublicationController::class, 'index']);
+    });
 

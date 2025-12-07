@@ -10,17 +10,29 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+
+            // Datos personales
             $table->string('nombre');
             $table->string('email')->unique();
             $table->string('cedula')->unique();
+
+            // Rol y estado
             $table->enum('rol', ['admin', 'cliente'])->default('cliente');
-            $table->enum('estado', ['pendiente', 'aprobado', 'rechazado', 'inactivo'])->default('pendiente');
+            // Alternativa más flexible:
+            // $table->string('rol')->default('cliente');
+            
+            $table->enum('estado', ['pendiente', 'aprobado', 'rechazado', 'inactivo'])
+                  ->default('pendiente');
+
+            // Seguridad y control
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamp('last_login_at')->nullable();
-            $table->softDeletes();
-            $table->timestamps();
+
+            // Gestión y auditoría
+            $table->softDeletes();  // borrado lógico (deleted_at)
+            $table->timestamps();   // created_at y updated_at
         });
     }
 

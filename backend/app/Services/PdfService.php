@@ -12,26 +12,32 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
+
 class PdfService
 {
-    public function storePdf(UploadedFile $file, User $uploader, array $data = []): Pdf
-    {
-        $path = Storage::disk('private_pdfs')->putFile(date('Y/m'), $file);
-        $checksum = hash_file('sha256', $file->getRealPath());
+public function storePdf($file, $user, array $data)
+{
+    $filename = \Illuminate\Support\Str::uuid() . '.pdf';
 
-        return Pdf::create([
-            'title' => $data['title'] ?? $file->getClientOriginalName(),
-            'filename' => $file->getClientOriginalName(),
-            'storage_path' => $path,
-            'categoria' => $data['categoria'] ?? 'general',
-            'tags' => $data['tags'] ?? [],
-            'version' => $data['version'] ?? 'v1.0',
-            'vigente' => $data['vigente'] ?? true,
-            'checksum' => $checksum,
-            'size_bytes' => $file->getSize(),
-            'uploaded_by' => $uploader->id,
-        ]);
-    }
+    // carpeta dinámica: pdfs/AÑO/MES
+    $folder = now()->format('Y/m');
+
+    Storage::disk('private_pdfs')->putFileAs(
+        $folder,
+        $file,
+        $filename
+    );
+
+    return Pdf::create([
+        'title'        => $data['title'],
+        'grupo'        => $data['grupo'],
+        'filename'     => $filename,
+        'storage_path' => $folder . '/' . $filename,
+        'uploaded_by'  => $user->id,
+        'vigente'      => false,
+    ]);
+}
+
 
     public function assignToUsers(Pdf $pdf, array $users): int
     {
@@ -54,8 +60,19 @@ class PdfService
     {
         $disk = Storage::disk('private_pdfs');
 
-        return $disk->download($pdf->storage_path, $pdf->filename);
+        if (! $disk->exists($pdf->storage_path)) {
+            abort(404, 'PDF no encontrado');
+        }
+
+        return response()->streamDownload(function () use ($disk, $pdf) {
+            echo $disk->get($pdf->storage_path);
+        }, $pdf->filename, [
+            'Content-Type'        => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="'.$pdf->filename.'"',
+        ]);
     }
+
+
 
     public function createGroup(array $data, User $user): PdfGroup
     {
@@ -105,4 +122,15 @@ class PdfService
             return $group->fresh();
         });
     }
+public function deletePdf(Pdf $pdf): void
+{
+    $disk = Storage::disk('private_pdfs');
+
+    if ($disk->exists($pdf->storage_path)) {
+        $disk->delete($pdf->storage_path);
+    }
+
+    $pdf->delete();
+}
+
 }

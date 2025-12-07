@@ -6,9 +6,11 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 
 class EventServiceProvider extends ServiceProvider
 {
-    protected $listen = [
-        //
-    ];
+protected $listen = [
+    \Illuminate\Auth\Events\Login::class => [
+        \App\Listeners\UpdateLastLoginAt::class,
+    ],
+];
 
     public function boot(): void
     {
