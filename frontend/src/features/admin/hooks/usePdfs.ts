@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useMemo  } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import {
   alertError,
@@ -24,6 +24,14 @@ export const usePdfs = () => {
 
   const [pdfs, setPdfs] = useState<PdfItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const perPage = 6;
+const totalPages = Math.ceil(pdfs.length / perPage);
+
+const paginated = useMemo(() => {
+  const start = (page - 1) * perPage;
+  return pdfs.slice(start, start + perPage);
+}, [pdfs, page]);
   const [isUploading, setIsUploading] = useState(false);
 
   const [viewerOpen, setViewerOpen] = useState(false);
@@ -47,7 +55,7 @@ export const usePdfs = () => {
       setIsLoading(false);
     }
   }, [token]);
-console.log("🔑 TOKEN ACTUAL:", token);
+
   useEffect(() => {
     if (!token) return;
     loadPdfs();
@@ -84,6 +92,7 @@ console.log("🔑 TOKEN ACTUAL:", token);
     [token]
   );
 
+  
   // Abrir visor
   const handleView = useCallback(
     async (pdf: PdfItem) => {
@@ -223,5 +232,9 @@ const handleBulkDelete = useCallback(async () => {
     clearSelection,
     handleGroup,
     handleBulkGroup,
+
+    paginated,
+    page,
+    setPage
   };
 };

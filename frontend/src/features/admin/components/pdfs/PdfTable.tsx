@@ -62,128 +62,107 @@ export const PdfTable: React.FC<PdfTableProps> = ({
             </tr>
           )}
 
-          {!isLoading &&
-            pdfs.map((pdf) => {
-              const checked = selectedIds.includes(pdf.id);
-              return (
-                <tr key={pdf.id} className="hover:bg-slate-50">
-                  {/* checkbox */}
-                  <td className="px-4 py-4">
-                    <input
-                      type="checkbox"
-                      className="h-4 w-4 rounded border-slate-300"
-                      checked={checked}
-                      onChange={() => onToggleRow(pdf.id)}
-                    />
-                  </td>
+{!isLoading &&
+  pdfs.map((pdf) => {
+    const checked = selectedIds.includes(pdf.id);
 
-                  <td className="px-6 py-4 font-semibold whitespace-nowrap">
-                    {pdf.title || pdf.filename}
-                  </td>
-                  <td className="px-6 py-4 text-slate-600 whitespace-nowrap">
-                    {pdf.grupo || " "}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span
-                      className={`rounded-full px-3 py-1 text-xs font-semibold ${
-                        pdf.vigente
-                          ? "bg-green-50 text-green-700"
-                          : "bg-red-100 text-red-700"
-                      }`}
-                    >
-                      {pdf.vigente ? "Agrupado" : "No agrupado"}
-                    </span>
-                  </td>
+    return (
+      <tr
+        key={pdf.id}
+        onClick={() => onToggleRow(pdf.id)}
+        onDoubleClick={() => onView(pdf)}
+        className={`
+          border-b last:border-none cursor-pointer
+          transition select-none
+          ${checked ? "bg-blue-50" : "hover:bg-slate-50"}
+        `}
+      >
+        {/* checkbox */}
+        <td className="px-4 py-3" onClick={(e) => e.stopPropagation()}>
+          <input
+            type="checkbox"
+            className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-400"
+            checked={checked}
+            onChange={() => onToggleRow(pdf.id)}
+          />
+        </td>
 
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center gap-2">
-                      {/* Agrupar */}
-                      <button
-                        onClick={() => onGroup(pdf)}
-                        className="group relative inline-flex items-center justify-center rounded-full border border-slate-300 bg-white p-2 hover:bg-slate-100 transition"
-                      >
-                        <svg
-                          className="h-4 w-4 text-slate-700"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth={1.5}
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M3.75 7.5 12 3l8.25 4.5L12 12 3.75 7.5z"
-                          />
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="m3.75 12 8.25 4.5 8.25-4.5"
-                          />
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="m3.75 16.5 8.25 4.5 8.25-4.5"
-                          />
-                        </svg>
-                        <span className="pointer-events-none absolute -bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded bg-slate-900 px-2 py-1 text-[10px] font-medium text-white opacity-0 shadow-sm transition group-hover:opacity-100">
-                          Agrupar
-                        </span>
-                      </button>
+        {/* título */}
+        <td className="px-6 py-3 font-medium text-gray-900 truncate max-w-[280px]">
+          {pdf.title || pdf.filename}
+        </td>
 
-                      {/* Ver */}
-                      <button
-                        onClick={() => onView(pdf)}
-                        className="group relative inline-flex items-center justify-center rounded-full border border-slate-300 bg-white p-2 hover:bg-slate-100 transition"
-                      >
-                        <svg
-                          className="h-4 w-4 text-slate-700"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth={1.5}
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M2.25 12s2.25-6.75 9.75-6.75S21.75 12 21.75 12 19.5 18.75 12 18.75 2.25 12 2.25 12z"
-                          />
-                          <circle cx="12" cy="12" r="3" />
-                        </svg>
-                        <span className="pointer-events-none absolute -bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded bg-slate-900 px-2 py-1 text-[10px] font-medium text-white opacity-0 shadow-sm transition group-hover:opacity-100">
-                          Ver
-                        </span>
-                      </button>
+        {/* grupo */}
+        <td className="px-6 py-3 text-gray-600">
+          {pdf.grupo || "—"}
+        </td>
 
-                      {/* Eliminar */}
-                      <button
-                        onClick={() => onDelete(pdf)}
-                        className="group relative inline-flex items-center justify-center rounded-full border border-slate-300 bg-white p-2 hover:bg-red-50 transition"
-                      >
-                        <svg
-                          className="h-4 w-4 text-red-600"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth={1.5}
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M9.75 9.75v7.5m4.5-7.5v7.5M4.5 6.75h15m-1.5 0-.73 11.02A2.25 2.25 0 0 1 15.02 20H8.98a2.25 2.25 0 0 1-2.25-2.23L6.02 6.75m3.23-2.25h5.5a1.5 1.5 0 0 1 1.5 1.5v.75h-8.5v-.75a1.5 1.5 0 0 1 1.5-1.5z"
-                          />
-                        </svg>
-                        <span className="pointer-events-none absolute -bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded bg-slate-900 px-2 py-1 text-[10px] font-medium text-white opacity-0 shadow-sm transition group-hover:opacity-100">
-                          Eliminar
-                        </span>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              );
-            })}
+        {/* estado */}
+        <td className="px-6 py-3">
+          <span
+            className={`
+              inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+              ${
+                pdf.vigente
+                  ? "bg-green-100 text-green-700"
+                  : "bg-red-100 text-red-600"
+              }
+            `}
+          >
+            {pdf.vigente ? "Agrupado" : "No agrupado"}
+          </span>
+        </td>
+
+        {/* acciones */}
+        <td
+          className="px-6 py-3"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="flex items-center justify-end gap-2">
+
+
+
+            {/* Ver */}
+            <button
+              onClick={() => onView(pdf)}
+              className="h-8 w-8 flex items-center justify-center rounded-full border border-blue-200 text-blue-600 bg-white hover:bg-blue-50 hover:shadow-sm transition"
+            >
+              <svg
+                className="h-4 w-4"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={1.5}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12s2.25-6.75 9.75-6.75S21.75 12 21.75 12 19.5 18.75 12 18.75 2.25 12 2.25 12z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+            </button>
+
+            {/* Eliminar */}
+            <button
+              onClick={() => onDelete(pdf)}
+              className="h-8 w-8 flex items-center justify-center rounded-full border border-red-200 text-red-600 bg-white hover:bg-red-50 hover:shadow-sm transition"
+            >
+              <svg
+                className="h-4 w-4"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={1.5}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 9.75v7.5m4.5-7.5v7.5M4.5 6.75h15m-1.5 0-.73 11.02A2.25 2.25 0 0 1 15.02 20H8.98a2.25 2.25 0 0 1-2.25-2.23L6.02 6.75m3.23-2.25h5.5a1.5 1.5 0 0 1 1.5 1.5v.75h-8.5v-.75a1.5 1.5 0 0 1 1.5-1.5z" />
+              </svg>
+            </button>
+
+          </div>
+        </td>
+      </tr>
+    );
+  })}
+
         </Table>
 
         {/* checkbox general en header */}
@@ -260,13 +239,7 @@ export const PdfTable: React.FC<PdfTableProps> = ({
                 </div>
 
                 <div className="mt-3 flex gap-2">
-                  <Button
-                    variant="secondary"
-                    className="flex-1 py-2 text-sm"
-                    onClick={() => onGroup(pdf)}
-                  >
-                    Agrupar
-                  </Button>
+
                   <Button
                     variant="ghost"
                     className="flex-1 py-2 text-sm"

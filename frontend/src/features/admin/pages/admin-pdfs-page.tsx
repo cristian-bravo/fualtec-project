@@ -6,7 +6,10 @@ import { usePdfs } from "../hooks/usePdfs";
 export const AdminPdfsPage = () => {
   const {
     isAuthenticated,
-    pdfs,
+    paginated,
+    pdfs,        // ← nuevo
+    page,        // ← nuevo
+    setPage,     // ← nuevo
     isLoading,
     isUploading,
     viewerOpen,
@@ -23,6 +26,7 @@ export const AdminPdfsPage = () => {
     handleGroup,
     handleBulkGroup,
   } = usePdfs();
+  const totalPages = Math.ceil(pdfs.length / 10);
 
   if (!isAuthenticated) {
     return (
@@ -52,7 +56,7 @@ export const AdminPdfsPage = () => {
 
       {/* Tabla + tarjetas */}
       <PdfTable
-        pdfs={pdfs}
+        pdfs={paginated}
         selectedIds={selectedIds}
         onToggleRow={toggleSelect}
         onToggleAll={selectAll}
@@ -61,6 +65,53 @@ export const AdminPdfsPage = () => {
         onGroup={handleGroup}
         isLoading={isLoading}
       />
+
+<div className="flex items-center justify-end gap-1 mt-6 text-sm">
+  
+  <button
+    disabled={page === 1}
+    onClick={() => setPage(page - 1)}
+    className="px-3 py-1.5 rounded border border-gray-300 text-gray-600 disabled:text-gray-300 disabled:border-gray-200 hover:bg-gray-100"
+  >
+    ←
+  </button>
+
+  {[...Array(totalPages)].map((_, i) => {
+    const p = i + 1;
+    if (p === 1 || p === totalPages || Math.abs(p - page) <= 1) {
+      return (
+        <button
+          key={p}
+          onClick={() => setPage(p)}
+          className={`
+            px-3 py-1.5 rounded border text-gray-700
+            ${p === page
+              ? "bg-blue-600 text-white border-blue-600"
+              : "border-gray-300 hover:bg-gray-100"}
+          `}
+        >
+          {p}
+        </button>
+      );
+    }
+    if (Math.abs(p - page) === 2) {
+      return <span className="px-2" key={p}>…</span>;
+    }
+    return null;
+  })}
+
+  <button
+    disabled={page === totalPages}
+    onClick={() => setPage(page + 1)}
+    className="px-3 py-1.5 rounded border border-gray-300 text-gray-600 disabled:text-gray-300 disabled:border-gray-200 hover:bg-gray-100"
+  >
+    →
+  </button>
+
+</div>
+
+
+      
 
       {/* Toolbar flotante selección múltiple */}
       {hasSelection && (
