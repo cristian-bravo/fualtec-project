@@ -20,13 +20,17 @@ export type ViewerState = {
 } | null;
 
 export const usePdfs = () => {
+  const [status, setStatus] = useState<'all' | 'grouped' | 'ungrouped'>('all');
+  const [search, setSearch] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
+
   const { token, isAuthenticated } = useAuth();
 
   const [pdfs, setPdfs] = useState<PdfItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
   const perPage = 6;
-const totalPages = Math.ceil(pdfs.length / perPage);
+  const totalPages = Math.ceil(pdfs.length / perPage);
 
 const paginated = useMemo(() => {
   const start = (page - 1) * perPage;
@@ -39,27 +43,53 @@ const paginated = useMemo(() => {
 
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
+  const onChangeStatus = (v: 'all' | 'grouped' | 'ungrouped') => {
+  setStatus(v);
+  setPage(1);
+  };
+
+  const onSearchChange = (v: string) => {
+    setSearch(v);
+    setPage(1);
+  };
+
   // Cargar lista inicial
   
-  const loadPdfs = useCallback(async () => {
+const loadPdfs = useCallback(
+  async (silent = false) => {
     if (!token) return;
 
-    setIsLoading(true);
+    if (!silent) setIsLoading(true);
+
     try {
-      const data = await fetchPdfs(token);
+      const data = await fetchPdfs(token, { status, search });
       setPdfs(data);
     } catch (err) {
       console.error(err);
       alertError("No se pudieron cargar los PDFs.");
     } finally {
-      setIsLoading(false);
+      if (!silent) setIsLoading(false);
     }
-  }, [token]);
+  },
+  [token, status, search]
+);
+
+
 
   useEffect(() => {
     if (!token) return;
-    loadPdfs();
-  }, [token, loadPdfs]);
+    loadPdfs(true);
+  }, [token, status, debouncedSearch, loadPdfs]);
+
+ useEffect(() => {
+  const t = setTimeout(() => {
+    setDebouncedSearch(search);
+    setPage(1);
+  }, 300);
+
+  return () => clearTimeout(t);
+}, [search]);
+
 
   // Subir desde PdfUpload
   const handleUpload = useCallback(
@@ -235,6 +265,15 @@ const handleBulkDelete = useCallback(async () => {
 
     paginated,
     page,
-    setPage
+    setPage,
+    totalPages,
+    reload: loadPdfs,
+
+    status,
+    onChangeStatus,
+    search,
+    onSearchChange,
+    setSearch
+
   };
 };

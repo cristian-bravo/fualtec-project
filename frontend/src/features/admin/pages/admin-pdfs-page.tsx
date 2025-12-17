@@ -2,6 +2,14 @@ import { PdfViewerModal } from "../components/pdfs/PdfViewerModal";
 import { PdfUpload } from "../components/pdfs/PdfUpload";
 import { PdfTable } from "../components/pdfs/PdfTable";
 import { usePdfs } from "../hooks/usePdfs";
+import { CreateGroupModal } from "../components/groups/CreateGroupModal";
+import { useState } from "react";
+import { createGroup, addPdfsToGroup } from "../services/groupService";
+import { useAuth } from "@/hooks/use-auth";
+import { alertSuccess, alertError } from "@/lib/alerts";
+import { PdfTableMobile } from "../components/pdfs/PdfTableMobile";
+
+
 
 export const AdminPdfsPage = () => {
   const {
@@ -10,6 +18,7 @@ export const AdminPdfsPage = () => {
     pdfs,        // ← nuevo
     page,        // ← nuevo
     setPage,     // ← nuevo
+    totalPages, // ← nuevo
     isLoading,
     isUploading,
     viewerOpen,
@@ -25,8 +34,26 @@ export const AdminPdfsPage = () => {
     clearSelection,
     handleGroup,
     handleBulkGroup,
+    reload,
+
+    status,
+    onChangeStatus,
+    search,
+    setSearch, 
+    onSearchChange,
   } = usePdfs();
-  const totalPages = Math.ceil(pdfs.length / 10);
+  
+  const [searchInput, setSearchInput] = useState("");
+
+  const applySearch = () => {
+    setSearch(searchInput); // setSearch viene del hook
+    setPage(1);
+  };
+
+  const [groupModalOpen, setGroupModalOpen] = useState(false);
+  const { token } = useAuth();
+
+  
 
   if (!isAuthenticated) {
     return (
@@ -40,16 +67,76 @@ export const AdminPdfsPage = () => {
 
   return (
     <div className="relative space-y-6 px-4 sm:px-6 lg:px-8">
-      {/* Título */}
-      <div className="flex flex-col gap-2 text-center sm:text-left">
-        <h1 className="text-2xl font-bold text-slate-900">
-          Gestión de PDFs
-        </h1>
-        <p className="text-sm text-slate-600">
-          Suba archivos PDF, gestione versiones y prepare la
-          documentación para su futura agrupación y publicación.
-        </p>
+{/* Header 75% / 25% */}
+<div className="grid grid-cols-4 gap-4 items-center">
+  {/* 75% */}
+  <div className="col-span-3 flex flex-col gap-2 text-center sm:text-left">
+    <h1 className="text-2xl font-bold text-slate-900">
+      Gestión de PDFs
+    </h1>
+    <p className="text-sm text-slate-600">
+      Suba archivos PDF, gestione versiones y prepare la
+      documentación para su futura agrupación y publicación.
+    </p>
+  </div>
+
+  {/* 25% */}
+  <div className="col-span-1 flex items-center justify-center">
+    <div className="w-full flex flex-col gap-3">
+
+{/* Buscador */}
+<div className="flex items-center gap-2">
+  <div className="relative flex-1">
+    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+      🔍
+    </span>
+    <input
+      value={searchInput}
+      onChange={(e) => setSearchInput(e.target.value)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") applySearch();
+      }}
+      placeholder="Buscar PDF..."
+      className="w-full pl-9 pr-3 py-2 text-sm border rounded-md
+                 focus:ring-2 focus:ring-blue-500 outline-none"
+    />
+  </div>
+
+  <button
+    onClick={applySearch}
+    className="px-4 py-2 text-sm font-medium rounded-md
+               bg-blue-600 text-white hover:bg-blue-700
+               transition"
+  >
+    Buscar
+  </button>
+</div>
+
+
+      {/* Radio */}
+      <div className="flex gap-1 bg-slate-100 p-1 rounded-lg justify-center">
+        {[
+          { id: 'all', label: 'Todos' },
+          { id: 'grouped', label: 'Agrupados' },
+          { id: 'ungrouped', label: 'No agrupados' },
+        ].map(opt => (
+          <button
+            key={opt.id}
+            onClick={() => onChangeStatus(opt.id as any)}
+            className={`px-3 py-1 text-sm rounded-md transition
+              ${status === opt.id
+                ? 'bg-blue-600 text-white shadow'
+                : 'text-slate-600 hover:bg-white'}`}
+          >
+            {opt.label}
+          </button>
+        ))}
+            </div>
+
+          </div>
+        </div>
       </div>
+
 
       {/* Upload / Dropzone */}
       <PdfUpload onUpload={handleUpload} isUploading={isUploading} />
@@ -62,9 +149,18 @@ export const AdminPdfsPage = () => {
         onToggleAll={selectAll}
         onView={handleView}
         onDelete={handleDelete}
-        onGroup={handleGroup}
+        //onGroup={handleGroup}
         isLoading={isLoading}
       />
+      {/* Tabla + mobiles */}
+        <PdfTableMobile
+          pdfs={paginated}
+          selectedIds={selectedIds}
+          onToggleRow={toggleSelect}
+          onView={handleView}
+          onDelete={handleDelete}
+          isLoading={isLoading}
+        />
 
 <div className="flex items-center justify-end gap-1 mt-6 text-sm">
   
@@ -125,7 +221,7 @@ export const AdminPdfsPage = () => {
             <button
               type="button"
               className="text-xs sm:text-sm rounded-full border border-white/30 px-3 py-1 hover:bg-white/10 transition"
-              onClick={handleBulkGroup}
+              onClick={() => setGroupModalOpen(true)}
             >
               Agrupar
             </button>
@@ -148,6 +244,36 @@ export const AdminPdfsPage = () => {
           </div>
         </div>
       )}
+      <CreateGroupModal
+        open={groupModalOpen}
+        onClose={() => setGroupModalOpen(false)}
+        pdfs={pdfs.filter(p => selectedIds.includes(p.id))}
+        onSave={async ({ name, periodo }) => {
+          if (!token) {
+            alertError("Sesión inválida.");
+            return;
+          }
+
+          try {
+            const { id } = await createGroup(token, { name, periodo });
+            await addPdfsToGroup(token, id, selectedIds);
+
+            await reload();  
+            setGroupModalOpen(false);
+            clearSelection();
+            alertSuccess("Grupo creado correctamente.");
+          } catch (e: any) {
+  console.error(e);
+
+  const message =
+    e?.response?.data?.errors?.pdfs?.[0] ||
+    e?.response?.data?.message ||
+    "Error al crear el grupo.";
+
+  alertError(message);
+}
+        }}
+      />
 
       {/* MODAL VISOR PDF */}
       <PdfViewerModal

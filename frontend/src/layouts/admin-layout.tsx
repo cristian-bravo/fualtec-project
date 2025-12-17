@@ -35,9 +35,10 @@ export const AdminLayout = () => {
               className="mb-4 h-20 w-auto object-contain"
             />
 
-            <p className="text-[15px] font-semibold tracking-wide text-center text-blue-200">
-              Panel <span className="text-[#e74c3c] font-bold">Administrativo</span>
-            </p>
+          <p className="text-[15px] font-semibold tracking-wide text-center text-blue-400">
+            Panel <span className="text-blue-500 font-bold">Administrativo</span> 
+          </p>
+
 
             <p className="text-sm text-slate-400 mt-3 text-center">
               {user?.email}
@@ -104,14 +105,15 @@ export const AdminLayout = () => {
               </button>
 
               <div className="h-8 w-1 rounded-full bg-gradient-to-b from-blue-400 to-blue-500"></div>
-              <h1 className="text-lg md:text-xl font-semibold text-white tracking-wide">
-                Panel Administrativo
-              </h1>
+                <h1 className="text-lg md:text-xl font-semibold text-white tracking-wide">
+                  Bienvenido al sistema,{" "}
+                  <span className="text-blue-400 font-bold">
+                    {user?.nombre}
+                  </span>
+                </h1>
             </div>
 
-            <p className="hidden md:block text-base text-blue-100/90 tracking-wide font-medium text-center">
-              Gestión de clientes, auditorías y publicaciones
-            </p>
+
 
             <div className="flex items-center gap-2 text-slate-300 text-xs md:text-sm">
               <div className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />

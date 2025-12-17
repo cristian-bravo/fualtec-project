@@ -22,14 +22,22 @@ function chunkArray<T>(array: T[], size: number): T[][] {
   return chunks;
 }
 
-export async function fetchPdfs(token: string): Promise<PdfItem[]> {
+export async function fetchPdfs(
+  token: string,
+  params?: {
+    status?: 'all' | 'grouped' | 'ungrouped';
+    search?: string;
+    page?: number;
+  }
+): Promise<PdfItem[]> {
   const res = await axios.get(`${API_BASE}/admin/pdfs`, {
     headers: { Authorization: `Bearer ${token}` },
+    params,
   });
 
-  // Tu backend a veces devuelve data.data y a veces data directo
-  return res.data.data || res.data;
+  return res.data.data ?? res.data;
 }
+
 
 export async function uploadPdfs(
   token: string,

@@ -11,6 +11,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Illuminate\Validation\ValidationException;
 
 
 class PdfService
@@ -83,19 +84,29 @@ public function storePdf($file, $user, array $data)
         ]);
     }
 
-    public function attachPdfs(PdfGroup $group, array $pdfIds): int
-    {
-        $count = 0;
-        foreach ($pdfIds as $pdfId) {
-            PdfGroupItem::firstOrCreate([
-                'group_id' => $group->id,
-                'pdf_id' => $pdfId,
-            ]);
-            $count++;
-        }
+        public function attachPdfs(PdfGroup $group, array $pdfIds): int
+        {
+            $added = 0;
 
-        return $count;
-    }
+            foreach ($pdfIds as $pdfId) {
+                $pdf = Pdf::withCount('groups')->findOrFail($pdfId);
+
+                // 🚨 LÍMITE DURO: máximo 3 grupos
+                if ($pdf->groups_count >= 3) {
+                    throw ValidationException::withMessages([
+                        'pdfs' => "El PDF '{$pdf->title}' ya pertenece a 3 grupos.",
+                    ]);
+                }
+
+                // evitar duplicados
+                if (!$pdf->groups()->where('pdf_groups.id', $group->id)->exists()) {
+                    $pdf->groups()->attach($group->id);
+                    $added++;
+                }
+            }
+
+            return $added;
+        }
 
     public function publishGroup(PdfGroup $group): PdfGroup
     {

@@ -7,8 +7,6 @@ use App\Models\Pdf;
 use App\Services\PdfService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-
 
 class PdfController extends Controller
 {
@@ -16,59 +14,78 @@ class PdfController extends Controller
     {
     }
 
+    /**
+     * Listar PDFs con grupos (1 o varios)
+     */
     public function index(Request $request): JsonResponse
     {
-        $pdfs = Pdf::query()
-            ->when(
-                $request->get('grupo'),
-                fn ($q, $grupo) => $q->where('grupo', $grupo)
-            )
-            ->when(
-                $request->filled('vigente'),
-                function ($q) use ($request) {
-                    $vigente = filter_var(
-                        $request->get('vigente'),
-                        FILTER_VALIDATE_BOOL,
-                        FILTER_NULL_ON_FAILURE
-                    );
+        $status = $request->query('status', 'all'); // all | grouped | ungrouped
+        $search = $request->query('search');
 
-                    if (!is_null($vigente)) {
-                        $q->where('vigente', $vigente);
-                    }
-                }
-            )
-            ->latest()
-            ->paginate(20);
+        $query = Pdf::with('groups')->latest();
+
+        // 🔹 Filtro por estado
+        if ($status === 'grouped') {
+            $query->whereHas('groups');
+        }
+
+        if ($status === 'ungrouped') {
+            $query->whereDoesntHave('groups');
+        }
+
+        // 🔹 Búsqueda
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                ->orWhere('filename', 'like', "%{$search}%")
+                ->orWhereHas('groups', function ($g) use ($search) {
+                    $g->where('name', 'like', "%{$search}%");
+                });
+            });
+        }
+
+        $pdfs = $query->paginate(20);
+
+        // 🔹 Mantener TU formato actual
+        $pdfs->getCollection()->transform(function (Pdf $pdf) {
+
+            $groupNames = $pdf->groups->pluck('name');
+
+            return [
+                'id'           => $pdf->id,
+                'title'        => $pdf->title,
+                'filename'     => $pdf->filename,
+                'storage_path' => $pdf->storage_path,
+                'grupo'        => $groupNames->isNotEmpty()
+                    ? $groupNames->implode(', ')
+                    : null,
+                'vigente'      => $groupNames->isNotEmpty(),
+            ];
+        });
 
         return response()->json($pdfs);
     }
 
 
     /**
-     * Subir varios PDF en una sola petición (batch).
+     * Subir PDFs
      */
     public function upload(Request $request): JsonResponse
     {
         $data = $request->validate([
             'files'   => ['required', 'array'],
             'files.*' => ['required', 'file', 'mimes:pdf', 'max:20480'],
-
-            'grupo' => ['required', 'string', 'max:120'],
-
-            'titles'   => ['nullable', 'array'],
-            'titles.*' => ['nullable', 'string', 'max:255'],
+            'grupo'   => ['required', 'string', 'max:120'],
         ]);
 
         $uploaded = [];
 
-        foreach ($request->file('files', []) as $index => $file) {
-
+        foreach ($request->file('files') as $file) {
             $pdf = $this->pdfService->storePdf(
                 $file,
                 $request->user(),
                 [
-                    'title' => $data['titles'][$index]
-                        ?? pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME),
+                    'title' => pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME),
                     'grupo' => $data['grupo'],
                 ]
             );
@@ -82,77 +99,44 @@ class PdfController extends Controller
         ], 201);
     }
 
-
-    public function assign(Request $request, Pdf $pdf): JsonResponse
-    {
-        $data = $request->validate([
-            'userIds'   => ['array'],
-            'userIds.*' => ['integer', 'exists:users,id'],
-            'cedulas'   => ['array'],
-            'cedulas.*' => ['string'],
-        ]);
-
-        $count = 0;
-
-        if (!empty($data['userIds'])) {
-            $count += $this->pdfService->assignToUsers($pdf, $data['userIds']);
-        }
-
-        if (!empty($data['cedulas'])) {
-            $count += $this->pdfService->assignByCedulas($pdf, $data['cedulas']);
-        }
-
-        return response()->json(['assigned' => $count]);
-    }
-
-
+    /**
+     * Descargar PDF
+     */
     public function download(Pdf $pdf, Request $request)
     {
-        $user = $request->user();
-
-        if (!$user->hasRole('admin')) {
-            $isAssigned = $pdf->assignedClients()
-                ->where('users.id', $user->id)
-                ->exists();
-
-            if (!$isAssigned) {
-                return response()->json(['message' => 'No autorizado'], 403);
-            }
-        }
-
-        return $this->pdfService->streamForUser($pdf, $user);
+        return $this->pdfService->streamForUser($pdf, $request->user());
     }
 
-
-    public function destroy(Pdf $pdf, Request $request): JsonResponse
+    /**
+     * Eliminar PDF
+     */
+    public function destroy(Pdf $pdf): JsonResponse
     {
-        $user = $request->user();
+        $this->pdfService->deletePdf($pdf);
 
-        if (!$user->hasRole('admin')) {
-            return response()->json(['message' => 'No autorizado'], 403);
+        return response()->json([
+            'message' => 'PDF eliminado correctamente'
+        ]);
+    }
+
+    /**
+     * Eliminación múltiple
+     */
+    public function bulkDestroy(Request $request): JsonResponse
+    {
+        $ids = $request->validate([
+            'ids'   => ['required', 'array'],
+            'ids.*' => ['integer', 'exists:pdfs,id'],
+        ])['ids'];
+
+        $pdfs = Pdf::whereIn('id', $ids)->get();
+
+        foreach ($pdfs as $pdf) {
+            $this->pdfService->deletePdf($pdf);
         }
 
-        $this->pdfService->deletePdf($pdf);
-
-        return response()->json(['message' => 'PDF eliminado correctamente']);
+        return response()->json([
+            'message' => 'PDFs eliminados correctamente.'
+        ]);
     }
-
-public function bulkDestroy(Request $request)
-{
-    $ids = $request->input('ids', []);
-    $pdfs = Pdf::whereIn('id', $ids)->get();
-
-    foreach ($pdfs as $pdf) {
-        $this->pdfService->deletePdf($pdf);
-    }
-
-    return response()->json([
-        'message' => 'PDFs eliminados correctamente.'
-    ]);
-}
-
-
-
-
-
 }

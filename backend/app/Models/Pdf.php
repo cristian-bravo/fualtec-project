@@ -35,7 +35,12 @@ class Pdf extends Model
 
     public function groups()
     {
-        return $this->belongsToMany(PdfGroup::class, 'pdf_group_items');
+        return $this->belongsToMany(
+            PdfGroup::class,
+            'pdf_group_items',
+            'pdf_id',    // FK en pivote hacia Pdf
+            'group_id'   // FK en pivote hacia PdfGroup
+        );
     }
 
     public function uploader()
