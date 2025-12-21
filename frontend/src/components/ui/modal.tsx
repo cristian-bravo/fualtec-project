@@ -15,8 +15,18 @@ export const Modal = ({ isOpen, title, description, onClose, actions, children }
   if (!isOpen) return null;
 
   return createPortal(
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 px-4">
-      <div className="w-full max-w-lg rounded-lg bg-white shadow-xl">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 px-4"
+      onClick={(event) => {
+        if (event.target === event.currentTarget) {
+          onClose();
+        }
+      }}
+    >
+      <div
+        className="w-full max-w-lg rounded-lg bg-white shadow-xl"
+        onClick={(event) => event.stopPropagation()}
+      >
         <header className="flex items-start justify-between border-b border-slate-200 px-6 py-4">
           <div>
             <h2 className="text-lg font-semibold text-slate-900">{title}</h2>

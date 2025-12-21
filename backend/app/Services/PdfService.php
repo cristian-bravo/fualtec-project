@@ -31,7 +31,7 @@ public function storePdf($file, $user, array $data)
 
     return Pdf::create([
         'title'        => $data['title'],
-        'grupo'        => $data['grupo'],
+        'categoria'    => $data['categoria'] ?? 'General',
         'filename'     => $filename,
         'storage_path' => $folder . '/' . $filename,
         'uploaded_by'  => $user->id,
@@ -108,27 +108,61 @@ public function storePdf($file, $user, array $data)
             return $added;
         }
 
-    public function publishGroup(PdfGroup $group): PdfGroup
+    public function detachFromGroup(PdfGroup $group, Pdf $pdf): void
     {
-        return DB::transaction(function () use ($group) {
+        $group->items()
+            ->where('pdf_id', $pdf->id)
+            ->delete();
+    }
+
+    public function publishGroup(PdfGroup $group, User $user, array $userIds): PdfGroup
+    {
+        if ($group->publicado) {
+            throw ValidationException::withMessages([
+                'group' => 'El grupo ya fue publicado.',
+            ]);
+        }
+
+        if (count($userIds) === 0 || count($userIds) > 3) {
+            throw ValidationException::withMessages([
+                'user_ids' => 'Debe seleccionar entre 1 y 3 usuarios.',
+            ]);
+        }
+
+        return DB::transaction(function () use ($group, $user, $userIds) {
             $group->update([
                 'publicado' => true,
                 'published_at' => now(),
+                'published_by' => $user->id,
             ]);
 
-            $clientIds = $group->items()
-                ->with('pdf.assignedClients:id')
-                ->get()
-                ->flatMap(fn ($item) => $item->pdf->assignedClients->pluck('id'))
-                ->unique()
-                ->all();
-
-            foreach ($clientIds as $clientId) {
+            foreach ($userIds as $clientId) {
                 Publication::updateOrCreate(
                     ['group_id' => $group->id, 'user_id' => $clientId],
                     ['published_at' => now()]
                 );
             }
+
+            return $group->fresh();
+        });
+    }
+
+    public function unpublishGroup(PdfGroup $group, User $user): PdfGroup
+    {
+        if (! $group->publicado) {
+            throw ValidationException::withMessages([
+                'group' => 'El grupo ya esta en borrador.',
+            ]);
+        }
+
+        return DB::transaction(function () use ($group) {
+            $group->update([
+                'publicado' => false,
+                'published_at' => null,
+                'published_by' => null,
+            ]);
+
+            Publication::where('group_id', $group->id)->delete();
 
             return $group->fresh();
         });

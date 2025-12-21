@@ -15,6 +15,7 @@ class PdfGroup extends Model
         'periodo',
         'publicado',
         'published_at',
+        'published_by',
         'created_by',
     ];
 
@@ -31,6 +32,11 @@ class PdfGroup extends Model
     public function creator()
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function publisher()
+    {
+        return $this->belongsTo(User::class, 'published_by');
     }
 
     public function publications()

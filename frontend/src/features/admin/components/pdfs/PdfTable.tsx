@@ -11,6 +11,8 @@ type PdfTableProps = {
   onView: (pdf: PdfItem) => void;
   onDelete: (pdf: PdfItem) => void;
   isLoading?: boolean;
+  viewLabel?: string;
+  deleteLabel?: string;
 };
 
 export const PdfTable: React.FC<PdfTableProps> = ({
@@ -21,6 +23,8 @@ export const PdfTable: React.FC<PdfTableProps> = ({
   onView,
   onDelete,
   isLoading = false,
+  viewLabel = "Ver",
+  deleteLabel = "Eliminar",
 }) => {
   const allSelected =
     pdfs.length > 0 && selectedIds.length === pdfs.length;
@@ -112,6 +116,7 @@ export const PdfTable: React.FC<PdfTableProps> = ({
                     className="flex h-9 w-9 items-center justify-center rounded-full
                               border border-blue-200 text-blue-600
                               hover:bg-blue-50 hover:shadow-sm transition"
+                    aria-label={viewLabel}
                   >
                     <Eye className="h-4 w-4" />
                   </button>
@@ -121,7 +126,7 @@ export const PdfTable: React.FC<PdfTableProps> = ({
                               rounded bg-slate-900 px-2 py-1 text-xs text-white
                               opacity-0 group-hover:opacity-100 transition"
                   >
-                    Ver
+                    {viewLabel}
                   </span>
                 </div>
 
@@ -132,6 +137,7 @@ export const PdfTable: React.FC<PdfTableProps> = ({
                     className="flex h-9 w-9 items-center justify-center rounded-full
                               border border-red-200 text-red-600
                               hover:bg-red-50 hover:shadow-sm transition"
+                    aria-label={deleteLabel}
                   >
                     <Trash2 className="h-4 w-4" />
                   </button>
@@ -141,7 +147,7 @@ export const PdfTable: React.FC<PdfTableProps> = ({
                               rounded bg-slate-900 px-2 py-1 text-xs text-white
                               opacity-0 group-hover:opacity-100 transition"
                   >
-                    Eliminar
+                    {deleteLabel}
                   </span>
                 </div>
               </div>

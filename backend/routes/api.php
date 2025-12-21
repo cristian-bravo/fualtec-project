@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\ApprovalController;
 use App\Http\Controllers\Admin\AuditController;
 use App\Http\Controllers\Admin\GroupController;
 use App\Http\Controllers\Admin\PdfController as AdminPdfController;
+use App\Http\Controllers\Admin\PublicationController as AdminPublicationController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Client\DocumentController;
 use App\Http\Controllers\Client\PublicationController;
@@ -45,7 +46,8 @@ Route::middleware(['auth:sanctum', 'role:admin'])
 
         // 📌 rutas SIN parámetros primero
         Route::get('pdfs', [AdminPdfController::class, 'index']);
-        Route::post('pdfs/upload', [AdminPdfController::class, 'upload']);
+        Route::post('pdfs/upload', [AdminPdfController::class, 'upload'])
+            ->middleware('throttle:upload-pdfs');
         Route::delete('pdfs/bulk', [AdminPdfController::class, 'bulkDestroy']);
 
         // luego rutas con parámetro
@@ -65,9 +67,18 @@ Route::middleware(['auth:sanctum', 'role:admin'])
         Route::post('approvals/{user}/reject', [ApprovalController::class, 'reject']);
 
         // grupos
+        Route::get('groups', [GroupController::class, 'index']);
         Route::post('groups', [GroupController::class, 'store']);
+        Route::get('groups/{group}', [GroupController::class, 'show']);
+        Route::get('groups/{group}/available-pdfs', [GroupController::class, 'availablePdfs']);
         Route::post('groups/{group}/items', [GroupController::class, 'addItems']);
+        Route::delete('groups/{group}/items/{pdf}', [GroupController::class, 'removeItem']);
         Route::post('groups/{group}/publish', [GroupController::class, 'publish']);
+        Route::post('groups/{group}/unpublish', [GroupController::class, 'unpublish']);
+
+        // publicaciones admin
+        Route::get('publications', [AdminPublicationController::class, 'index']);
+        Route::get('publications/{group}', [AdminPublicationController::class, 'show']);
 
         // auditoría
         Route::get('audit/downloads', [AuditController::class, 'index']);
@@ -89,4 +100,3 @@ Route::middleware(['auth:sanctum', 'role:cliente', 'can:estado-aprobado'])
         // Publicaciones
         Route::get('publications', [PublicationController::class, 'index']);
     });
-

@@ -3,6 +3,9 @@
 namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
@@ -11,6 +14,20 @@ class RouteServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        RateLimiter::for('upload-pdfs', function (Request $request) {
+            $user = $request->user();
+            $key = $user ? 'upload-pdfs:user:' . $user->id : 'upload-pdfs:ip:' . $request->ip();
+
+            return Limit::perMinute(30)->by($key)->response(function (Request $request, array $headers) {
+                return response()->json([
+                    'message' => 'Has excedido el limite de solicitudes de subida. Intenta nuevamente en un minuto.',
+                    'errors' => [
+                        'rate_limit' => ['Has excedido el limite de solicitudes de subida. Intenta nuevamente en un minuto.'],
+                    ],
+                ], 429, $headers);
+            });
+        });
+
         Route::prefix('api')
             ->middleware('api')
             ->group(base_path('routes/api.php'));

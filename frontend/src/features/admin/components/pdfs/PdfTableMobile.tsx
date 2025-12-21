@@ -1,3 +1,4 @@
+import { Eye, Trash2 } from "lucide-react";
 import { PdfItem } from "../../services/pdfService";
 
 type Props = {
@@ -7,6 +8,9 @@ type Props = {
   onView: (pdf: PdfItem) => void;
   onDelete: (pdf: PdfItem) => void;
   isLoading?: boolean;
+  viewLabel?: string;
+  deleteLabel?: string;
+  iconOnlyActions?: boolean;
 };
 
 export const PdfTableMobile = ({
@@ -16,7 +20,13 @@ export const PdfTableMobile = ({
   onView,
   onDelete,
   isLoading = false,
+  viewLabel,
+  deleteLabel,
+  iconOnlyActions = false,
 }: Props) => {
+  const resolvedViewLabel = viewLabel ?? "Ver";
+  const resolvedDeleteLabel = deleteLabel ?? "Eliminar";
+
   if (isLoading) {
     return (
       <p className="sm:hidden text-center text-sm text-slate-500">
@@ -79,25 +89,55 @@ export const PdfTableMobile = ({
             </div>
 
             <div className="mt-3 flex gap-2">
-              <button
-                className="flex-1 rounded-md border py-2 text-sm"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onView(pdf);
-                }}
-              >
-                Ver
-              </button>
+              {iconOnlyActions ? (
+                <>
+                  <button
+                    type="button"
+                    className="flex-1 rounded-md border py-2 text-sm flex items-center justify-center"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onView(pdf);
+                    }}
+                    aria-label={resolvedViewLabel}
+                  >
+                    <Eye className="h-4 w-4" />
+                  </button>
 
-              <button
-                className="flex-1 rounded-md border border-red-200 py-2 text-sm text-red-600"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onDelete(pdf);
-                }}
-              >
-                Eliminar
-              </button>
+                  <button
+                    type="button"
+                    className="flex-1 rounded-md border border-red-200 py-2 text-sm text-red-600 flex items-center justify-center"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onDelete(pdf);
+                    }}
+                    aria-label={resolvedDeleteLabel}
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    className="flex-1 rounded-md border py-2 text-sm"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onView(pdf);
+                    }}
+                  >
+                    {resolvedViewLabel}
+                  </button>
+
+                  <button
+                    className="flex-1 rounded-md border border-red-200 py-2 text-sm text-red-600"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onDelete(pdf);
+                    }}
+                  >
+                    {resolvedDeleteLabel}
+                  </button>
+                </>
+              )}
             </div>
           </div>
         );

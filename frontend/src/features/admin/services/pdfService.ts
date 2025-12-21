@@ -35,7 +35,29 @@ export async function fetchPdfs(
     params,
   });
 
-  return res.data.data ?? res.data;
+  if (Array.isArray(res.data)) {
+    return res.data as PdfItem[];
+  }
+
+  const firstPage = (res.data?.data || []) as PdfItem[];
+  const lastPage = Number(res.data?.last_page || 1);
+
+  if (lastPage <= 1) {
+    return firstPage;
+  }
+
+  const all: PdfItem[] = [...firstPage];
+
+  for (let page = 2; page <= lastPage; page += 1) {
+    const pageRes = await axios.get(`${API_BASE}/admin/pdfs`, {
+      headers: { Authorization: `Bearer ${token}` },
+      params: { ...params, page },
+    });
+    const pageData = (pageRes.data?.data || []) as PdfItem[];
+    all.push(...pageData);
+  }
+
+  return all;
 }
 
 

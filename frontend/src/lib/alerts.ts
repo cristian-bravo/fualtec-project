@@ -32,3 +32,18 @@ export async function confirmDelete(message: string): Promise<boolean> {
 
   return result.isConfirmed === true;
 }
+
+export async function confirmAction(message: string, confirmText: string) {
+  const result = await Swal.fire({
+    title: "Confirmar",
+    text: message,
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#d33",
+    cancelButtonColor: "#3085d6",
+    confirmButtonText: confirmText,
+    cancelButtonText: "Cancelar",
+  });
+
+  return result.isConfirmed === true;
+}

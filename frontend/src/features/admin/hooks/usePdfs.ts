@@ -111,9 +111,13 @@ const loadPdfs = useCallback(
         setPdfs((prev) => [...created, ...prev]);
         alertSuccess("PDFs subidos correctamente.");
         return true;
-      } catch (err) {
+      } catch (err: any) {
         console.error(err);
-        alertError("Error subiendo los PDFs.");
+        const message =
+          err?.response?.data?.message ||
+          err?.response?.data?.errors?.files?.[0] ||
+          "Error subiendo los PDFs.";
+        alertError(message);
         return false;
       } finally {
         setIsUploading(false);

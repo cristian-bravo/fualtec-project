@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 
 class PdfController extends Controller
 {
+    private const MAX_FILES_PER_REQUEST = 100;
+    private const MAX_FILE_SIZE_KB = 20480; // 20 MB
+    private const DAILY_UPLOAD_LIMIT = 300;
+
     public function __construct(private readonly PdfService $pdfService)
     {
     }
@@ -72,21 +76,66 @@ class PdfController extends Controller
      */
     public function upload(Request $request): JsonResponse
     {
-        $data = $request->validate([
-            'files'   => ['required', 'array'],
-            'files.*' => ['required', 'file', 'mimes:pdf', 'max:20480'],
-            'grupo'   => ['required', 'string', 'max:120'],
-        ]);
+        $request->validate(
+            [
+                'files' => ['required', 'array', 'min:1', 'max:' . self::MAX_FILES_PER_REQUEST],
+                'files.*' => ['required', 'file', 'mimes:pdf', 'max:' . self::MAX_FILE_SIZE_KB],
+            ],
+            [
+                'files.required' => 'Debes seleccionar al menos un PDF.',
+                'files.array' => 'El campo files debe ser un arreglo de PDFs.',
+                'files.min' => 'Debes seleccionar al menos un PDF.',
+                'files.max' => 'No puedes subir mas de ' . self::MAX_FILES_PER_REQUEST . ' PDFs por solicitud.',
+                'files.*.file' => 'Todos los archivos deben ser PDFs validos.',
+                'files.*.mimes' => 'Solo se permiten archivos PDF.',
+                'files.*.max' => 'Cada PDF debe pesar menos de 20 MB.',
+            ]
+        );
+
+        $files = $request->file('files', []);
+        $incomingCount = is_array($files) ? count($files) : 0;
+
+        if ($incomingCount === 0) {
+            return response()->json([
+                'message' => 'Debes seleccionar al menos un PDF.',
+                'errors' => [
+                    'files' => ['Debes seleccionar al menos un PDF.'],
+                ],
+            ], 422);
+        }
+
+        $dailyCount = Pdf::where('uploaded_by', $request->user()->id)
+            ->whereBetween('created_at', [now()->startOfDay(), now()->endOfDay()])
+            ->count();
+
+        if ($dailyCount + $incomingCount > self::DAILY_UPLOAD_LIMIT) {
+            return response()->json([
+                'message' => 'Has alcanzado el limite diario de subida (' . self::DAILY_UPLOAD_LIMIT . ' PDFs).',
+                'errors' => [
+                    'daily_limit' => [
+                        'Has alcanzado el limite diario de subida (' . self::DAILY_UPLOAD_LIMIT . ' PDFs).',
+                    ],
+                ],
+            ], 429);
+        }
 
         $uploaded = [];
 
-        foreach ($request->file('files') as $file) {
+        foreach ($files as $file) {
+            if (! $file->isValid()) {
+                return response()->json([
+                    'message' => 'Uno de los PDFs no se pudo subir.',
+                    'errors' => [
+                        'files' => ['El archivo no se pudo subir.'],
+                    ],
+                ], 422);
+            }
+
             $pdf = $this->pdfService->storePdf(
                 $file,
                 $request->user(),
                 [
                     'title' => pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME),
-                    'grupo' => $data['grupo'],
                 ]
             );
 

@@ -25,6 +25,7 @@ import { AdminApprovalsPage } from '../features/admin/pages/admin-approvals-page
 import { AdminUsersPage } from '../features/admin/pages/admin-users-page';
 import { AdminPdfsPage } from '../features/admin/pages/admin-pdfs-page';
 import { AdminGroupsPage } from '../features/admin/pages/admin-groups-page';
+import { AdminGroupsManagePdfsPage } from '../features/admin/pages/admin-groups-manage-pdfs-page';
 import { AdminPublicationsPage } from '../features/admin/pages/admin-publications-page';
 import { AdminAuditPage } from '../features/admin/pages/admin-audit-page';
 
@@ -87,6 +88,7 @@ const routes: RouteObject[] = [
               { path: 'usuarios', element: <AdminUsersPage /> },
               { path: 'pdfs', element: <AdminPdfsPage /> },
               { path: 'grupos', element: <AdminGroupsPage /> },
+              { path: 'grupos/:groupId/pdfs', element: <AdminGroupsManagePdfsPage /> },
               { path: 'publicaciones', element: <AdminPublicationsPage /> },
               { path: 'auditoria', element: <AdminAuditPage /> },
             ],
