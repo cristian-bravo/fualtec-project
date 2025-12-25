@@ -7,19 +7,32 @@ use App\Http\Requests\ForgotPasswordRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\ResetPasswordRequest;
+use App\Http\Requests\VerifyEmailRequest;
 use App\Services\AuthService;
+use App\Services\CaptchaService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
-    public function __construct(private readonly AuthService $authService)
+    public function __construct(
+        private readonly AuthService $authService,
+        private readonly CaptchaService $captchaService
+    ) {
+    }
+
+    public function captcha(): JsonResponse
     {
+        return response()->json($this->captchaService->generate());
     }
 
     public function register(RegisterRequest $request): JsonResponse
     {
-        $user = $this->authService->register($request->validated());
+        $data = $request->validated();
+        $this->validateCaptcha($data['captcha_token'], $data['captcha_answer']);
+
+        $user = $this->authService->register($data);
 
         return response()->json([
             'id' => $user->id,
@@ -39,17 +52,27 @@ class AuthController extends Controller
 
     public function forgot(ForgotPasswordRequest $request): JsonResponse
     {
-        $this->authService->sendPasswordReset($request->validated()['email']);
+        $data = $request->validated();
+        $this->validateCaptcha($data['captcha_token'], $data['captcha_answer']);
 
-        return response()->json(['message' => 'Se ha enviado un enlace de recuperación.']);
+        $this->authService->sendPasswordReset($data['email']);
+
+        return response()->json(['message' => 'Se ha enviado un enlace de recuperacion.']);
     }
 
     public function reset(ResetPasswordRequest $request): JsonResponse
     {
         $data = $request->validated();
-        $this->authService->resetPassword($data['token'], $data['password']);
+        $this->authService->resetPassword($data['token'], $data['email'], $data['password']);
 
-        return response()->json(['message' => 'Contraseña actualizada correctamente.']);
+        return response()->json(['message' => 'Contrasena actualizada correctamente.']);
+    }
+
+    public function verifyEmail(VerifyEmailRequest $request): JsonResponse
+    {
+        $this->authService->verifyEmailToken($request->validated()['token']);
+
+        return response()->json(['message' => 'Correo verificado correctamente.']);
     }
 
     public function me(Request $request): JsonResponse
@@ -61,6 +84,16 @@ class AuthController extends Controller
     {
         $request->user()->currentAccessToken()?->delete();
 
-        return response()->json(['message' => 'Sesión finalizada']);
+        return response()->json(['message' => 'Sesion finalizada']);
+    }
+
+    private function validateCaptcha(string $token, string $answer): void
+    {
+        if (! $this->captchaService->verify($token, $answer)) {
+            throw ValidationException::withMessages([
+                'captcha' => ['Captcha invalido.'],
+            ]);
+        }
     }
 }
+

@@ -121,7 +121,7 @@ export const AdminPublicationsPage = () => {
           "Creado por",
           "Publicado",
           "Publicado por",
-          "Acciones",
+          "",
         ]}
       >
         {isLoading && (
@@ -170,21 +170,14 @@ export const AdminPublicationsPage = () => {
                 <td className="px-6 py-4 text-slate-600">{publisher}</td>
                 <td className="px-6 py-4">
                   <div className="flex justify-end">
-                    <div className="relative group">
-                      <button
-                        type="button"
-                        onClick={() => openDetail(item.id)}
-                        className="flex h-9 w-9 items-center justify-center rounded-full border border-blue-200 text-blue-600 hover:bg-blue-50 hover:shadow-sm transition"
-                        aria-label="Ver detalle"
-                      >
-                        <Eye className="h-4 w-4" />
-                      </button>
-                      <span
-                        className="pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 rounded bg-slate-900 px-2 py-1 text-xs text-white opacity-0 transition group-hover:opacity-100"
-                      >
-                        Ver detalle
-                      </span>
-                    </div>
+                    <button
+                      type="button"
+                      onClick={() => openDetail(item.id)}
+                      className="flex items-center gap-2 rounded-full border border-blue-200 px-3 py-2 text-xs font-semibold text-blue-700 hover:bg-blue-50 hover:shadow-sm transition"
+                    >
+                      <Eye className="h-4 w-4" />
+                      Ver detalle
+                    </button>
                   </div>
                 </td>
               </tr>
@@ -271,8 +264,10 @@ export const AdminPublicationsPage = () => {
 
               {detail.pdfs.map((pdf: PdfItem) => (
                 <tr key={pdf.id}>
-                  <td className="px-6 py-3 font-medium text-slate-900">
-                    {pdf.title || pdf.filename}
+                  <td className="px-6 py-3">
+                    <div className="text-sm font-semibold text-slate-900 break-words">
+                      {pdf.title || pdf.filename}
+                    </div>
                   </td>
                   <td className="px-6 py-3 text-right">
                     <Button variant="ghost" onClick={() => handleViewPdf(pdf)}>

@@ -3,7 +3,7 @@ import * as yup from 'yup';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../hooks/use-auth';
 import { useToast } from '../../../components/toast-context';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface LoginValues {
   email: string;
@@ -21,6 +21,26 @@ export const LoginPage = () => {
   const location = useLocation() as { state?: { from?: Location } };
   const { showToast } = useToast();
   const [showPassword, setShowPassword] = useState(false);
+  const reloadTimerRef = useRef<number | null>(null);
+
+  const clearReloadTimer = () => {
+    if (reloadTimerRef.current) {
+      window.clearTimeout(reloadTimerRef.current);
+      reloadTimerRef.current = null;
+    }
+  };
+
+  const scheduleReload = () => {
+    clearReloadTimer();
+    reloadTimerRef.current = window.setTimeout(() => {
+      reloadTimerRef.current = null;
+      if (window.location.pathname.includes('/client-access/login')) {
+        window.location.reload();
+      }
+    }, 60000);
+  };
+
+  useEffect(() => clearReloadTimer, []);
 
   return (
     <div className="relative min-h-screen flex items-center justify-center bg-[#0A1F44] overflow-hidden px-6 py-12">
@@ -38,7 +58,7 @@ export const LoginPage = () => {
       <Link
         to="/"
         title="Volver al inicio"
-        className="absolute left-6 top-6 z-20 inline-flex items-center gap-2 rounded-md border border-[#FFC107] bg-[#FFC107] px-3 py-2 text-[#0A1F44] font-semibold shadow transition hover:bg-[#ffcf3a]"
+        className="absolute left-6 top-6 z-20 flex items-center gap-2 rounded-full border border-[#FFC107]/70 bg-transparent px-3 py-2 text-[#FFC107] transition hover:bg-[#FFC107]/10"
       >
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
           <path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
@@ -66,6 +86,7 @@ export const LoginPage = () => {
               onSubmit={async (values, actions) => {
                 try {
                   await login(values.email, values.password);
+                  clearReloadTimer();
                   showToast({ title: 'Inicio de sesión exitoso', tone: 'success' });
                   const redirect = (location.state?.from as any)?.pathname ?? '/client-access/app';
                   navigate(redirect, { replace: true });
@@ -75,6 +96,7 @@ export const LoginPage = () => {
                     description: 'Revise los datos ingresados',
                     tone: 'error',
                   });
+                  scheduleReload();
                 } finally {
                   actions.setSubmitting(false);
                 }
@@ -84,7 +106,7 @@ export const LoginPage = () => {
                 <Form className="mt-6 space-y-5 text-sm">
                   {/* Email */}
                   <label className="flex flex-col gap-1">
-                    <span className="font-semibold text-white">Correo corporativo</span>
+                    <span className="font-semibold text-white">Correo electrónico</span>
                     <Field
                       name="email"
                       type="email"

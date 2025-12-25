@@ -15,6 +15,8 @@ class ForgotPasswordRequest extends FormRequest
     {
         return [
             'email' => ['required', 'email'],
+            'captcha_token' => ['required', 'string'],
+            'captcha_answer' => ['required', 'string'],
         ];
     }
 }

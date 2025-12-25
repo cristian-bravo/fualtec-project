@@ -20,7 +20,18 @@ apiClient.interceptors.request.use((config) => {
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401 || error.response?.status === 403) {
+    const status = error.response?.status;
+    const url = error.config?.url ?? '';
+    const isAuthEndpoint = [
+      '/auth/login',
+      '/auth/register',
+      '/auth/forgot',
+      '/auth/reset',
+      '/auth/verify-email',
+      '/auth/captcha'
+    ].some((path) => url.includes(path));
+
+    if ((status === 401 || status === 403) && !isAuthEndpoint) {
       window.location.href = '/client-access/login';
     }
     return Promise.reject(error);

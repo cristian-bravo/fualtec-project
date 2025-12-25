@@ -10,13 +10,21 @@ class ApprovalController extends Controller
 {
     public function index(): JsonResponse
     {
-        $pending = User::where('estado', 'pendiente')->get(['id', 'nombre', 'email', 'cedula', 'estado']);
+        $pending = User::where('estado', 'pendiente')
+            ->orderByDesc('created_at')
+            ->get(['id', 'nombre', 'email', 'cedula', 'estado', 'email_verified_at']);
 
         return response()->json($pending);
     }
 
     public function approve(User $user): JsonResponse
     {
+        if (! $user->email_verified_at) {
+            return response()->json([
+                'message' => 'El correo no ha sido verificado.',
+            ], 422);
+        }
+
         $user->update(['estado' => 'aprobado']);
 
         return response()->json(['status' => 'aprobado']);

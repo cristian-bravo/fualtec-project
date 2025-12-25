@@ -140,12 +140,12 @@ export const AdminGroupsPage = () => {
         </div>
       </div>
 
-      <Table headers={["Nombre", "Periodo", "Estado", "Acciones"]}>
+      <Table headers={["Nombre", "Periodo", "Estado", ""]}>
         {isLoading && (
           <tr>
             <td
               colSpan={4}
-              className="px-6 py-4 text-center text-sm text-slate-500"
+              className="px- py-4 text-center text-sm text-slate-500"
             >
               Cargando grupos...
             </td>

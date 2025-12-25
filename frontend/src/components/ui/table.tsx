@@ -36,9 +36,9 @@ export const Table = ({
             <th
               key={index}
               className={clsx(
-                "px-3 py-3 font-semibold text-left",
+                "px-6 py-3 font-semibold text-left",
                 header === "Estado" && "text-center",
-                header === "" && "text-right"
+                (header === "" || header === "Acciones") && "text-right"
               )}
             >
               {header}

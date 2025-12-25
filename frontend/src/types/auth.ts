@@ -15,6 +15,8 @@ export interface AuthRegisterPayload {
   email: string;
   cedula: string;
   password: string;
+  captcha_token: string;
+  captcha_answer: string;
 }
 
 export interface AuthRegisterResponse {
@@ -34,9 +36,17 @@ export interface AuthLoginResponse {
 
 export interface ForgotPasswordPayload {
   email: string;
+  captcha_token: string;
+  captcha_answer: string;
 }
 
 export interface ResetPasswordPayload {
   token: string;
+  email: string;
   password: string;
+}
+
+export interface CaptchaResponse {
+  token: string;
+  question: string;
 }

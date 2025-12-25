@@ -16,7 +16,7 @@ export const Modal = ({ isOpen, title, description, onClose, actions, children }
 
   return createPortal(
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 px-4"
+      className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-slate-900/60 px-4 py-8"
       onClick={(event) => {
         if (event.target === event.currentTarget) {
           onClose();
@@ -24,20 +24,21 @@ export const Modal = ({ isOpen, title, description, onClose, actions, children }
       }}
     >
       <div
-        className="w-full max-w-lg rounded-lg bg-white shadow-xl"
+        className="flex w-full max-w-lg flex-col overflow-hidden rounded-2xl bg-white shadow-xl"
+        style={{ maxHeight: "calc(100vh - 4rem)" }}
         onClick={(event) => event.stopPropagation()}
       >
-        <header className="flex items-start justify-between border-b border-slate-200 px-6 py-4">
+        <header className="flex items-start justify-between border-b border-slate-100 bg-slate-50/80 px-6 py-4">
           <div>
             <h2 className="text-lg font-semibold text-slate-900">{title}</h2>
             {description && <p className="mt-1 text-sm text-slate-600">{description}</p>}
           </div>
           <Button variant="ghost" onClick={onClose} aria-label="Cerrar">
-            ✕
+            X
           </Button>
         </header>
-        <div className="px-6 py-4 text-sm text-slate-700">{children}</div>
-        <footer className="flex items-center justify-end gap-3 border-t border-slate-200 px-6 py-3">
+        <div className="overflow-y-auto px-6 py-4 text-sm text-slate-700">{children}</div>
+        <footer className="flex items-center justify-end gap-3 border-t border-slate-100 bg-slate-50/70 px-6 py-3">
           <Button variant="secondary" onClick={onClose}>
             Cancelar
           </Button>
@@ -48,3 +49,6 @@ export const Modal = ({ isOpen, title, description, onClose, actions, children }
     document.body
   );
 };
+
+
+

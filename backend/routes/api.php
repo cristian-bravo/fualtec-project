@@ -26,10 +26,14 @@ use App\Http\Controllers\Client\PublicationController;
 # 🔐 AUTENTICACIÓN (AuthController)
 # =====================================
 Route::prefix('auth')->group(function () {
-    Route::post('register', [AuthController::class, 'register']);
+    Route::get('captcha', [AuthController::class, 'captcha']);
+    Route::post('register', [AuthController::class, 'register'])
+        ->middleware('throttle:auth-emails');
     Route::post('login', [AuthController::class, 'login']);
-    Route::post('forgot', [AuthController::class, 'forgot']);
+    Route::post('forgot', [AuthController::class, 'forgot'])
+        ->middleware('throttle:auth-emails');
     Route::post('reset', [AuthController::class, 'reset']);
+    Route::post('verify-email', [AuthController::class, 'verifyEmail']);
 
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('me', [AuthController::class, 'me']);

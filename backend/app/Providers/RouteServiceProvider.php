@@ -28,6 +28,20 @@ class RouteServiceProvider extends ServiceProvider
             });
         });
 
+        RateLimiter::for('auth-emails', function (Request $request) {
+            $email = strtolower((string) $request->input('email', ''));
+            $key = 'auth-emails:' . $request->ip() . ':' . $email;
+
+            return Limit::perDay(50)->by($key)->response(function (Request $request, array $headers) {
+                return response()->json([
+                    'message' => 'Limite diario alcanzado. Intenta nuevamente manana.',
+                    'errors' => [
+                        'rate_limit' => ['Limite diario alcanzado. Intenta nuevamente manana.'],
+                    ],
+                ], 429, $headers);
+            });
+        });
+
         Route::prefix('api')
             ->middleware('api')
             ->group(base_path('routes/api.php'));

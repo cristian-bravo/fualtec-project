@@ -4,6 +4,7 @@ import type {
   AuthLoginResponse,
   AuthRegisterPayload,
   AuthRegisterResponse,
+  CaptchaResponse,
   ForgotPasswordPayload,
   ResetPasswordPayload,
   AuthUser
@@ -12,6 +13,10 @@ import type {
 export const authApi = {
   register: async (payload: AuthRegisterPayload): Promise<AuthRegisterResponse> => {
     const { data } = await apiClient.post<AuthRegisterResponse>('/auth/register', payload);
+    return data;
+  },
+  captcha: async (): Promise<CaptchaResponse> => {
+    const { data } = await apiClient.get<CaptchaResponse>('/auth/captcha');
     return data;
   },
   login: async (payload: AuthLoginPayload): Promise<AuthLoginResponse> => {
@@ -24,6 +29,10 @@ export const authApi = {
   },
   reset: async (payload: ResetPasswordPayload): Promise<{ message: string }> => {
     const { data } = await apiClient.post<{ message: string }>('/auth/reset', payload);
+    return data;
+  },
+  verifyEmail: async (token: string): Promise<{ message: string }> => {
+    const { data } = await apiClient.post<{ message: string }>('/auth/verify-email', { token });
     return data;
   },
   me: async (): Promise<AuthUser> => {
