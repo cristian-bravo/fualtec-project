@@ -174,11 +174,14 @@ export const ForgotPasswordPage = () => {
             )}
           </Formik>
 
-          <div className="mt-auto pt-8 text-center text-xs text-slate-500">
-            (c) {new Date().getFullYear()} Fualtec - Plataforma de acceso seguro
-          </div>
+
         </div>
       </div>
+
+    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-md bg-white/70 px-3 py-1 text-center text-xs font-semibold text-slate-800 backdrop-blur-sm">
+      (c) {new Date().getFullYear()} Fualtec - Plataforma de acceso seguro
+    </div>
+
     </div>
   );
 };

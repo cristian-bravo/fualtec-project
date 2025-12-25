@@ -19,11 +19,13 @@ import { VerifyEmailPage } from '../features/auth/pages/verify-email-page';
 
 import { ClientDashboardPage } from '../features/client/pages/client-dashboard-page';
 import { ClientDocumentsPage } from '../features/client/pages/client-documents-page';
+import { ClientGroupDocumentsPage } from '../features/client/pages/client-group-documents-page';
 import { ClientProfilePage } from '../features/client/pages/client-profile-page';
 
 import { AdminDashboardPage } from '../features/admin/pages/admin-dashboard-page';
 import { AdminApprovalsPage } from '../features/admin/pages/admin-approvals-page';
 import { AdminUsersPage } from '../features/admin/pages/admin-users-page';
+import { AdminUserEditPage } from '../features/admin/pages/admin-user-edit-page';
 import { AdminPdfsPage } from '../features/admin/pages/admin-pdfs-page';
 import { AdminGroupsPage } from '../features/admin/pages/admin-groups-page';
 import { AdminGroupsManagePdfsPage } from '../features/admin/pages/admin-groups-manage-pdfs-page';
@@ -71,6 +73,7 @@ const routes: RouteObject[] = [
             children: [
               { index: true, element: <ClientDashboardPage /> },
               { path: 'documentos', element: <ClientDocumentsPage /> },
+              { path: 'documentos/grupos/:groupId', element: <ClientGroupDocumentsPage /> },
               { path: 'perfil', element: <ClientProfilePage /> },
             ],
           },
@@ -88,6 +91,7 @@ const routes: RouteObject[] = [
               { index: true, element: <AdminDashboardPage /> },
               { path: 'aprobaciones', element: <AdminApprovalsPage /> },
               { path: 'usuarios', element: <AdminUsersPage /> },
+              { path: 'usuarios/:userId', element: <AdminUserEditPage /> },
               { path: 'pdfs', element: <AdminPdfsPage /> },
               { path: 'grupos', element: <AdminGroupsPage /> },
               { path: 'grupos/:groupId/pdfs', element: <AdminGroupsManagePdfsPage /> },

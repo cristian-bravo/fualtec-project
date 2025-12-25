@@ -4,6 +4,8 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../hooks/use-auth';
 import { useToast } from '../../../components/toast-context';
 import { useEffect, useRef, useState } from 'react';
+import loginImg from "../../../assets/images/register/login.webp";
+
 
 interface LoginValues {
   email: string;
@@ -69,8 +71,14 @@ export const LoginPage = () => {
       {/* Card glass */}
       <div className="relative z-10 w-full max-w-4xl overflow-hidden rounded-2xl border border-white/10 bg-white/10 backdrop-blur-xl shadow-2xl">
         <div className="grid grid-cols-1 md:grid-cols-2">
-          {/* Panel de imagen (opcional / identidad petrolera) */}
-          <div className="hidden md:block bg-[url('https://images.unsplash.com/photo-1542370285-4171b8048f9f?q=80&w=1200&auto=format&fit=crop')] bg-cover bg-center" />
+          {/* Panel de imagen ( identidad petrolera) */}
+              <div
+                className="relative hidden md:block bg-cover bg-center "
+                style={{ backgroundImage: `url(${loginImg})` }}
+              >
+                <div className="absolute inset-0 bg-black/40" />
+              </div>
+
 
           {/* Formulario */}
           <div className="p-8 md:p-10 text-slate-100">
@@ -90,12 +98,38 @@ export const LoginPage = () => {
                   showToast({ title: 'Inicio de sesión exitoso', tone: 'success' });
                   const redirect = (location.state?.from as any)?.pathname ?? '/client-access/app';
                   navigate(redirect, { replace: true });
-                } catch (error) {
-                  showToast({
-                    title: 'Credenciales inválidas',
-                    description: 'Revise los datos ingresados',
-                    tone: 'error',
-                  });
+                } catch (error: any) {
+                  const message = error?.response?.data?.message as
+                    | string
+                    | undefined;
+                  const normalized = message?.toLowerCase() ?? '';
+
+                  if (normalized.includes('deshabilitada')) {
+                    showToast({
+                      title: 'Cuenta deshabilitada',
+                      description: 'Consulte con administracion.',
+                      tone: 'error',
+                    });
+                  } else if (normalized.includes('pendiente')) {
+                    showToast({
+                      title: 'Cuenta pendiente de aprobacion',
+                      description: 'Espere la aprobacion del administrador.',
+                      tone: 'error',
+                    });
+                  } else if (normalized.includes('no verificado')) {
+                    showToast({
+                      title: 'Correo no verificado',
+                      description: 'Revise su correo para verificar la cuenta.',
+                      tone: 'error',
+                    });
+                  } else {
+                    showToast({
+                      title: 'Credenciales invalidas',
+                      description: 'Revise los datos ingresados',
+                      tone: 'error',
+                    });
+                  }
+
                   scheduleReload();
                 } finally {
                   actions.setSubmitting(false);
@@ -178,8 +212,9 @@ export const LoginPage = () => {
 
       {/* Créditos (opcional) */}
       <div className="absolute bottom-4 text-center text-xs text-slate-300/80">
-        © {new Date().getFullYear()} Fualtec
+        © {new Date().getFullYear()} Fualtec - Plataforma de acceso seguro
       </div>
     </div>
   );
 };
+

@@ -15,16 +15,16 @@ export const ClientLayout = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <div className="flex min-h-screen bg-slate-100 relative">
+    <div className="flex min-h-screen bg-slate-50 relative">
       {/* Sidebar */}
       <aside
-        className={`fixed md:static inset-y-0 left-0 z-30 w-64 flex-col justify-between bg-slate-900 p-6 text-slate-200 transform transition-transform duration-300 ${
+        className={`fixed md:static inset-y-0 left-0 z-30 w-64 flex-col justify-between bg-slate-900/95 p-6 text-slate-200 transform transition-transform duration-300 ${
           isMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
         } md:flex`}
       >
         {/* Parte superior */}
         <div>
-          <div className="flex flex-col items-center border-b border-slate-700 pb-6">
+          <div className="flex flex-col items-center border-b border-slate-700/60 pb-6">
             <img
               src={logoLight}
               alt="Logo Fualtec"
@@ -32,13 +32,12 @@ export const ClientLayout = () => {
             />
 
             {/* Slogan refinado */}
-            <p className="text-[15px] font-semibold tracking-wide text-center text-blue-200">
-              Su garantía en{' '}
-              <span className="text-[#e74c3c] font-bold">NDT</span>
+            <p className="text-[15px] font-semibold tracking-wide text-center text-blue-400">
+               Área de <span className="text-blue-500 font-bold">Clientes</span> 
             </p>
 
             <p className="text-sm text-slate-400 mt-3 text-center">
-              Bienvenido, {user?.nombre}
+              {user?.email}
             </p>
 
             <div className="w-20 h-[1px] bg-gradient-to-r from-slate-600 to-slate-700 mt-4"></div>
@@ -56,8 +55,8 @@ export const ClientLayout = () => {
                 className={({ isActive }) =>
                   `flex items-center gap-2 rounded-md px-4 py-2 font-medium transition-all duration-200 ${
                     isActive
-                      ? 'bg-blue-600/70 text-white shadow-sm'
-                      : 'text-slate-300 hover:bg-slate-800/70 hover:text-white'
+                      ? 'bg-blue-900/50 text-slate-100 shadow-sm'
+                      : 'text-slate-300 hover:bg-slate-800/50 hover:text-white'
                   }`
                 }
               >
@@ -72,7 +71,7 @@ export const ClientLayout = () => {
           <button
             type="button"
             onClick={logout}
-            className="w-full flex items-center justify-center gap-2 rounded-md bg-[#7a1c1c] px-4 py-2 text-sm font-medium text-white hover:bg-[#601414] transition-all duration-200 shadow-sm"
+            className="w-full flex items-center justify-center gap-2 rounded-md bg-[#7a1c1c]/90 px-4 py-2 text-sm font-medium text-white hover:bg-[#601414]/90 transition-all duration-200 shadow-sm"
           >
             <LogOut size={18} className="text-white opacity-90" />
             <span className="tracking-wide">Desconectarse</span>
@@ -91,7 +90,7 @@ export const ClientLayout = () => {
       {/* Contenido principal */}
       <div className="flex-1 flex flex-col">
         {/* Header */}
-        <header className="sticky top-0 z-10 bg-gradient-to-r from-[#0A1F44] via-[#132a5e] to-[#0A1F44] border-b border-blue-700/40 shadow-[0_2px_25px_rgba(10,31,68,0.3)]">
+        <header className="sticky top-0 z-10 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border-b border-slate-700/40 shadow-[0_1px_8px_rgba(0,0,0,0.25)]">
           <div className="flex items-center justify-between px-6 md:px-10 py-6">
             <div className="flex items-center gap-4">
               {/* Botón hamburguesa móvil */}
@@ -102,18 +101,21 @@ export const ClientLayout = () => {
                 {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
 
-              <div className="h-8 w-1 rounded-full bg-gradient-to-b from-blue-400 to-blue-500"></div>
-              <h1 className="text-lg md:text-xl font-semibold text-white tracking-wide">
-                Panel del Cliente
+              <div className="h-8 w-1 rounded-full bg-gradient-to-b from-slate-400 to-slate-500"></div>
+              <h1 className="text-base md:text-lg font-medium text-slate-200 tracking-wide">
+                Bienvenido a su portal,
+                <span className="ml-1 text-slate-100 font-semibold">
+                  {user?.nombre}
+                </span>
               </h1>
             </div>
 
-            <p className="hidden md:block text-base text-blue-100/90 tracking-wide font-medium text-center">
+            {/* <p className="hidden md:block text-base text-slate-300 tracking-wide font-medium text-center">
               Documentos confidenciales y publicaciones recientes
-            </p>
+            </p> */}
 
             <div className="flex items-center gap-2 text-slate-300 text-xs md:text-sm">
-              <div className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+              <div className="h-2 w-2 rounded-full bg-emerald-400/80 animate-pulse" />
               <span className="text-slate-300 font-medium">Conectado</span>
             </div>
           </div>

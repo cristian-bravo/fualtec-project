@@ -15,13 +15,15 @@ class PublicationController extends Controller
 
         $publications = Publication::query()
             ->where('user_id', $user->id)
-            ->with('group:id,name,periodo')
+            ->with(['group' => function ($query) {
+                $query->select('id', 'name', 'periodo')->withCount('items');
+            }])
             ->orderByDesc('published_at')
             ->get()
             ->map(fn ($publication) => [
                 'id' => $publication->id,
                 'published_at' => $publication->published_at,
-                'group' => $publication->group?->only(['id', 'name', 'periodo']),
+                'group' => $publication->group?->only(['id', 'name', 'periodo', 'items_count']),
             ]);
 
         return response()->json($publications);

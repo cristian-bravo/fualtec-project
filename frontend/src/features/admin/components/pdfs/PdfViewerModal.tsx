@@ -12,8 +12,14 @@ export const PdfViewerModal = ({ open, title, url, onClose }: Props) => {
   if (!open) return null;
 
   return createPortal(
-    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 px-4 py-8">
-      <div className="relative flex h-[80vh] w-full max-w-5xl flex-col rounded-xl bg-white shadow-xl">
+    <div
+      className="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 px-4 py-8"
+      onClick={onClose}
+    >
+      <div
+        className="relative flex h-[80vh] w-full max-w-5xl flex-col rounded-xl bg-white shadow-xl"
+        onClick={(event) => event.stopPropagation()}
+      >
         <div className="flex items-center justify-between border-b px-4 py-3">
           <h2 className="truncate text-sm font-semibold text-slate-900">
             {title}

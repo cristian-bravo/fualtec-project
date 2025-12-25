@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Admin\ApprovalController;
 use App\Http\Controllers\Admin\AuditController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GroupController;
 use App\Http\Controllers\Admin\PdfController as AdminPdfController;
 use App\Http\Controllers\Admin\PublicationController as AdminPublicationController;
@@ -60,8 +61,12 @@ Route::middleware(['auth:sanctum', 'role:admin'])
         Route::post('pdfs/{pdf}/assign', [AdminPdfController::class, 'assign']);
         Route::delete('pdfs/{pdf}', [AdminPdfController::class, 'destroy']);
 
+        // dashboard
+        Route::get('dashboard', [DashboardController::class, 'index']);
+
         // usuarios
         Route::get('usuarios', [UserController::class, 'index']);
+        Route::get('usuarios/{user}', [UserController::class, 'show']);
         Route::post('usuarios', [UserController::class, 'store']);
         Route::patch('usuarios/{user}', [UserController::class, 'update']);
 
@@ -99,8 +104,11 @@ Route::middleware(['auth:sanctum', 'role:cliente', 'can:estado-aprobado'])
 
         // Documentos y descargas
         Route::get('documents', [DocumentController::class, 'index']);
+        Route::get('documents/groups/{group}/download', [DocumentController::class, 'downloadGroup']);
+        Route::post('documents/bulk-download', [DocumentController::class, 'bulkDownload']);
         Route::get('documents/{pdf}/download', [DocumentController::class, 'download']);
 
         // Publicaciones
         Route::get('publications', [PublicationController::class, 'index']);
     });
+

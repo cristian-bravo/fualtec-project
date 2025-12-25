@@ -44,7 +44,7 @@ export const RegisterForm = ({
       </label>
 
       <label className="flex flex-col gap-1">
-        <span className="font-semibold text-white">Correo corporativo</span>
+        <span className="font-semibold text-white">Correo electrónico</span>
         <Field
           name="email"
           type="email"
@@ -56,7 +56,7 @@ export const RegisterForm = ({
       </label>
 
       <label className="flex flex-col gap-1">
-        <span className="font-semibold text-white">Cedula ecuatoriana</span>
+        <span className="font-semibold text-white">Cédula de ciudadania</span>
         <Field
           name="cedula"
           placeholder="0102030405"

@@ -34,6 +34,7 @@ public function storePdf($file, $user, array $data)
         'categoria'    => $data['categoria'] ?? 'General',
         'filename'     => $filename,
         'storage_path' => $folder . '/' . $filename,
+        'size_bytes'   => $file->getSize(),
         'uploaded_by'  => $user->id,
         'vigente'      => false,
     ]);

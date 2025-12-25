@@ -30,7 +30,7 @@ export const RegisterPage = () => {
         </svg>
       </div>
 
-      <Link
+      {/* <Link
         to="/client-access/login"
         title="Volver al inicio de sesion"
         className="absolute left-6 top-6 z-20 flex items-center gap-2 rounded-full border border-[#FFC107]/70 bg-transparent px-3 py-2 text-[#FFC107] transition hover:bg-[#FFC107]/10"
@@ -40,7 +40,7 @@ export const RegisterPage = () => {
           <path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
         </svg>
         Volver
-      </Link>
+      </Link> */}
 
       <div className="relative z-10 mx-auto w-full max-w-6xl px-0 md:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">

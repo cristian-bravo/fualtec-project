@@ -22,6 +22,11 @@ class UserController extends Controller
         return response()->json($users);
     }
 
+    public function show(User $user): JsonResponse
+    {
+        return response()->json($user);
+    }
+
     public function store(Request $request): JsonResponse
     {
         $data = $request->validate([
@@ -49,9 +54,30 @@ class UserController extends Controller
     public function update(Request $request, User $user): JsonResponse
     {
         $data = $request->validate([
-            'estado' => ['nullable', Rule::in(['pendiente', 'aprobado', 'rechazado', 'inactivo'])],
-            'password' => ['nullable', 'string', 'min:8'],
+            'nombre' => ['sometimes', 'filled', 'string', 'max:255'],
+            'email' => ['sometimes', 'filled', 'email', Rule::unique('users', 'email')->ignore($user->id)],
+            'cedula' => ['sometimes', 'filled', 'string', Rule::unique('users', 'cedula')->ignore($user->id)],
+            'rol' => ['sometimes', 'filled', Rule::in(['admin', 'cliente'])],
+            'estado' => ['sometimes', Rule::in(['pendiente', 'aprobado', 'rechazado', 'inactivo'])],
+            'password' => ['sometimes', 'nullable', 'string', 'min:8'],
         ]);
+
+        if (array_key_exists('nombre', $data)) {
+            $user->nombre = $data['nombre'];
+        }
+
+        if (array_key_exists('email', $data)) {
+            $user->email = $data['email'];
+        }
+
+        if (array_key_exists('cedula', $data)) {
+            $user->cedula = strtoupper($data['cedula']);
+        }
+
+        if (array_key_exists('rol', $data) && $data['rol'] !== $user->rol) {
+            $user->rol = $data['rol'];
+            $user->syncRoles($data['rol']);
+        }
 
         if (isset($data['estado'])) {
             $user->estado = $data['estado'];

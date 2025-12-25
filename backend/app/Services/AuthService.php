@@ -90,6 +90,10 @@ class AuthService
             throw new AuthenticationException('Credenciales invalidas');
         }
 
+        if ($user->estado === 'inactivo') {
+            throw new AuthenticationException('Cuenta deshabilitada. Consulte con administracion.');
+        }
+
         if ($user->estado !== 'aprobado') {
             throw new AuthenticationException('Cuenta pendiente de aprobacion');
         }

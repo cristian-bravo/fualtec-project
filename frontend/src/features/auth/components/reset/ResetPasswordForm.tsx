@@ -6,21 +6,25 @@ type Props = {
   isSubmitting?: boolean;
 };
 
-export const ResetPasswordForm = ({ showPassword, onTogglePassword, isSubmitting }: Props) => (
-  <Form className="mt-6 space-y-4 text-sm">
-    <label className="flex flex-col gap-1 text-slate-700">
-      <span className="font-semibold text-slate-900">Nueva contrasena</span>
+export const ResetPasswordForm = ({
+  showPassword,
+  onTogglePassword,
+  isSubmitting,
+}: Props) => (
+  <Form className="mt-6 flex flex-col gap-4 text-sm">
+    <label className="flex flex-col gap-1">
+      <span className="font-semibold text-[#0A1F44]">Nueva contrasena</span>
       <div className="relative">
         <Field
           name="password"
           type={showPassword ? "text" : "password"}
-          className="w-full rounded-md border border-slate-200 px-3 py-2 pr-10 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
+          className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 pr-10 text-slate-900 outline-none transition focus:border-[#0A7CC4] focus:ring-2 focus:ring-[#0A7CC4]/20"
         />
         <button
           type="button"
           onClick={onTogglePassword}
           aria-label={showPassword ? "Ocultar contrasena" : "Mostrar contrasena"}
-          className="absolute right-2 top-1/2 -translate-y-1/2 rounded p-1 text-slate-500 transition hover:text-slate-700"
+          className="absolute right-2 top-1/2 -translate-y-1/2 rounded p-1 text-slate-400 transition hover:text-slate-600"
         >
           {showPassword ? (
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -34,23 +38,27 @@ export const ResetPasswordForm = ({ showPassword, onTogglePassword, isSubmitting
           )}
         </button>
       </div>
-      <ErrorMessage name="password" component="span" className="text-xs font-medium text-red-700" />
+      <ErrorMessage name="password" component="span" className="text-xs font-medium text-red-600" />
     </label>
 
-    <label className="flex flex-col gap-1 text-slate-700">
-      <span className="font-semibold text-slate-900">Confirmar contrasena</span>
+    <label className="flex flex-col gap-1">
+      <span className="font-semibold text-[#0A1F44]">Confirmar contrasena</span>
       <Field
         name="confirmPassword"
         type={showPassword ? "text" : "password"}
-        className="rounded-md border border-slate-200 px-3 py-2 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
+        className="rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 outline-none transition focus:border-[#0A7CC4] focus:ring-2 focus:ring-[#0A7CC4]/20"
       />
-      <ErrorMessage name="confirmPassword" component="span" className="text-xs font-medium text-red-700" />
+      <ErrorMessage
+        name="confirmPassword"
+        component="span"
+        className="text-xs font-medium text-red-600"
+      />
     </label>
 
     <button
       type="submit"
       disabled={isSubmitting}
-      className="w-full rounded-md bg-primary px-4 py-2 text-sm font-semibold text-white shadow transition hover:bg-blue-700 disabled:opacity-60"
+      className="w-full rounded-md bg-[#0A7CC4] px-4 py-2 text-sm font-semibold text-white shadow transition hover:bg-[#096aaa] disabled:opacity-60"
     >
       Actualizar contrasena
     </button>

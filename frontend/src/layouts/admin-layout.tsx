@@ -11,7 +11,7 @@ const adminNav = [
   { to: '/client-access/admin/pdfs', label: 'PDFs' },
   { to: '/client-access/admin/grupos', label: 'Grupos' },
   { to: '/client-access/admin/publicaciones', label: 'Publicaciones' },
-  { to: '/client-access/admin/auditoria', label: 'Auditoría' },
+  // { to: '/client-access/admin/auditoria', label: 'Auditoría' },
 ];
 
 export const AdminLayout = () => {
