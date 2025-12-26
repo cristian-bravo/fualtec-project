@@ -1,5 +1,6 @@
 import React from "react";
 import { createPortal } from "react-dom";
+import { Tooltip } from "@/components/ui/tooltip";
 
 type Props = {
   open: boolean;
@@ -24,26 +25,28 @@ export const PdfViewerModal = ({ open, title, url, onClose }: Props) => {
           <h2 className="truncate text-sm font-semibold text-slate-900">
             {title}
           </h2>
-          <button
-            onClick={onClose}
-            className="rounded-full border border-slate-300 bg-white p-1 hover:bg-slate-100"
-            aria-label="Cerrar"
-          >
-            <svg
-              className="h-4 w-4 text-slate-700"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
+          <Tooltip content="Cerrar">
+            <button
+              onClick={onClose}
+              className="rounded-full border border-slate-300 bg-white p-1 hover:bg-slate-100"
+              aria-label="Cerrar"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18 18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
+              <svg
+                className="h-4 w-4 text-slate-700"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18 18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </Tooltip>
         </div>
 
         <div className="flex-1 overflow-hidden">

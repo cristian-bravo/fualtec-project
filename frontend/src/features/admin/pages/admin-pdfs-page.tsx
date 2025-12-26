@@ -1,4 +1,4 @@
-import { PdfViewerModal } from "../components/pdfs/PdfViewerModal";
+﻿import { PdfViewerModal } from "../components/pdfs/PdfViewerModal";
 import { PdfUpload } from "../components/pdfs/PdfUpload";
 import { PdfTable } from "../components/pdfs/PdfTable";
 import { usePdfs } from "../hooks/usePdfs";
@@ -8,6 +8,7 @@ import { createGroup, addPdfsToGroup } from "../services/groupService";
 import { useAuth } from "@/hooks/use-auth";
 import { alertSuccess, alertError } from "@/lib/alerts";
 import { PdfTableMobile } from "../components/pdfs/PdfTableMobile";
+import { ChevronLeft, ChevronRight, MoreHorizontal, Search } from "lucide-react";
 
 
 
@@ -88,7 +89,7 @@ export const AdminPdfsPage = () => {
 <div className="flex items-center gap-2">
   <div className="relative flex-1">
     <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
-      🔍
+      <Search className="h-4 w-4" />
     </span>
     <input
       value={searchInput}
@@ -164,12 +165,13 @@ export const AdminPdfsPage = () => {
 
 <div className="flex items-center justify-end gap-1 mt-6 text-sm">
   
-  <button
+    <button
     disabled={page === 1}
     onClick={() => setPage(page - 1)}
-    className="px-3 py-1.5 rounded border border-gray-300 text-gray-600 disabled:text-gray-300 disabled:border-gray-200 hover:bg-gray-100"
+    className="inline-flex items-center justify-center px-3 py-1.5 rounded border border-gray-300 text-gray-600 disabled:text-gray-300 disabled:border-gray-200 hover:bg-gray-100"
+    aria-label="Anterior"
   >
-    ←
+    <ChevronLeft className="h-4 w-4" />
   </button>
 
   {[...Array(totalPages)].map((_, i) => {
@@ -191,17 +193,22 @@ export const AdminPdfsPage = () => {
       );
     }
     if (Math.abs(p - page) === 2) {
-      return <span className="px-2" key={p}>…</span>;
+      return (
+        <span className="px-2 text-slate-400" key={p}>
+          <MoreHorizontal className="h-4 w-4" />
+        </span>
+      );
     }
     return null;
   })}
 
-  <button
+    <button
     disabled={page === totalPages}
     onClick={() => setPage(page + 1)}
-    className="px-3 py-1.5 rounded border border-gray-300 text-gray-600 disabled:text-gray-300 disabled:border-gray-200 hover:bg-gray-100"
+    className="inline-flex items-center justify-center px-3 py-1.5 rounded border border-gray-300 text-gray-600 disabled:text-gray-300 disabled:border-gray-200 hover:bg-gray-100"
+    aria-label="Siguiente"
   >
-    →
+    <ChevronRight className="h-4 w-4" />
   </button>
 
 </div>

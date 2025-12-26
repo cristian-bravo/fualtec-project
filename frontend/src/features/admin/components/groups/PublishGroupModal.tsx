@@ -1,8 +1,9 @@
-import { useEffect, useMemo, useState } from "react";
+﻿import { useEffect, useMemo, useState } from "react";
 import { Modal } from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/use-auth";
 import { alertError } from "@/lib/alerts";
+import { Search } from "lucide-react";
 import { AdminUser, fetchUsers } from "../../services/userService";
 
 type Props = {
@@ -105,7 +106,7 @@ export const PublishGroupModal = ({
         <div className="flex items-center gap-2">
           <div className="relative flex-1">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
-              🔍
+              <Search className="h-4 w-4" />
             </span>
             <input
               value={search}

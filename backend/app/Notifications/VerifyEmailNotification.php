@@ -21,12 +21,17 @@ class VerifyEmailNotification extends Notification
 
     public function toMail(object $notifiable): MailMessage
     {
+        $name = trim((string) ($notifiable->nombre ?? ''));
+        if ($name === '') {
+            $name = 'Cliente';
+        }
+
         return (new MailMessage)
             ->subject('Verifique su correo corporativo')
-            ->greeting('Hola ' . ($notifiable->nombre ?? ''))
-            ->line('Su registro fue recibido correctamente.')
-            ->line('Confirme su correo para continuar con el proceso de aprobacion.')
-            ->action('Verificar correo', $this->verificationUrl)
-            ->line('Si no solicitaste este registro, puedes ignorar este mensaje.');
+            ->from(config('mail.from.address'), 'FUALTEC')
+            ->view('emails.verify-email', [
+                'name' => $name,
+                'verificationUrl' => $this->verificationUrl,
+            ]);
     }
 }

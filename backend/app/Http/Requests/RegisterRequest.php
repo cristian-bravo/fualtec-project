@@ -26,7 +26,6 @@ class RegisterRequest extends FormRequest
                 'required',
                 'string',
                 'size:10',
-                Rule::unique('users', 'cedula')->where(fn ($query) => $query->where('estado', '!=', 'rechazado')),
                 'regex:/^\d{10}$/',
                 function (string $attribute, mixed $value, \Closure $fail) {
                     $cedula = (string) $value;
@@ -38,6 +37,13 @@ class RegisterRequest extends FormRequest
             'password' => ['required', 'string', 'min:8', 'regex:/[A-Z]/', 'regex:/[a-z]/', 'regex:/\d/', 'regex:/[^A-Za-z0-9]/'],
             'captcha_token' => ['required', 'string'],
             'captcha_answer' => ['required', 'string'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'email.unique' => 'El correo ya esta registrado.',
         ];
     }
 

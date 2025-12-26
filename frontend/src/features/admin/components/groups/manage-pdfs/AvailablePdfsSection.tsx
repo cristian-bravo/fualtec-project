@@ -1,6 +1,7 @@
 ﻿import { Button } from "@/components/ui/button";
 import { Table } from "@/components/ui/table";
-import { Eye } from "lucide-react";
+import { Tooltip } from "@/components/ui/tooltip";
+import { Eye, Search } from "lucide-react";
 import { PdfItem } from "../../../services/pdfService";
 
 type Props = {
@@ -66,7 +67,7 @@ export const AvailablePdfsSection = ({
         <div className="flex items-center gap-2">
           <div className="relative flex-1">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
-              🔍
+              <Search className="h-4 w-4" />
             </span>
             <input
               value={searchValue}
@@ -125,7 +126,7 @@ export const AvailablePdfsSection = ({
             <col className="w-[150px]" />
           </>
         }
-        className="rounded-b-none"
+        className="overflow-visible rounded-b-none"
       >
         {isLoading && (
           <tr>
@@ -195,7 +196,7 @@ export const AvailablePdfsSection = ({
                   onClick={(e) => e.stopPropagation()}
                 >
                   <div className="flex justify-end">
-                    <div className="relative group">
+                    <Tooltip content="Ver PDF">
                       <button
                         type="button"
                         onClick={() => onView(pdf)}
@@ -206,15 +207,7 @@ export const AvailablePdfsSection = ({
                       >
                         <Eye className="h-4 w-4" />
                       </button>
-
-                      <span
-                        className="pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2
-                                  rounded bg-slate-900 px-2 py-1 text-xs text-white
-                                  opacity-0 group-hover:opacity-100 transition"
-                      >
-                        Ver PDF
-                      </span>
-                    </div>
+                    </Tooltip>
                   </div>
                 </td>
               </tr>

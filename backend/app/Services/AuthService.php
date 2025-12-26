@@ -20,30 +20,15 @@ class AuthService
             $email = $data['email'];
             $cedula = strtoupper($data['cedula']);
             $existingByEmail = User::where('email', $email)->first();
-            $existingByCedula = User::where('cedula', $cedula)->first();
 
-            if ($existingByEmail && $existingByCedula && $existingByEmail->id !== $existingByCedula->id) {
-                throw ValidationException::withMessages([
-                    'email' => ['The email has already been taken.'],
-                    'cedula' => ['The cedula has already been taken.'],
-                ]);
-            }
-
-            $existing = $existingByEmail ?? $existingByCedula;
-
-            if ($existing) {
-                if ($existing->estado !== 'rechazado') {
-                    $messages = [];
-                    if ($existingByEmail) {
-                        $messages['email'] = ['The email has already been taken.'];
-                    }
-                    if ($existingByCedula) {
-                        $messages['cedula'] = ['The cedula has already been taken.'];
-                    }
-                    throw ValidationException::withMessages($messages);
+            if ($existingByEmail) {
+                if ($existingByEmail->estado !== 'rechazado') {
+                    throw ValidationException::withMessages([
+                        'email' => ['El correo ya esta registrado.'],
+                    ]);
                 }
 
-                $existing->forceFill([
+                $existingByEmail->forceFill([
                     'nombre' => $data['nombre'],
                     'email' => $email,
                     'cedula' => $cedula,
@@ -53,9 +38,9 @@ class AuthService
                     'password' => Hash::make($data['password']),
                 ])->save();
 
-                $existing->assignRole('cliente');
+                $existingByEmail->assignRole('cliente');
 
-                return $existing->fresh();
+                return $existingByEmail->fresh();
             }
 
             $user = User::create([

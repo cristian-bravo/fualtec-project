@@ -79,10 +79,31 @@ export const RegisterPage = () => {
                       });
                       setSent(true);
                       actions.resetForm();
-                    } catch {
+                    } catch (error: any) {
+                      const errors = error?.response?.data?.errors as
+                        | Record<string, string[]>
+                        | undefined;
+
+                      if (errors) {
+                        Object.entries(errors).forEach(([field, messages]) => {
+                          if (Array.isArray(messages) && messages[0]) {
+                            actions.setFieldError(
+                              field as keyof RegisterValues,
+                              messages[0]
+                            );
+                          }
+                        });
+                      }
+
+                      const message =
+                        errors?.email?.[0] ||
+                        errors?.cedula?.[0] ||
+                        error?.response?.data?.message ||
+                        "Intente nuevamente o contacte a soporte.";
+
                       showToast({
                         title: "No se pudo completar el registro",
-                        description: "Intente nuevamente o contacte a soporte.",
+                        description: message,
                         tone: "error",
                       });
                       refresh();
@@ -115,4 +136,3 @@ export const RegisterPage = () => {
     </div>
   );
 };
-

@@ -81,7 +81,7 @@ export const ForgotPasswordPage = () => {
             </div>
             <div className="text-center">
               <p className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">Seguridad</p>
-              <h2 className="mt-1 text-xl font-bold text-[#0A1F44]">Generar / Recuperar clave</h2>
+              <h2 className="mt-1 text-xl font-bold text-[#0A1F44]">Recuperar clave</h2>
             </div>
           </div>
 

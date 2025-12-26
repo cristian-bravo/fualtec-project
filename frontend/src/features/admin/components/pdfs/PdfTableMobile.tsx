@@ -1,4 +1,5 @@
 import { Eye, Trash2 } from "lucide-react";
+import { Tooltip } from "@/components/ui/tooltip";
 import { PdfItem } from "../../services/pdfService";
 
 type Props = {
@@ -91,29 +92,33 @@ export const PdfTableMobile = ({
             <div className="mt-3 flex gap-2">
               {iconOnlyActions ? (
                 <>
-                  <button
-                    type="button"
-                    className="flex-1 rounded-md border py-2 text-sm flex items-center justify-center"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onView(pdf);
-                    }}
-                    aria-label={resolvedViewLabel}
-                  >
-                    <Eye className="h-4 w-4" />
-                  </button>
+                  <Tooltip content={resolvedViewLabel} className="flex-1">
+                    <button
+                      type="button"
+                      className="w-full rounded-md border py-2 text-sm flex items-center justify-center"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onView(pdf);
+                      }}
+                      aria-label={resolvedViewLabel}
+                    >
+                      <Eye className="h-4 w-4" />
+                    </button>
+                  </Tooltip>
 
-                  <button
-                    type="button"
-                    className="flex-1 rounded-md border border-red-200 py-2 text-sm text-red-600 flex items-center justify-center"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onDelete(pdf);
-                    }}
-                    aria-label={resolvedDeleteLabel}
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </button>
+                  <Tooltip content={resolvedDeleteLabel} className="flex-1">
+                    <button
+                      type="button"
+                      className="w-full rounded-md border border-red-200 py-2 text-sm text-red-600 flex items-center justify-center"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onDelete(pdf);
+                      }}
+                      aria-label={resolvedDeleteLabel}
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  </Tooltip>
                 </>
               ) : (
                 <>

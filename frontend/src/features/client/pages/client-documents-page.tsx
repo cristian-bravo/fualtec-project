@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import { Download, FolderOpen, Search } from "lucide-react";
 import { Card } from "../../../components/ui/card";
 import { Button } from "../../../components/ui/button";
+import { Tooltip } from "../../../components/ui/tooltip";
 import { useClientGroups } from "../hooks/useClientGroups";
 
 const formatDate = (value?: string | null) => {
@@ -131,31 +132,35 @@ export const ClientDocumentsPage = () => {
                     Publicado: {formatDate(publication.published_at)}
                   </p>
                   <div className="mt-4 flex items-center gap-2">
-                    <button
-                      type="button"
-                      title="Ver documentos"
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        openGroup(group.id, publication.id);
-                      }}
-                      onDoubleClick={(event) => event.stopPropagation()}
-                      className="rounded-md border border-slate-200 bg-white p-2 text-slate-500 transition hover:border-slate-300 hover:text-slate-700"
-                    >
-                      <FolderOpen className="h-4 w-4" />
-                    </button>
-                    <button
-                      type="button"
-                      title="Descargar"
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        downloadGroup(publication);
-                      }}
-                      onDoubleClick={(event) => event.stopPropagation()}
-                      disabled={actionId === publication.id}
-                      className={`rounded-md border border-slate-200 bg-white p-2 text-slate-500 transition hover:border-slate-300 hover:text-slate-700 ${actionId === publication.id ? "opacity-60 cursor-not-allowed" : ""}`}
-                    >
-                      <Download className="h-4 w-4" />
-                    </button>
+                    <Tooltip content="Ver documentos">
+                      <button
+                        type="button"
+                        aria-label="Ver documentos"
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          openGroup(group.id, publication.id);
+                        }}
+                        onDoubleClick={(event) => event.stopPropagation()}
+                        className="rounded-md border border-slate-200 bg-white p-2 text-slate-500 transition hover:border-slate-300 hover:text-slate-700"
+                      >
+                        <FolderOpen className="h-4 w-4" />
+                      </button>
+                    </Tooltip>
+                    <Tooltip content="Descargar carpeta">
+                      <button
+                        type="button"
+                        aria-label="Descargar carpeta"
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          downloadGroup(publication);
+                        }}
+                        onDoubleClick={(event) => event.stopPropagation()}
+                        disabled={actionId === publication.id}
+                        className={`rounded-md border border-slate-200 bg-white p-2 text-slate-500 transition hover:border-slate-300 hover:text-slate-700 ${actionId === publication.id ? "opacity-60 cursor-not-allowed" : ""}`}
+                      >
+                        <Download className="h-4 w-4" />
+                      </button>
+                    </Tooltip>
                   </div>
                 </Card>
               </div>

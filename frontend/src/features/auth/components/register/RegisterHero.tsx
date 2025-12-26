@@ -6,9 +6,11 @@ export const RegisterHero = () => (
     <img
       src={registerImg }
       alt="Inspección petrolera y ensayos no destructivos"
-      className="h-full w-full object-cover"
+      className="h-full w-full object-cover object-[25%_center]"
     />
-    <div className="absolute inset-0 bg-gradient-to-tr from-[#0A1F44]/85 via-[#0A1F44]/55 to-transparent" />
+    <div className="absolute inset-0 bg-gradient-to-tr from-[#0A1F44]/90 via-[#0A1F44]/65 to-[#0A1F44]/25" />
+
+
     <div className="absolute inset-0 flex items-end justify-start p-8 md:p-10">
       <div className="max-w-2xl rounded-xl bg-gradient-to-t from-[#0A1F44]/95 via-[#0A1F44]/100 to-transparent p-6">
         <p className="text-xs font-semibold uppercase tracking-[0.25em] text-blue-200 text-center">Portal seguro</p>

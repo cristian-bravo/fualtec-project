@@ -1,10 +1,11 @@
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+﻿import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../hooks/use-auth';
 import { useToast } from '../../../components/toast-context';
 import { useEffect, useRef, useState } from 'react';
 import loginImg from "../../../assets/images/register/login.webp";
+import { Tooltip } from '../../../components/ui/tooltip';
 
 
 interface LoginValues {
@@ -56,16 +57,33 @@ export const LoginPage = () => {
         </svg>
       </div>
 
-      {/* Botón volver a la landing */}
+      {/* Botón de volver a la página principal */}
       <Link
         to="/"
-        title="Volver al inicio"
-        className="absolute left-6 top-6 z-20 flex items-center gap-2 rounded-full border border-[#FFC107]/70 bg-transparent px-3 py-2 text-[#FFC107] transition hover:bg-[#FFC107]/10"
+        title="Ir a la página principal"
+        aria-label="Ir a la página principal"
+        className="absolute left-11 top-11 z-20
+                  inline-flex items-center justify-center
+                  rounded-full
+                  border border-white/30
+                  bg-white/15
+                  p-3
+                  text-white/80
+                  backdrop-blur
+                  transition
+                  hover:bg-white/25 hover:text-white"
       >
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              className="scale-125"
+            >
+
+          <path d="M10.707 2.293a1 1 0 0 1 1.414 0l9 9a1 1 0 0 1-1.414 1.414L19 11.828V20a1 1 0 0 1-1 1h-4v-5h-4v5H6a1 1 0 0 1-1-1v-8.172l-.707.879A1 1 0 0 1 2.879 11.293l9-9z" />
         </svg>
-        Volver
       </Link>
 
       {/* Card glass */}
@@ -162,23 +180,27 @@ export const LoginPage = () => {
                         placeholder="********"
                         className="w-full rounded-md border border-white/20 bg-white/10 px-3 py-2 pr-10 text-white placeholder-slate-300 outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-400/30"
                       />
-                      <button
-                        type="button"
-                        aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
-                        onClick={() => setShowPassword((s) => !s)}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 rounded p-1 text-slate-300 transition hover:text-white"
-                      >
-                        {showPassword ? (
-                          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 6.5C7 6.5 2.73 9.61 1 14c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5C21.27 9.61 17 6.5 12 6.5zm0 12.5c-2.76 0-5-2.24-5-5s2.24-5 5-5a5 5 0 010 10z" />
-                            <circle cx="12" cy="14" r="3" />
-                          </svg>
-                        ) : (
-                          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 6.5C7 6.5 2.73 9.61 1 14c.55 1.4 1.37 2.67 2.39 3.78l-1.61 1.61 1.41 1.41 18-18-1.41-1.41-2.46 2.46C15.64 7.02 13.87 6.5 12 6.5zM12 21.5c5 0 9.27-3.11 11-7.5-.7-1.76-1.86-3.29-3.31-4.5l-2.16 2.16a5 5 0 01-6.87 6.87l-2.1 2.1c1.01.53 2.11.87 3.44.87z" />
-                          </svg>
-                        )}
-                      </button>
+                      <div className="absolute right-2 top-1/2 -translate-y-1/2">
+                        <Tooltip content={showPassword ? 'Ocultar contrasena' : 'Mostrar contrasena'}>
+                          <button
+                            type="button"
+                            aria-label={showPassword ? 'Ocultar contrasena' : 'Mostrar contrasena'}
+                            onClick={() => setShowPassword((s) => !s)}
+                            className="rounded p-1 text-slate-300 transition hover:text-white"
+                          >
+                            {showPassword ? (
+                              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 6.5C7 6.5 2.73 9.61 1 14c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5C21.27 9.61 17 6.5 12 6.5zm0 12.5c-2.76 0-5-2.24-5-5s2.24-5 5-5a5 5 0 010 10z" />
+                                <circle cx="12" cy="14" r="3" />
+                              </svg>
+                            ) : (
+                              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 6.5C7 6.5 2.73 9.61 1 14c.55 1.4 1.37 2.67 2.39 3.78l-1.61 1.61 1.41 1.41 18-18-1.41-1.41-2.46 2.46C15.64 7.02 13.87 6.5 12 6.5zM12 21.5c5 0 9.27-3.11 11-7.5-.7-1.76-1.86-3.29-3.31-4.5l-2.16 2.16a5 5 0 01-6.87 6.87l-2.1 2.1c1.01.53 2.11.87 3.44.87z" />
+                              </svg>
+                            )}
+                          </button>
+                        </Tooltip>
+                      </div>
                     </div>
                     <ErrorMessage name="password" component="span" className="text-xs font-medium text-red-300" />
                   </label>

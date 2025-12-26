@@ -4,6 +4,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { alertError, alertSuccess, confirmAction } from "@/lib/alerts";
 import { Button } from "../../../components/ui/button";
 import { Table } from "../../../components/ui/table";
+import { Tooltip } from "../../../components/ui/tooltip";
 import { CheckCircle2, Clock, FileText, UploadCloud } from "lucide-react";
 import {
   GroupSummary,
@@ -140,7 +141,7 @@ export const AdminGroupsPage = () => {
         </div>
       </div>
 
-      <Table headers={["Nombre", "Periodo", "Estado", ""]}>
+      <Table headers={["Nombre", "Periodo", "Estado", ""]} className="overflow-visible">
         {isLoading && (
           <tr>
             <td
@@ -190,7 +191,7 @@ export const AdminGroupsPage = () => {
               </td>
               <td className="px-6 py-4">
                 <div className="flex flex-col items-end gap-2 sm:flex-row sm:justify-end">
-                  <div className="relative group">
+                  <Tooltip content="Gestionar PDFs del grupo">
                     <Button
                       variant="primary"
                       onClick={() =>
@@ -201,14 +202,7 @@ export const AdminGroupsPage = () => {
                       <FileText className="h-4 w-4" />
                       Gestionar
                     </Button>
-                    <span
-                      className="pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2
-                                rounded bg-slate-900 px-2 py-1 text-xs text-white
-                                opacity-0 group-hover:opacity-100 transition"
-                    >
-                      Gestionar PDFs del grupo
-                    </span>
-                  </div>
+                  </Tooltip>
 
                   {group.publicado ? (
                     <Button

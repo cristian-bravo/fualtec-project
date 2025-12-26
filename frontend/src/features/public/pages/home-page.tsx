@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Tooltip } from '../../../components/ui/tooltip';
 import hero1 from "../../../assets/images/hero/hero1.webp";
 import hero2 from "../../../assets/images/hero/hero2.webp";
 import hero3 from "../../../assets/images/hero/hero3.webp";
@@ -64,24 +65,32 @@ function HeroSlider() {
       </div>
 
       {/* Controles */}
-      <button
-        aria-label="Anterior"
-        onClick={prev}
-        className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-black/30 p-3 text-white backdrop-blur transition hover:bg-black/50"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
-        </svg>
-      </button>
-      <button
-        aria-label="Siguiente"
-        onClick={next}
-        className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-black/30 p-3 text-white backdrop-blur transition hover:bg-black/50"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-        </svg>
-      </button>
+      <div className="absolute left-4 top-1/2 -translate-y-1/2">
+        <Tooltip content="Anterior">
+          <button
+            aria-label="Anterior"
+            onClick={prev}
+            className="rounded-full bg-black/30 p-3 text-white backdrop-blur transition hover:bg-black/50"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+        </Tooltip>
+      </div>
+      <div className="absolute right-4 top-1/2 -translate-y-1/2">
+        <Tooltip content="Siguiente">
+          <button
+            aria-label="Siguiente"
+            onClick={next}
+            className="rounded-full bg-black/30 p-3 text-white backdrop-blur transition hover:bg-black/50"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </Tooltip>
+      </div>
 
       {/* Bullets */}
       <div className="absolute inset-x-0 bottom-5 flex items-center justify-center gap-2">

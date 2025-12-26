@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+﻿import { useEffect, useRef, useState } from 'react';
 import { Outlet, NavLink } from 'react-router-dom';
 import logoLight from '../assets/images/logo/fualtec.webp';
 import logoDark from '../assets/images/logo/fualtec-dark.webp';
+import { Tooltip } from '../components/ui/tooltip';
 
 
 const navItems = [
@@ -206,30 +207,30 @@ const scheduleClose = () => {
                   viewBox: '0 0 24 24',
                 },
               ].map(({ href, label, svg, viewBox }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener"
-                  aria-label={label}
-                  title={label}
-                  className={[
-                    'inline-flex items-center justify-center px-3 py-2 rounded-lg transition',
-                    isScrolled
-                      ? 'text-white/90 hover:text-white hover:bg-white/10'
-                      : 'text-[#0A1F44]/90 hover:text-[#0A1F44] hover:bg-slate-200/70',
-                  ].join(' ')}
-                >
-                  <svg
-                    width="28"
-                    height="28"
-                    viewBox={viewBox}
-                    fill="currentColor"
-                    aria-hidden="true"
+                <Tooltip key={label} content={label}>
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener"
+                    aria-label={label}
+                    className={[
+                      'inline-flex items-center justify-center px-3 py-2 rounded-lg transition',
+                      isScrolled
+                        ? 'text-white/90 hover:text-white hover:bg-white/10'
+                        : 'text-[#0A1F44]/90 hover:text-[#0A1F44] hover:bg-slate-200/70',
+                    ].join(' ')}
                   >
-                    {svg}
-                  </svg>
-                </a>
+                    <svg
+                      width="28"
+                      height="28"
+                      viewBox={viewBox}
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      {svg}
+                    </svg>
+                  </a>
+                </Tooltip>
               ))}
             </div>
 
@@ -324,13 +325,14 @@ const scheduleClose = () => {
 
       {/* BOTÓN FLOTANTE WHATSAPP — fondo transparente, ícono grande */}
       {/* BOTÓN FLOTANTE WHATSAPP — sticker centrado y limpio */}
+<div className="fixed right-5 bottom-5 z-[60]">
+  <Tooltip content="WhatsApp">
 <a
   href="https://wa.me/593999999999"
   target="_blank"
   rel="noopener"
   aria-label="WhatsApp"
-  title="WhatsApp"
-  className="fixed right-5 bottom-5 z-[60] inline-flex h-16 w-16 items-center justify-center transition-transform hover:scale-[1.05] focus:outline-none"
+    className="inline-flex h-16 w-16 items-center justify-center transition-transform hover:scale-[1.05] focus:outline-none"
 >
   <svg
     viewBox="0 0 64 64"
@@ -361,6 +363,8 @@ const scheduleClose = () => {
     </svg>
   </svg>
 </a>
+  </Tooltip>
+</div>
 
     </div>
   );

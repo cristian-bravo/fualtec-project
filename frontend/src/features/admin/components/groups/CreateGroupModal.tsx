@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { X } from "lucide-react";
+import { Tooltip } from "@/components/ui/tooltip";
 
 type Props = {
   open: boolean;
@@ -33,9 +34,11 @@ export const CreateGroupModal = ({
               Defina nombre y periodo del paquete de documentos.
             </p>
           </div>
-          <button onClick={onClose}>
-            <X className="h-5 w-5 text-slate-400 hover:text-slate-600" />
-          </button>
+          <Tooltip content="Cerrar">
+            <button onClick={onClose} aria-label="Cerrar">
+              <X className="h-5 w-5 text-slate-400 hover:text-slate-600" />
+            </button>
+          </Tooltip>
         </div>
 
         {/* Body */}

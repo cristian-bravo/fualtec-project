@@ -1,4 +1,5 @@
-import { Table } from "@/components/ui/table";
+﻿import { Table } from "@/components/ui/table";
+import { Tooltip } from "@/components/ui/tooltip";
 import { PdfItem } from "../../services/pdfService";
 import { Eye, Trash2 } from "lucide-react";
 
@@ -32,7 +33,8 @@ export const PdfTable: React.FC<PdfTableProps> = ({
   return (
     <div className="hidden sm:block overflow-x-auto rounded-lg border bg-white">
       <Table
-        headers={["", "Título", "Grupo", "Estado", ""]}
+        headers={["", "Titulo", "Grupo", "Estado", ""]}
+        className="overflow-visible"
         colgroup={
           <>
             <col className="w-[40px]" />
@@ -109,8 +111,7 @@ export const PdfTable: React.FC<PdfTableProps> = ({
                   onClick={(e) => e.stopPropagation()}
                 >
               <div className="flex justify-end gap-2">
-                {/* VER */}
-                <div className="relative group">
+                <Tooltip content={viewLabel}>
                   <button
                     onClick={() => onView(pdf)}
                     className="flex h-9 w-9 items-center justify-center rounded-full
@@ -120,18 +121,9 @@ export const PdfTable: React.FC<PdfTableProps> = ({
                   >
                     <Eye className="h-4 w-4" />
                   </button>
+                </Tooltip>
 
-                  <span
-                    className="pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2
-                              rounded bg-slate-900 px-2 py-1 text-xs text-white
-                              opacity-0 group-hover:opacity-100 transition"
-                  >
-                    {viewLabel}
-                  </span>
-                </div>
-
-                {/* ELIMINAR */}
-                <div className="relative group">
+                <Tooltip content={deleteLabel}>
                   <button
                     onClick={() => onDelete(pdf)}
                     className="flex h-9 w-9 items-center justify-center rounded-full
@@ -141,15 +133,7 @@ export const PdfTable: React.FC<PdfTableProps> = ({
                   >
                     <Trash2 className="h-4 w-4" />
                   </button>
-
-                  <span
-                    className="pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2
-                              rounded bg-slate-900 px-2 py-1 text-xs text-white
-                              opacity-0 group-hover:opacity-100 transition"
-                  >
-                    {deleteLabel}
-                  </span>
-                </div>
+                </Tooltip>
               </div>
                 </td>
               </tr>

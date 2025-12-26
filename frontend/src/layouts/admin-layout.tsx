@@ -3,6 +3,7 @@ import { NavLink, Outlet } from 'react-router-dom';
 import { LogOut, Menu, X } from 'lucide-react';
 import { useAuth } from '../hooks/use-auth';
 import logoLight from '../assets/images/logo/fualtec-dark.webp';
+import { Tooltip } from '../components/ui/tooltip';
 
 const adminNav = [
   { to: '/client-access/admin', label: 'Resumen', exact: true },
@@ -72,14 +73,17 @@ export const AdminLayout = () => {
 
         {/* Logout */}
         <div className="pt-8 border-t border-slate-700 mt-6">
-          <button
-            type="button"
-            onClick={logout}
-            className="w-full flex items-center justify-center gap-2 rounded-md bg-[#7a1c1c]/90 px-4 py-2 text-sm font-medium text-white hover:bg-[#601414]/90 transition-all duration-200 shadow-sm"
-          >
-            <LogOut size={18} className="text-white opacity-90" />
-            <span className="tracking-wide">Desconectarse</span>
-          </button>
+        <button
+          type="button"
+          onClick={logout}
+          className="w-full flex items-center justify-center gap-2 rounded-md
+                    bg-slate-800 hover:bg-slate-900
+                    px-4 py-2 text-sm font-medium text-white
+                    transition-all duration-200 shadow-sm"
+        >
+          <LogOut size={18} className="opacity-90" />
+          <span className="tracking-wide">Desconectarse</span>
+        </button>
         </div>
       </aside>
 
@@ -98,12 +102,15 @@ export const AdminLayout = () => {
           <div className="flex items-center justify-between px-6 md:px-10 py-6">
             <div className="flex items-center gap-4">
               {/* Botón móvil */}
-              <button
-                className="md:hidden text-white focus:outline-none"
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-              >
-                {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-              </button>
+              <Tooltip content={isMenuOpen ? "Cerrar menu" : "Abrir menu"}>
+                <button
+                  className="md:hidden text-white focus:outline-none"
+                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+                  aria-label={isMenuOpen ? "Cerrar menu" : "Abrir menu"}
+                >
+                  {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                </button>
+              </Tooltip>
 
               <div className="h-8 w-1 rounded-full bg-gradient-to-b from-slate-400 to-slate-500"></div>
               <h1 className="text-base md:text-lg font-medium text-slate-200 tracking-wide">
