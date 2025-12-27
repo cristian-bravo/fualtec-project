@@ -5,12 +5,18 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Admin\ApprovalController;
 use App\Http\Controllers\Admin\AuditController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ContactSubmissionController as AdminContactSubmissionController;
+use App\Http\Controllers\Admin\SatisfactionSubmissionController as AdminSatisfactionSubmissionController;
+use App\Http\Controllers\Admin\ComplaintSubmissionController as AdminComplaintSubmissionController;
 use App\Http\Controllers\Admin\GroupController;
 use App\Http\Controllers\Admin\PdfController as AdminPdfController;
 use App\Http\Controllers\Admin\PublicationController as AdminPublicationController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Client\DocumentController;
 use App\Http\Controllers\Client\PublicationController;
+use App\Http\Controllers\Landing\ContactSubmissionController as LandingContactSubmissionController;
+use App\Http\Controllers\Landing\SatisfactionSubmissionController as LandingSatisfactionSubmissionController;
+use App\Http\Controllers\Landing\ComplaintSubmissionController as LandingComplaintSubmissionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +46,15 @@ Route::prefix('auth')->group(function () {
         Route::get('me', [AuthController::class, 'me']);
         Route::post('logout', [AuthController::class, 'logout']);
     });
+});
+
+# =====================================
+# 🌐 FORMULARIOS PUBLICOS (Landing)
+# =====================================
+Route::prefix('public')->group(function () {
+    Route::post('contact', [LandingContactSubmissionController::class, 'store']);
+    Route::post('satisfaction', [LandingSatisfactionSubmissionController::class, 'store']);
+    Route::post('complaints', [LandingComplaintSubmissionController::class, 'store']);
 });
 
 # =====================================
@@ -91,6 +106,12 @@ Route::middleware(['auth:sanctum', 'role:admin'])
 
         // auditoría
         Route::get('audit/downloads', [AuditController::class, 'index']);
+
+        // formularios publicos
+        Route::get('contact-submissions', [AdminContactSubmissionController::class, 'index']);
+        Route::get('satisfaction-submissions', [AdminSatisfactionSubmissionController::class, 'index']);
+        Route::get('complaint-submissions', [AdminComplaintSubmissionController::class, 'index']);
+        Route::get('complaint-submissions/{complaint}/attachment', [AdminComplaintSubmissionController::class, 'downloadAttachment']);
     });
 
 

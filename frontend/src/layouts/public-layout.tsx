@@ -1,21 +1,85 @@
 ﻿import { useEffect, useRef, useState } from 'react';
 import { Outlet, NavLink } from 'react-router-dom';
 import logoLight from '../assets/images/logo/fualtec.webp';
-import logoDark from '../assets/images/logo/fualtec-dark.webp';
+import fualtecDark from '../assets/images/logo/fualtec-dark.webp';
 import { Tooltip } from '../components/ui/tooltip';
 
 
-const navItems = [
-  { to: '/', label: 'Inicio' },
-  { to: '/servicios', label: 'Servicios' },
-  { to: '/descargas', label: 'Descargas' },
-  { to: '/contacto', label: 'Contacto' },
+const companyItems = [
+  { to: '/quienes-somos', label: 'Quienes somos' },
+  { to: '/historia', label: 'Nuestra historia' },
+  { to: '/mision', label: 'Mision' },
+  { to: '/vision', label: 'Vision' },
+  { to: '/valores', label: 'Valores' },
+];
+
+const socialLinks = [
+  {
+    href: 'https://www.tiktok.com/@fualtec',
+    label: 'TikTok',
+    viewBox: '0 0 24 24',
+    svg: (
+      <path
+        d="M15 3c.6 1.6 2 3 3.6 3.4V9c-1.5-.1-2.8-.7-3.6-1.6v6.1a5 5 0 1 1-5-5c.5 0 1 .1 1.5.3v2.7a2.5 2.5 0 1 0 1 2V3h2.5Z"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    ),
+  },
+  {
+    href: 'https://www.instagram.com/fualtec',
+    label: 'Instagram',
+    viewBox: '0 0 24 24',
+    svg: (
+      <>
+        <rect
+          x="3"
+          y="3"
+          width="18"
+          height="18"
+          rx="5"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.6"
+        />
+        <circle
+          cx="12"
+          cy="12"
+          r="4"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.6"
+        />
+        <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" />
+      </>
+    ),
+  },
+  {
+    href: 'https://www.facebook.com/fualtec',
+    label: 'Facebook',
+    viewBox: '0 0 24 24',
+    svg: (
+      <path
+        d="M14 8h3V5h-3c-2 0-3 1.5-3 3.4V11H8v3h3v5h3v-5h3l1-3h-4V8.4c0-.3.2-.4.5-.4Z"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    ),
+  },
 ];
 
 export const PublicLayout = () => {
+  const [openCompany, setOpenCompany] = useState(false);
   const [openClient, setOpenClient] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const closeClientTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const closeCompanyTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 10);
@@ -24,15 +88,27 @@ export const PublicLayout = () => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-const open = () => {
-  if (closeTimer.current) clearTimeout(closeTimer.current);
-  setOpenClient(true);
-};
+  const openClientMenu = () => {
+    if (closeClientTimer.current) clearTimeout(closeClientTimer.current);
+    setOpenClient(true);
+    setOpenCompany(false);
+  };
 
-const scheduleClose = () => {
-  if (closeTimer.current) clearTimeout(closeTimer.current);
-  closeTimer.current = setTimeout(() => setOpenClient(false), 180);
-};
+  const scheduleCloseClientMenu = () => {
+    if (closeClientTimer.current) clearTimeout(closeClientTimer.current);
+    closeClientTimer.current = setTimeout(() => setOpenClient(false), 180);
+  };
+
+  const openCompanyMenu = () => {
+    if (closeCompanyTimer.current) clearTimeout(closeCompanyTimer.current);
+    setOpenCompany(true);
+    setOpenClient(false);
+  };
+
+  const scheduleCloseCompanyMenu = () => {
+    if (closeCompanyTimer.current) clearTimeout(closeCompanyTimer.current);
+    closeCompanyTimer.current = setTimeout(() => setOpenCompany(false), 180);
+  };
 
   // Links adaptan color según estado del header
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>
@@ -55,198 +131,247 @@ const scheduleClose = () => {
         : 'focus-visible:ring-2 focus-visible:ring-[#0A1F44]/30',
     ].join(' ');
 
+  const navButtonClass = [
+    'relative px-3 py-2 rounded-md text-base font-medium select-none transition',
+    isScrolled
+      ? 'text-white/80 hover:text-white'
+      : 'text-[#0A1F44]/80 hover:text-[#0A1F44]',
+    'after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:transition-all',
+    isScrolled ? 'after:bg-white' : 'after:bg-[#0A1F44]',
+    'hover:after:w-full',
+    isScrolled
+      ? 'focus-visible:ring-2 focus-visible:ring-white/30'
+      : 'focus-visible:ring-2 focus-visible:ring-[#0A1F44]/30',
+  ].join(' ');
+
   return (
     <div className="flex min-h-screen flex-col">
-      {/* HEADER: blanco arriba; azul translúcido con blur al hacer scroll */}
-      <header
-        className={[
-          'sticky top-0 z-50 transition-colors',
-          isScrolled
-            ? 'bg-[rgba(10,31,68,0.80)] backdrop-blur-md'
-            : 'bg-white',
-          // líneas sutiles
-          'before:content-[""] before:absolute before:inset-x-0 before:top-0 before:h-[2px]',
-          isScrolled ? 'before:bg-white/10' : 'before:bg-[#0A1F44]/15',
-          'after:content-[""] after:absolute after:inset-x-0 after:bottom-0 after:h-[2px]',
-          isScrolled ? 'after:bg-white/10' : 'after:bg-[#0A1F44]/15',
-          'shadow-sm',
-        ].join(' ')}
-      >
-        <nav className="mx-auto flex w-full max-w-[90rem] items-center justify-between px-8 py-5">
-          {/* Logo */}
-          <nav className="flex items-center justify-between h-[80px] px-8 py-0">
-            <NavLink to="/" className="flex items-center leading-none">
-            <img
-              src={isScrolled ? logoDark : logoLight}
-              alt="Fualtec logo"
-              className="block h-[115px] w-auto object-contain m-0 p-0 transition-all duration-300"
-            />
-            </NavLink>
-          </nav>
-
-
-
-          {/* Navegación Desktop */}
-          <div className="hidden items-center gap-3 md:flex">
-            {navItems.map((item) => (
-              <NavLink key={item.to} to={item.to} className={navLinkClass}>
-                {item.label}
-              </NavLink>
-            ))}
-
-            {/* Dropdown Atención al Cliente */}
-            <div
-              className="relative"
-              onMouseEnter={open}
-              onMouseLeave={scheduleClose}
-              onFocus={open}
-              onBlur={scheduleClose}
-            >
-              <button
-                aria-haspopup="menu"
-                aria-expanded={openClient}
+      {/* HEADER: blanco arriba; azul translucido con blur al hacer scroll */}
+      <header className="sticky top-0 z-50">
+        <div
+          className={[
+            'relative transition-colors',
+            isScrolled
+              ? 'bg-[rgba(10,31,68,0.80)] backdrop-blur-md'
+              : 'bg-white',
+            // lineas sutiles
+            'before:content-[""] before:absolute before:inset-x-0 before:top-0 before:h-[2px]',
+            isScrolled ? 'before:bg-white/10' : 'before:bg-[#0A1F44]/15',
+            'after:content-[""] after:absolute after:inset-x-0 after:bottom-0 after:h-[2px]',
+            isScrolled ? 'after:bg-white/10' : 'after:bg-[#0A1F44]/15',
+            'shadow-sm',
+          ].join(' ')}
+        >
+          <div
+            className={[
+              'border-b',
+              isScrolled ? 'border-white/10' : 'border-[#0A1F44]/10',
+            ].join(' ')}
+          >
+            <div className="mx-auto flex h-8 w-full max-w-[90rem] items-center justify-end gap-3 px-8 text-xs">
+              <span
                 className={[
-                  'relative px-3 py-2 rounded-md text-base font-medium select-none transition',
-                  isScrolled
-                    ? 'text-white/80 hover:text-white'
-                    : 'text-[#0A1F44]/80 hover:text-[#0A1F44]',
-                  'after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:transition-all',
-                  isScrolled ? 'after:bg-white' : 'after:bg-[#0A1F44]',
-                  'hover:after:w-full',
-                  isScrolled
-                    ? 'focus-visible:ring-2 focus-visible:ring-white/30'
-                    : 'focus-visible:ring-2 focus-visible:ring-[#0A1F44]/30',
+                  'hidden sm:inline',
+                  isScrolled ? 'text-white/80' : 'text-[#0A1F44]/70',
                 ].join(' ')}
               >
-                Atención al Cliente
-              </button>
-
-              {openClient && (
-                <div
-                  role="menu"
-                  className={[
-                    'absolute left-0 mt-3 w-[340px] rounded-2xl border p-2 shadow-2xl z-50',
-                    isScrolled
-                      ? 'border-white/15 bg-[rgba(10,31,68,0.92)] backdrop-blur-md'
-                      : 'border-[#0A1F44]/15 bg-white',
-                  ].join(' ')}
-                  onMouseEnter={open}
-                  onMouseLeave={scheduleClose}
-                >
-                  {[
-                    {
-                      to: '/formulario-de-satisfaccion',
-                      title: 'Formulario de satisfacción',
-                      note: 'Evalúa nuestro servicio y atención.',
-                    },
-                    {
-                      to: '/quejas-y-apelaciones',
-                      title: 'Formulario de quejas y apelaciones',
-                      note: 'Registra una inconformidad o solicitud formal.',
-                    },
-                  ].map(({ to, title, note }) => (
-                    <NavLink
-                      key={to}
-                      to={to}
-                      role="menuitem"
-                      className={({ isActive }) =>
-                        [
-                          'block rounded-xl px-4 py-3 text-sm transition',
-                          isScrolled
-                            ? isActive
-                              ? 'bg-white/10 text-white ring-1 ring-white/15'
-                              : 'text-white/90 hover:bg-white/10 hover:text-white'
-                            : isActive
-                              ? 'bg-[#0A1F44]/10 text-[#0A1F44] ring-1 ring-[#0A1F44]/20'
-                              : 'text-[#0A1F44]/90 hover:bg-[#0A1F44]/8 hover:text-[#0A1F44]',
-                        ].join(' ')
-                      }
+                Siguenos
+              </span>
+              <div className="flex items-center gap-3">
+                {socialLinks.map(({ href, label, viewBox, svg }) => (
+                  <Tooltip key={label} content={label} side="bottom">
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener"
+                      aria-label={label}
+                      className={[
+                        'inline-flex items-center justify-center text-[14px] leading-none transition',
+                        isScrolled
+                          ? 'text-white/80 hover:text-white'
+                          : 'text-[#0A1F44]/70 hover:text-[#0A1F44]',
+                        'hover:opacity-80',
+                      ].join(' ')}
                     >
-                      {title}
-                      <span
-                        className={[
-                          'block text-xs',
-                          isScrolled ? 'text-white/70' : 'text-slate-500',
-                        ].join(' ')}
+                      <svg
+                        className="h-4 w-4"
+                        viewBox={viewBox}
+                        aria-hidden="true"
                       >
-                        {note}
-                      </span>
-                    </NavLink>
-                  ))}
-                </div>
-              )}
+                        {svg}
+                      </svg>
+                    </a>
+                  </Tooltip>
+                ))}
+              </div>
             </div>
-
-            {/* Íconos sociales (sin círculo; pill en hover) */}
-            <div className="ml-3 mr-3 flex items-center gap-1.5 pl-3">
-              {[
-                {
-                  href: 'https://www.tiktok.com/@fualtec',
-                  label: 'TikTok',
-                  svg: (
-                    <path d="M34 14.4c2.1 1.6 4.7 2.6 7.5 2.8v6.8c-3.3-.1-6.4-1.1-9-2.8v12.2c0 7-5.7 12.6-12.6 12.6S7.2 40.4 7.2 33.5 12.9 20.9 19.8 20.9c1.2 0 2.4.2 3.5.6v7a6.6 6.6 0 0 0-3.5-1c-3.2 0-5.9 2.7-5.9 6s2.6 6 5.9 6c3.2 0 5.9-2.7 5.9-6V6h7.1V14.4Z" />
-                  ),
-                  viewBox: '0 0 48 48',
-                },
-                {
-                  href: 'https://www.instagram.com/fualtec',
-                  label: 'Instagram',
-                  svg: (
-                    <>
-                      <rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" strokeWidth="2" />
-                      <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" strokeWidth="2" />
-                      <circle cx="17.5" cy="6.5" r="1.6" />
-                    </>
-                  ),
-                  viewBox: '0 0 24 24',
-                },
-                {
-                  href: 'https://www.facebook.com/fualtec',
-                  label: 'Facebook',
-                  svg: <path d="M13 10h3V7h-3c-1.7 0-3 1.3-3 3v2H7v3h3v7h3v-7h3l1-3h-4v-2c0-.6.4-1 1-1Z" />,
-                  viewBox: '0 0 24 24',
-                },
-              ].map(({ href, label, svg, viewBox }) => (
-                <Tooltip key={label} content={label}>
-                  <a
-                    href={href}
-                    target="_blank"
-                    rel="noopener"
-                    aria-label={label}
-                    className={[
-                      'inline-flex items-center justify-center px-3 py-2 rounded-lg transition',
-                      isScrolled
-                        ? 'text-white/90 hover:text-white hover:bg-white/10'
-                        : 'text-[#0A1F44]/90 hover:text-[#0A1F44] hover:bg-slate-200/70',
-                    ].join(' ')}
-                  >
-                    <svg
-                      width="28"
-                      height="28"
-                      viewBox={viewBox}
-                      fill="currentColor"
-                      aria-hidden="true"
-                    >
-                      {svg}
-                    </svg>
-                  </a>
-                </Tooltip>
-              ))}
-            </div>
-
-            {/* CTA Portal */}
-            <NavLink
-              to="/client-access"
-              className={[
-                'rounded-xl px-5 py-3 text-sm font-semibold shadow-md transition',
-                'hover:opacity-95 hover:shadow-lg',
-                isScrolled ? 'bg-white text-[#0A1F44]' : 'bg-[#8B0000] text-white shadow-[#8B0000]/30',
-              ].join(' ')}
-            >
-              Acceso Clientes
-            </NavLink>
           </div>
-        </nav>
+
+          <nav className="mx-auto flex w-full max-w-[90rem] items-center justify-between px-8 py-3">
+            {/* Logo */}
+            <div className="flex items-center h-[64px]">
+              <NavLink to="/" className="flex items-center leading-none">
+                <img
+                  src={isScrolled ? fualtecDark : logoLight}
+                  alt="Fualtec logo"
+                  className="block h-[72px] w-auto object-contain m-0 p-0 transition-all duration-300"
+                />
+              </NavLink>
+            </div>
+
+            {/* Navegacion Desktop */}
+            <div className="hidden items-center gap-2 md:flex">
+              <NavLink to="/servicios" className={navLinkClass}>
+                Servicios
+              </NavLink>
+
+              {/* Dropdown Nuestra empresa */}
+              <div
+                className="relative"
+                onMouseEnter={openCompanyMenu}
+                onMouseLeave={scheduleCloseCompanyMenu}
+                onFocus={openCompanyMenu}
+                onBlur={scheduleCloseCompanyMenu}
+              >
+                <button
+                  aria-haspopup="menu"
+                  aria-expanded={openCompany}
+                  className={navButtonClass}
+                >
+                  Nuestra empresa
+                </button>
+
+                {openCompany && (
+                  <div
+                    role="menu"
+                    className={[
+                      'absolute left-0 mt-3 w-[260px] rounded-xl border p-2 shadow-2xl z-50',
+                      isScrolled
+                        ? 'border-white/15 bg-[rgba(10,31,68,0.92)] backdrop-blur-md'
+                        : 'border-[#0A1F44]/15 bg-white',
+                    ].join(' ')}
+                    onMouseEnter={openCompanyMenu}
+                    onMouseLeave={scheduleCloseCompanyMenu}
+                  >
+                    {companyItems.map(({ to, label }) => (
+                      <NavLink
+                        key={to}
+                        to={to}
+                        role="menuitem"
+                        className={({ isActive }) =>
+                          [
+                            'block rounded-lg px-4 py-2 text-sm transition',
+                            isScrolled
+                              ? isActive
+                                ? 'bg-white/10 text-white ring-1 ring-white/15'
+                                : 'text-white/90 hover:bg-white/10 hover:text-white'
+                              : isActive
+                                ? 'bg-[#0A1F44]/10 text-[#0A1F44] ring-1 ring-[#0A1F44]/20'
+                                : 'text-[#0A1F44]/90 hover:bg-[#0A1F44]/8 hover:text-[#0A1F44]',
+                          ].join(' ')
+                        }
+                      >
+                        {label}
+                      </NavLink>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <NavLink to="/descargas" className={navLinkClass}>
+                Descargas
+              </NavLink>
+              <NavLink to="/contacto" className={navLinkClass}>
+                Contacto
+              </NavLink>
+
+              {/* Dropdown Atencion al Cliente */}
+              <div
+                className="relative"
+                onMouseEnter={openClientMenu}
+                onMouseLeave={scheduleCloseClientMenu}
+                onFocus={openClientMenu}
+                onBlur={scheduleCloseClientMenu}
+              >
+                <button
+                  aria-haspopup="menu"
+                  aria-expanded={openClient}
+                  className={navButtonClass}
+                >
+                  Atencion al Cliente
+                </button>
+
+                {openClient && (
+                  <div
+                    role="menu"
+                    className={[
+                      'absolute left-0 mt-3 w-[340px] rounded-2xl border p-2 shadow-2xl z-50',
+                      isScrolled
+                        ? 'border-white/15 bg-[rgba(10,31,68,0.92)] backdrop-blur-md'
+                        : 'border-[#0A1F44]/15 bg-white',
+                    ].join(' ')}
+                    onMouseEnter={openClientMenu}
+                    onMouseLeave={scheduleCloseClientMenu}
+                  >
+                    {[
+                      {
+                        to: '/formulario-de-satisfaccion',
+                        title: 'Formulario de satisfaccion',
+                      },
+                      {
+                        to: '/quejas-y-apelaciones',
+                        title: 'Formulario de quejas y apelaciones',
+                      },
+                    ].map(({ to, title }) => (
+                      <NavLink
+                        key={to}
+                        to={to}
+                        role="menuitem"
+                        className={({ isActive }) =>
+                          [
+                            'block rounded-xl px-4 py-3 text-sm transition',
+                            isScrolled
+                              ? isActive
+                                ? 'bg-white/10 text-white ring-1 ring-white/15'
+                                : 'text-white/90 hover:bg-white/10 hover:text-white'
+                              : isActive
+                                ? 'bg-[#0A1F44]/10 text-[#0A1F44] ring-1 ring-[#0A1F44]/20'
+                                : 'text-[#0A1F44]/90 hover:bg-[#0A1F44]/8 hover:text-[#0A1F44]',
+                          ].join(' ')
+                        }
+                      >
+                        {title}
+                      </NavLink>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <div
+                className={[
+                  'mx-3 h-5 w-px',
+                  isScrolled ? 'bg-white/20' : 'bg-[#0A1F44]/20',
+                ].join(' ')}
+              />
+
+
+
+              {/* CTA Portal */}
+              <NavLink
+                to="/client-access"
+                className={[
+                  'rounded-xl px-5 py-3 text-sm font-semibold shadow-md transition',
+                  'hover:opacity-95 hover:shadow-lg',
+                  isScrolled
+                    ? 'bg-white text-[#0A1F44]'
+                    : 'bg-[#8B0000] text-white shadow-[#8B0000]/30',
+                ].join(' ')}
+              >
+                Acceso Clientes
+              </NavLink>
+            </div>
+          </nav>
+        </div>
       </header>
 
       {/* MAIN: tus vistas mandan su propio color */}
@@ -254,73 +379,175 @@ const scheduleClose = () => {
         <Outlet />
       </main>
 
-{/* FOOTER corporativo petrolero con 1ª columna más ancha */}
-<footer className="relative bg-[#0A1F44] border-t border-white/10 text-slate-200 pt-16 pb-10 overflow-hidden">
-  {/* fondo */}
-  <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_80%,rgba(0,125,255,0.15),transparent_70%),radial-gradient(circle_at_70%_20%,rgba(255,0,70,0.1),transparent_60%)]"></div>
+      {/* FOOTER corporativo */}
+      <footer className="relative overflow-hidden bg-[#0A1F44] text-slate-200">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_80%,rgba(0,125,255,0.08),transparent_70%),radial-gradient(circle_at_75%_15%,rgba(255,60,80,0.05),transparent_65%)]"></div>
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/35 to-transparent"></div>
 
-  <div className="relative z-10 mx-auto max-w-7xl px-8 grid gap-y-10 gap-x-12 lg:gap-x-24
-                  md:[grid-template-columns:1.8fr_1fr_1fr_1fr]">
-    {/* 1. Identidad (columna amplia) */}
-    <div className="space-y-4 pr-2">
-      <h2 className="text-2xl font-semibold text-white">Fualtec</h2>
-      <p className="text-sm leading-relaxed text-slate-300">
-        Soluciones integrales para la industria petrolera con foco en seguridad, eficiencia y cumplimiento.
-      </p>
-      <div className="flex items-center gap-4 pt-2">
-        <a href="#" className="hover:text-blue-400 transition-colors"><i className="ri-linkedin-box-fill text-2xl"></i></a>
-        <a href="#" className="hover:text-blue-400 transition-colors"><i className="ri-facebook-circle-fill text-2xl"></i></a>
-        <a href="#" className="hover:text-blue-400 transition-colors"><i className="ri-twitter-x-line text-2xl"></i></a>
-      </div>
-    </div>
+        <div className="relative z-10 mx-auto max-w-7xl px-6 pb-10 pt-14 sm:px-8">
+          <div className="grid gap-10 md:grid-cols-3">
+            <div className="space-y-4">
+              <div className="relative z-10">
+                <img
+                  src={fualtecDark}
+                  alt="FUALTEC"
+                  className="h-12 w-auto object-contain sm:h-14"
+                />
+              </div>
+              <p className="text-sm leading-relaxed text-slate-300">
+                Servicios NDT para operaciones petroleras seguras y trazables.
+              </p>
+              <div className="flex items-center gap-3">
+                {socialLinks.map(({ href, label, viewBox, svg }) => (
+                  <Tooltip key={label} content={label}>
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener"
+                      aria-label={label}
+                      className="inline-flex items-center justify-center text-[16px] leading-none text-slate-300 transition hover:text-white"
+                    >
+                      <svg
+                        className="h-4 w-4"
+                        viewBox={viewBox}
+                        aria-hidden="true"
+                      >
+                        {svg}
+                      </svg>
+                    </a>
+                  </Tooltip>
+                ))}
+              </div>
+            </div>
 
-    {/* 2. Enlaces */}
-    <div className="space-y-3">
-      <h3 className="text-lg font-semibold text-white mb-4 border-b border-blue-500/50 pb-1 w-fit">Enlaces útiles</h3>
-      <ul className="space-y-2 text-sm leading-relaxed">
-        <li><a href="/servicios" className="hover:text-blue-400">Servicios</a></li>
-        <li><a href="/descargas" className="hover:text-blue-400">Descargas</a></li>
-        <li><a href="/contacto" className="hover:text-blue-400">Contacto</a></li>
-        <li><a href="/soporte" className="hover:text-blue-400">Atención al cliente</a></li>
-      </ul>
-    </div>
+            <div>
+              <h3 className="text-base font-semibold text-white">Accesos clave</h3>
+              <ul className="mt-4 space-y-2 text-sm text-slate-300">
+                <li>
+                  <NavLink
+                    to="/client-access"
+                    className="inline-flex items-center gap-2 transition hover:translate-x-1 hover:text-white"
+                  >
+                    Acceso clientes
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/descargas"
+                    className="inline-flex items-center gap-2 transition hover:translate-x-1 hover:text-white"
+                  >
+                    Descargas
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/formulario-de-satisfaccion"
+                    className="inline-flex items-center gap-2 transition hover:translate-x-1 hover:text-white"
+                  >
+                    Atencion al cliente
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/contacto"
+                    className="inline-flex items-center gap-2 transition hover:translate-x-1 hover:text-white"
+                  >
+                    Contacto
+                  </NavLink>
+                </li>
+              </ul>
+            </div>
 
-    {/* 3. Legal */}
-    <div className="space-y-3">
-      <h3 className="text-lg font-semibold text-white mb-4 border-b border-blue-500/50 pb-1 w-fit">Legal y Políticas</h3>
-      <ul className="space-y-2 text-sm leading-relaxed">
-        <li><a href="/terminos" className="hover:text-blue-400">Términos y condiciones</a></li>
-        <li><a href="/privacidad" className="hover:text-blue-400">Política de privacidad</a></li>
-        <li><a href="/cookies" className="hover:text-blue-400">Uso de cookies</a></li>
-        <li><a href="/legal" className="hover:text-blue-400">Aviso legal</a></li>
-      </ul>
-    </div>
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-base font-semibold text-white">Contacto</h3>
+                <ul className="mt-4 space-y-3 text-sm text-slate-300">
+                  <li className="flex items-start gap-3">
+                    <svg
+                      className="mt-0.5 h-4 w-4 text-slate-400"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.6"
+                      aria-hidden="true"
+                    >
+                      <path d="M4 6h16v12H4z" />
+                      <path d="M4 7l8 6 8-6" />
+                    </svg>
+                    <a
+                      href="mailto:contacto@fualtec.com"
+                      className="transition hover:translate-x-1 hover:text-white"
+                    >
+                      contacto@fualtec.com
+                    </a>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <svg
+                      className="mt-0.5 h-4 w-4 text-slate-400"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.6"
+                      aria-hidden="true"
+                    >
+                      <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.6 19.6 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7l.4 2.2a2 2 0 0 1-.6 1.9l-1.2 1.2a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 1.9-.6l2.2.4A2 2 0 0 1 22 16.9Z" />
+                    </svg>
+                    <span>(+593) 99 123 4567</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <svg
+                      className="mt-0.5 h-4 w-4 text-slate-400"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.6"
+                      aria-hidden="true"
+                    >
+                      <path d="M12 22s7-7.4 7-12a7 7 0 1 0-14 0c0 4.6 7 12 7 12Z" />
+                      <circle cx="12" cy="10" r="2.5" />
+                    </svg>
+                    <span>Lago Agrio, Sucumbios - Ecuador</span>
+                  </li>
+                </ul>
+              </div>
 
-    {/* 4. Contacto */}
-    <div className="space-y-3">
-      <h3 className="text-lg font-semibold text-white mb-4 border-b border-blue-500/50 pb-1 w-fit">Contacto</h3>
-      <ul className="space-y-3 text-sm leading-relaxed">
-        <li className="flex items-start gap-3">
-          <i className="ri-mail-fill text-blue-400 mt-0.5"></i>
-          <a href="mailto:contacto@fualtec.com" className="hover:text-blue-400">contacto@fualtec.com</a>
-        </li>
-        <li className="flex items-start gap-3">
-          <i className="ri-phone-fill text-blue-400 mt-0.5"></i>
-          <span>(+593) 99 123 4567</span>
-        </li>
-        <li className="flex items-start gap-3">
-          <i className="ri-map-pin-fill text-blue-400 mt-0.5"></i>
-          <span>Lago Agrio, Sucumbíos — Ecuador</span>
-        </li>
-      </ul>
-    </div>
-  </div>
+              <div>
+                <h3 className="text-base font-semibold text-white">Legal</h3>
+                <ul className="mt-3 space-y-2 text-sm text-slate-300">
+                  <li>
+                    <NavLink
+                      to="/terminos-y-condiciones"
+                      className="inline-flex items-center gap-2 transition hover:translate-x-1 hover:text-white"
+                    >
+                      Terminos y condiciones
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/politica-de-privacidad"
+                      className="inline-flex items-center gap-2 transition hover:translate-x-1 hover:text-white"
+                    >
+                      Politica de privacidad
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/uso-de-cookies"
+                      className="inline-flex items-center gap-2 transition hover:translate-x-1 hover:text-white"
+                    >
+                      Uso de cookies
+                    </NavLink>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
 
-  <div className="relative z-10 mt-12 border-t border-white/10"></div>
-  <div className="relative z-10 text-center mt-6 text-sm text-slate-400">
-    © {new Date().getFullYear()} Fualtec. Todos los derechos reservados.
-  </div>
-</footer>
+        <div className="relative z-10 border-t border-white/10 py-4 text-center text-xs text-slate-400/70">
+          &copy; 2025 FUALTEC &middot; Plataforma de acceso seguro
+        </div>
+      </footer>
 
 
       {/* BOTÓN FLOTANTE WHATSAPP — fondo transparente, ícono grande */}
@@ -369,3 +596,6 @@ const scheduleClose = () => {
     </div>
   );
 };
+
+
+

@@ -10,6 +10,16 @@ import { ComplaintsAppealsPage } from '../features/public/pages/quejas-apelacion
 import { ContactPage } from '../features/public/pages/contact-page';
 import { SatisfactionPage } from '../features/public/pages/satisfaction-page';
 import { HistoryPage } from '../features/public/pages/history-page';
+import { CompanyPage } from '../features/public/pages/company-page';
+import { QuienesSomosPage } from '../features/public/pages/quienes-somos-page';
+import { MisionPage } from '../features/public/pages/mision-page';
+import { VisionPage } from '../features/public/pages/vision-page';
+import { ValoresPage } from '../features/public/pages/valores-page';
+import { TerminosPage } from '../features/public/pages/terminos-page';
+import { ContratoDigitalPage } from '../features/public/pages/contrato-digital-page';
+import { PrivacidadPage } from '../features/public/pages/privacidad-page';
+import { CookiesPage } from '../features/public/pages/cookies-page';
+import { CambiosDevolucionesPage } from '../features/public/pages/cambios-devoluciones-page';
 
 import { LoginPage } from '../features/auth/pages/login-page';
 import { RegisterPage } from '../features/auth/pages/register-page';
@@ -31,6 +41,9 @@ import { AdminGroupsPage } from '../features/admin/pages/admin-groups-page';
 import { AdminGroupsManagePdfsPage } from '../features/admin/pages/admin-groups-manage-pdfs-page';
 import { AdminPublicationsPage } from '../features/admin/pages/admin-publications-page';
 import { AdminAuditPage } from '../features/admin/pages/admin-audit-page';
+import { AdminContactSubmissionsPage } from '../features/admin/pages/admin-contact-submissions-page';
+import { AdminSatisfactionSubmissionsPage } from '../features/admin/pages/admin-satisfaction-submissions-page';
+import { AdminComplaintSubmissionsPage } from '../features/admin/pages/admin-complaint-submissions-page';
 
 import { ProtectedRoute } from '../components/protected-route';
 import { useAuth } from '../hooks/use-auth';
@@ -47,6 +60,16 @@ const routes: RouteObject[] = [
       { path: 'contacto', element: <ContactPage /> },
       { path: 'formulario-de-satisfaccion', element: <SatisfactionPage /> },
       { path: 'historia', element: <HistoryPage /> },
+      { path: 'nuestra-empresa', element: <CompanyPage /> },
+      { path: 'quienes-somos', element: <QuienesSomosPage /> },
+      { path: 'mision', element: <MisionPage /> },
+      { path: 'vision', element: <VisionPage /> },
+      { path: 'valores', element: <ValoresPage /> },
+      { path: 'terminos-y-condiciones', element: <TerminosPage /> },
+      { path: 'contrato-digital', element: <ContratoDigitalPage /> },
+      { path: 'politica-de-privacidad', element: <PrivacidadPage /> },
+      { path: 'uso-de-cookies', element: <CookiesPage /> },
+      { path: 'cambios-y-devoluciones', element: <CambiosDevolucionesPage /> },
     ],
   },
 
@@ -96,6 +119,9 @@ const routes: RouteObject[] = [
               { path: 'grupos', element: <AdminGroupsPage /> },
               { path: 'grupos/:groupId/pdfs', element: <AdminGroupsManagePdfsPage /> },
               { path: 'publicaciones', element: <AdminPublicationsPage /> },
+              { path: 'contactos', element: <AdminContactSubmissionsPage /> },
+              { path: 'satisfaccion', element: <AdminSatisfactionSubmissionsPage /> },
+              { path: 'quejas', element: <AdminComplaintSubmissionsPage /> },
               { path: 'auditoria', element: <AdminAuditPage /> },
             ],
           },

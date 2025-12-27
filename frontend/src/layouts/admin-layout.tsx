@@ -12,6 +12,9 @@ const adminNav = [
   { to: '/client-access/admin/pdfs', label: 'PDFs' },
   { to: '/client-access/admin/grupos', label: 'Grupos' },
   { to: '/client-access/admin/publicaciones', label: 'Publicaciones' },
+  { to: '/client-access/admin/contactos', label: 'Contactos' },
+  { to: '/client-access/admin/satisfaccion', label: 'Satisfaccion' },
+  { to: '/client-access/admin/quejas', label: 'Quejas' },
   // { to: '/client-access/admin/auditoria', label: 'Auditoría' },
 ];
 

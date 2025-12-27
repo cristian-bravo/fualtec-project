@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Tooltip } from '../../../components/ui/tooltip';
+import { NewsSection } from '../components/news-section';
 import hero1 from "../../../assets/images/hero/hero1.webp";
 import hero2 from "../../../assets/images/hero/hero2.webp";
 import hero3 from "../../../assets/images/hero/hero3.webp";
@@ -207,6 +208,9 @@ export const HomePage = () => {
           </div>
         </div>
       </section>
+
+      {/* 3) NOTICIAS */}
+      <NewsSection />
     </main>
   );
 };
