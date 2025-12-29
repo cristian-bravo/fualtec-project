@@ -3,7 +3,7 @@ import { ContentPageLayout } from '../components/content-page-layout';
 export const MisionPage = () => (
   <ContentPageLayout
     eyebrow="Nuestra empresa"
-    title="Nuestra mision"
+    title="Nuestra misión"
     subtitle="Proveer servicios de inspeccion y gestion documental que garanticen seguridad y confianza operativa."
     sections={[
       {

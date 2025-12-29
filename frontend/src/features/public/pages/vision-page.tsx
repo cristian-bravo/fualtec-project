@@ -3,7 +3,7 @@ import { ContentPageLayout } from '../components/content-page-layout';
 export const VisionPage = () => (
   <ContentPageLayout
     eyebrow="Nuestra empresa"
-    title="Nuestra vision"
+    title="Nuestra visión"
     subtitle="Ser el socio tecnico lider en inspeccion NDT y gestion documental en la region Amazonica."
     sections={[
       {
