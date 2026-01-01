@@ -24,7 +24,7 @@ export const HeroSlider = () => {
           key={slide.src}
           src={slide.src}
           alt={slide.alt}
-          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
+          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[1400ms] ease-in-out ${
             i === index
               ? i === HERO_INDUSTRIAL_SLIDE_INDEX
                 ? 'opacity-0'

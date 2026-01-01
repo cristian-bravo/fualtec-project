@@ -5,6 +5,7 @@ import { AdminLayout } from '../layouts/admin-layout';
 
 import { HomePage } from '../features/public/pages/home-page';
 import { ServicesPage } from '../features/public/pages/services-page';
+import { ServiceDetailPage } from '../features/public/pages/service-detail-page';
 import { DownloadsPage } from '../features/public/pages/downloads-page';
 import { ComplaintsAppealsPage } from '../features/public/pages/quejas-apelaciones';
 import { ContactPage } from '../features/public/pages/contact-page';
@@ -54,6 +55,9 @@ const routes: RouteObject[] = [
     element: <PublicLayout />,
     children: [
       { index: true, element: <HomePage /> },
+      { path: 'services', element: <ServicesPage /> },
+      { path: 'services/:slug', element: <ServiceDetailPage /> },
+      { path: 'contact', element: <ContactPage /> },
       { path: 'servicios', element: <ServicesPage /> },
       { path: 'descargas', element: <DownloadsPage /> },
       { path: 'quejas-y-apelaciones', element: <ComplaintsAppealsPage /> },

@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+﻿import { NavLink } from 'react-router-dom';
 import logoLight from '../../../assets/images/logo/fualtec.webp';
 import fualtecDark from '../../../assets/images/logo/fualtec-dark.webp';
 import { Tooltip } from '../../../components/ui/tooltip';
@@ -212,7 +212,7 @@ export const PublicHeader = () => {
                 >
                   {[
                     {
-                      to: '/formulario-de-satisfacci¢n',
+                      to: '/formulario-de-satisfaccion',
                       title: 'Formulario de satisfacción',
                     },
                     {
@@ -268,3 +268,4 @@ export const PublicHeader = () => {
     </header>
   );
 };
+
