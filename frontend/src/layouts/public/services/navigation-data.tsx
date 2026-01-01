@@ -1,5 +1,5 @@
 const companyItems = [
-  { to: '/quienes-somos', label: 'Quienes somos' },
+  { to: '/quienes-somos', label: 'Quiénes somos' },
   { to: '/historia', label: 'Nuestra historia' },
   { to: '/mision', label: 'Misión' },
   { to: '/vision', label: 'Visión' },

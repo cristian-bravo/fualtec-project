@@ -26,7 +26,7 @@ const resolveMeta = (filename: string): Omit<DownloadItem, 'url'> => {
 
   if (name.includes('alcances')) {
     return {
-      title: 'Alcances de acreditacion OI',
+      title: 'Alcances de acreditación OI',
       date: '20/12/2024',
       size: '0.22 MB',
     };
@@ -34,7 +34,7 @@ const resolveMeta = (filename: string): Omit<DownloadItem, 'url'> => {
 
   if (name.includes('certificado')) {
     return {
-      title: 'Certificado de acreditacion',
+      title: 'Certificado de acreditación',
       date: '18/12/2024',
       size: '0.86 MB',
     };
@@ -42,7 +42,7 @@ const resolveMeta = (filename: string): Omit<DownloadItem, 'url'> => {
 
   if (name.includes('resolucion')) {
     return {
-      title: 'Resolucion ARCERNNR 2024',
+      title: 'Resolución  ARCERNNR 2024',
       date: '05/12/2024',
       size: '0.11 MB',
     };
@@ -109,7 +109,12 @@ export const DownloadsPage = () => {
               key={doc.title}
               className="group relative overflow-hidden rounded-2xl border border-white/10 bg-[#0b244f] transition hover:-translate-y-1 hover:shadow-2xl hover:border-white/20"
             >
-              <div className="relative h-44 w-full overflow-hidden border-b border-white/10 bg-[#081a35]">
+              <button
+                type="button"
+                onClick={() => setPreviewDoc(doc)}
+                aria-label={`Abrir ${doc.title}`}
+                className="relative h-44 w-full overflow-hidden border-b border-white/10 bg-[#081a35] text-left cursor-pointer"
+              >
                 <iframe
                   title={`Preview ${doc.title}`}
                   src={doc.url}
@@ -117,7 +122,7 @@ export const DownloadsPage = () => {
                   className="pointer-events-none h-full w-full scale-[1.02] opacity-90"
                 />
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#081a35] via-transparent to-transparent" />
-              </div>
+              </button>
 
               <div className="p-6">
                 <div className="flex items-start gap-4">

@@ -195,7 +195,7 @@ export const PublicHeader = () => {
                 aria-expanded={openClient}
                 className={navButtonClass}
               >
-                Atencion al Cliente
+                Atención al Cliente
               </NavLink>
 
               {openClient && (

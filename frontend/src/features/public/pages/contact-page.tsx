@@ -84,7 +84,7 @@ export const ContactPage = () => {
                     </svg>
                   </span>
                   <div>
-                    <p className="font-medium text-white">Direccion</p>
+                    <p className="font-medium text-white">Dirección</p>
                     <p className="text-slate-300">Av. Quito y Av. Amazonas, Lago Agrio, Sucumbios - Ecuador</p>
                   </div>
                 </li>
@@ -96,7 +96,7 @@ export const ContactPage = () => {
                   </span>
                   <div>
                     <p className="font-medium text-white">Telefonos</p>
-                    <p className="text-slate-300">+593 98 456 7890 / +593 98 456 7891</p>
+                    <p className="text-slate-300">+593 99 434 2217 / +593 98 456 7891</p>
                   </div>
                 </li>
                 <li className="flex gap-3">
@@ -111,7 +111,7 @@ export const ContactPage = () => {
                       href="mailto:contacto@fualtec.com"
                       className="text-slate-300 hover:text-white underline decoration-white/30 underline-offset-4"
                     >
-                      contacto@fualtec.com
+                      info@fualtec.com.ec
                     </a>
                   </div>
                 </li>
