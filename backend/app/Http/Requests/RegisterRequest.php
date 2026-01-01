@@ -25,12 +25,11 @@ class RegisterRequest extends FormRequest
             'cedula' => [
                 'required',
                 'string',
-                'size:10',
-                'regex:/^\d{10}$/',
+                'regex:/^\d{10}(\d{3})?$/',
                 function (string $attribute, mixed $value, \Closure $fail) {
                     $cedula = (string) $value;
                     if (! $this->isValidEcuadorId($cedula)) {
-                        $fail('Cedula ecuatoriana invalida.');
+                        $fail('Cedula o RUC ecuatoriano invalido.');
                     }
                 },
             ],
@@ -49,7 +48,7 @@ class RegisterRequest extends FormRequest
 
     private function isValidEcuadorId(string $cedula): bool
     {
-        if (! preg_match('/^\d{10}$/', $cedula)) {
+        if (! preg_match('/^\d{10}(\d{3})?$/', $cedula)) {
             return false;
         }
 
@@ -58,6 +57,26 @@ class RegisterRequest extends FormRequest
             return false;
         }
 
+        $thirdDigit = (int) $cedula[2];
+        if (strlen($cedula) === 10) {
+            return $this->isValidCedula($cedula) && $thirdDigit >= 0 && $thirdDigit <= 5;
+        }
+
+        if ($thirdDigit >= 0 && $thirdDigit <= 5) {
+            return $this->isValidNaturalRuc($cedula);
+        }
+        if ($thirdDigit === 6) {
+            return $this->isValidPublicRuc($cedula);
+        }
+        if ($thirdDigit === 9) {
+            return $this->isValidPrivateRuc($cedula);
+        }
+
+        return false;
+    }
+
+    private function isValidCedula(string $cedula): bool
+    {
         $digits = array_map('intval', str_split($cedula));
         $coef = [2, 1, 2, 1, 2, 1, 2, 1, 2];
         $suma = 0;
@@ -71,5 +90,62 @@ class RegisterRequest extends FormRequest
         $verificador = (int) (ceil($suma / 10) * 10 - $suma) % 10;
 
         return $verificador === $digits[9];
+    }
+
+    private function computeMod11(array $digits, array $coef): int
+    {
+        $suma = 0;
+        foreach ($coef as $index => $weight) {
+            $suma += $digits[$index] * $weight;
+        }
+
+        $verificador = 11 - ($suma % 11);
+        if ($verificador === 11) {
+            return 0;
+        }
+        if ($verificador === 10) {
+            return -1;
+        }
+
+        return $verificador;
+    }
+
+    private function hasValidEstablishment(string $suffix): bool
+    {
+        return ctype_digit($suffix) && (int) $suffix > 0;
+    }
+
+    private function isValidNaturalRuc(string $ruc): bool
+    {
+        $cedula = substr($ruc, 0, 10);
+        $suffix = substr($ruc, 10);
+
+        return $this->isValidCedula($cedula) && $this->hasValidEstablishment($suffix);
+    }
+
+    private function isValidPrivateRuc(string $ruc): bool
+    {
+        if (! $this->hasValidEstablishment(substr($ruc, 10))) {
+            return false;
+        }
+
+        $digits = array_map('intval', str_split($ruc));
+        $coef = [4, 3, 2, 7, 6, 5, 4, 3, 2];
+        $verificador = $this->computeMod11($digits, $coef);
+
+        return $verificador !== -1 && $verificador === $digits[9];
+    }
+
+    private function isValidPublicRuc(string $ruc): bool
+    {
+        if (! $this->hasValidEstablishment(substr($ruc, 9))) {
+            return false;
+        }
+
+        $digits = array_map('intval', str_split($ruc));
+        $coef = [3, 2, 7, 6, 5, 4, 3, 2];
+        $verificador = $this->computeMod11($digits, $coef);
+
+        return $verificador !== -1 && $verificador === $digits[8];
     }
 }

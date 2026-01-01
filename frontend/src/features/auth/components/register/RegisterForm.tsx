@@ -57,7 +57,7 @@ export const RegisterForm = ({
       </label>
 
       <label className="flex flex-col gap-1">
-        <span className="font-semibold text-white">Cédula de ciudadania</span>
+        <span className="font-semibold text-white">Cédula o RUC</span>
         <Field
           name="cedula"
           placeholder="0102030405"

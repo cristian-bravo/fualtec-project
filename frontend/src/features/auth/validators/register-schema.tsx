@@ -7,7 +7,11 @@ export const registerSchema = yup.object({
   cedula: yup
     .string()
     .required("Ingrese su cedula")
-    .test("cedula-ec", "Cedula ecuatoriana invalida (10 digitos)", (v) => !!v && isValidEcuadorId(v)),
+    .test(
+      "cedula-ec",
+      "Cedula o RUC ecuatoriano invalido (10 o 13 digitos)",
+      (v) => !!v && isValidEcuadorId(v)
+    ),
   password: yup
     .string()
     .min(8, "Debe tener al menos 8 caracteres")

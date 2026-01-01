@@ -165,7 +165,7 @@ export const PublicFooter = () => (
     </div>
 
     <div className="relative z-10 border-t border-white/10 py-4 text-center text-xs text-slate-400/70">
-      &copy; 2025 FUALTEC &middot; Plataforma de acceso seguro
+      &copy; 2026 FUALTEC &middot; Plataforma de acceso seguro
     </div>
   </footer>
 );

@@ -18,7 +18,7 @@ export const ContentPageLayout = ({
   sections,
   hideHeader,
 }: ContentPageLayoutProps) => (
-  <section className="relative min-h-screen bg-[#0A1F44]">
+  <section className="relative bg-[#0A1F44]">
     <div className="pointer-events-none absolute inset-0 opacity-20 [background-image:radial-gradient(80rem_40rem_at_-10%_-10%,rgba(59,130,246,0.18),transparent),radial-gradient(60rem_30rem_at_110%_-10%,rgba(16,185,129,0.12),transparent)]" />
 
     <div className="relative mx-auto w-full max-w-5xl px-8 py-16">
