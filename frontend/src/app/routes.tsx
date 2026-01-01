@@ -1,4 +1,5 @@
-import { Navigate, RouteObject, useRoutes } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Navigate, RouteObject, useLocation, useRoutes } from 'react-router-dom';
 import { PublicLayout } from '../layouts/public-layout';
 import { ClientLayout } from '../layouts/client-layout';
 import { AdminLayout } from '../layouts/admin-layout';
@@ -139,8 +140,15 @@ const routes: RouteObject[] = [
 ];
 
 export const AppRoutes = () => {
+  const { pathname } = useLocation();
   const { isInitialized } = useAuth();
   const element = useRoutes(routes);
+
+  useEffect(() => {
+    document.title = pathname.startsWith('/client-access')
+      ? 'Fualtec | Portal Seguro'
+      : 'Fualtec';
+  }, [pathname]);
 
   if (!isInitialized) {
     return (

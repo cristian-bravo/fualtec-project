@@ -24,13 +24,13 @@ class DatabaseSeeder extends Seeder
 
         // ADMIN
         $admin = User::firstOrCreate(
-            ['email' => 'admin@midominio.com'],
+            ['email' => 'gerencia-general@fualtec.com.ec'],
             [
                 'nombre' => 'Katherine',
-                'cedula' => '1102486006',
+                'cedula' => '1792208394001',
                 'rol' => 'admin',
                 'estado' => 'aprobado',
-                'password' => Hash::make('Fualtec#2024'),
+                'password' => Hash::make('Fu@ltec2025.'),
             ]
         );
 

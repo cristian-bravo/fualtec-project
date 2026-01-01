@@ -29,6 +29,34 @@ export const RegisterPage = () => {
           <path d="M0 560 Q300 680 600 560 T1200 560" fill="none" stroke="#38bdf8" strokeWidth="1.5" />
         </svg>
       </div>
+            {/* Botón de volver a la página principal */}
+      <Link
+        to="/"
+        title="Ir a la página principal"
+        aria-label="Ir a la página principal"
+        className="absolute left-11 top-11 z-20
+                  inline-flex items-center justify-center
+                  rounded-full
+                  border border-white/30
+                  bg-white/15
+                  p-3
+                  text-white/80
+                  backdrop-blur
+                  transition
+                  hover:bg-white/25 hover:text-white"
+      >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              className="scale-125"
+            >
+
+          <path d="M10.707 2.293a1 1 0 0 1 1.414 0l9 9a1 1 0 0 1-1.414 1.414L19 11.828V20a1 1 0 0 1-1 1h-4v-5h-4v5H6a1 1 0 0 1-1-1v-8.172l-.707.879A1 1 0 0 1 2.879 11.293l9-9z" />
+        </svg>
+      </Link>
 
       {/* <Link
         to="/client-access/login"
