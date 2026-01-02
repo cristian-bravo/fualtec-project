@@ -14,5 +14,10 @@ class ContactSubmission extends Model
         'email',
         'asunto',
         'mensaje',
+        'is_resolved',
+    ];
+
+    protected $casts = [
+        'is_resolved' => 'boolean',
     ];
 }

@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use App\Notifications\ResetPasswordNotification;
+use RuntimeException;
 
 class User extends Authenticatable
 {
@@ -26,6 +27,10 @@ class User extends Authenticatable
         'last_login_at',
     ];
 
+    protected $guarded = [
+        'is_super_admin',
+    ];
+
     protected $hidden = [
         'password',
         'remember_token',
@@ -34,7 +39,23 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'last_login_at' => 'datetime',
+        'is_super_admin' => 'boolean',
     ];
+
+    protected static function booted(): void
+    {
+        static::updating(function (self $user) {
+            if ($user->is_super_admin) {
+                throw new RuntimeException('No se permite modificar un Super Admin.');
+            }
+        });
+
+        static::deleting(function (self $user) {
+            if ($user->is_super_admin) {
+                throw new RuntimeException('No se permite eliminar un Super Admin.');
+            }
+        });
+    }
 
     public function pdfs()
     {

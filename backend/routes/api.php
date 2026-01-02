@@ -109,6 +109,7 @@ Route::middleware(['auth:sanctum', 'role:admin'])
 
         // formularios publicos
         Route::get('contact-submissions', [AdminContactSubmissionController::class, 'index']);
+        Route::patch('contact-submissions/{contactSubmission}', [AdminContactSubmissionController::class, 'update']);
         Route::get('satisfaction-submissions', [AdminSatisfactionSubmissionController::class, 'index']);
         Route::get('complaint-submissions', [AdminComplaintSubmissionController::class, 'index']);
         Route::get('complaint-submissions/{complaint}/attachment', [AdminComplaintSubmissionController::class, 'downloadAttachment']);

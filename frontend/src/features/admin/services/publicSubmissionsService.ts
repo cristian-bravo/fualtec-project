@@ -9,6 +9,7 @@ export type ContactSubmission = {
   email: string;
   asunto: string;
   mensaje: string;
+  is_resolved?: boolean;
   created_at?: string | null;
 };
 
@@ -54,6 +55,24 @@ export async function fetchContactSubmissions(token: string): Promise<ContactSub
   });
 
   return res.data ?? [];
+}
+
+export async function updateContactSubmissionStatus(
+  token: string,
+  id: number,
+  isResolved: boolean
+): Promise<{ id: number; is_resolved: boolean; message?: string }> {
+  const res = await axios.patch(
+    `${API_BASE}/admin/contact-submissions/${id}`,
+    { is_resolved: isResolved },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  return res.data;
 }
 
 export async function fetchSatisfactionSubmissions(token: string): Promise<SatisfactionSubmission[]> {

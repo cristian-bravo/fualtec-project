@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
                 'cedula' => '1792208394001',
                 'rol' => 'admin',
                 'estado' => 'aprobado',
+                'is_super_admin' => true,
                 'password' => Hash::make('Fu@ltec2025.'),
             ]
         );

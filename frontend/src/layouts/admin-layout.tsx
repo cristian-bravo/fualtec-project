@@ -1,21 +1,38 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { LogOut, Menu, X } from 'lucide-react';
 import { useAuth } from '../hooks/use-auth';
 import logoLight from '../assets/images/logo/fualtec-dark.webp';
 import { Tooltip } from '../components/ui/tooltip';
 
-const adminNav = [
-  { to: '/client-access/admin', label: 'Resumen', exact: true },
-  { to: '/client-access/admin/aprobaciones', label: 'Aprobaciones' },
-  { to: '/client-access/admin/usuarios', label: 'Usuarios' },
-  { to: '/client-access/admin/pdfs', label: 'PDFs' },
-  { to: '/client-access/admin/grupos', label: 'Grupos' },
-  { to: '/client-access/admin/publicaciones', label: 'Publicaciones' },
-  { to: '/client-access/admin/contactos', label: 'Contactos' },
-  { to: '/client-access/admin/satisfaccion', label: 'Satisfaccion' },
-  { to: '/client-access/admin/quejas', label: 'Quejas' },
-  // { to: '/client-access/admin/auditoria', label: 'Auditoría' },
+const adminSections = [
+  {
+    title: 'Panel',
+    items: [{ to: '/client-access/admin', label: 'Resumen', exact: true }],
+  },
+  {
+    title: 'Usuarios',
+    items: [
+      { to: '/client-access/admin/usuarios', label: 'Listado' },
+      { to: '/client-access/admin/aprobaciones', label: 'Aprobaciones' },
+    ],
+  },
+  {
+    title: 'Documentos',
+    items: [
+      { to: '/client-access/admin/pdfs', label: 'PDFs' },
+      { to: '/client-access/admin/grupos', label: 'Grupos' },
+      { to: '/client-access/admin/publicaciones', label: 'Publicaciones' },
+    ],
+  },
+  {
+    title: 'Soporte',
+    items: [
+      { to: '/client-access/admin/contactos', label: 'Contactos' },
+      { to: '/client-access/admin/satisfaccion', label: 'Satisfaccion' },
+      { to: '/client-access/admin/quejas', label: 'Quejas' },
+    ],
+  },
 ];
 
 export const AdminLayout = () => {
@@ -27,66 +44,77 @@ export const AdminLayout = () => {
 
       {/* Sidebar */}
       <aside
-        className={`fixed md:static inset-y-0 left-0 z-30 w-64 flex-col justify-between bg-slate-900/95 p-6 text-slate-200 transform transition-transform duration-300 ${
+        className={`fixed md:static inset-y-0 left-0 z-30 h-screen w-60 md:w-56 lg:w-60 flex-col bg-slate-900/95 px-4 md:px-5 lg:px-6 py-4 text-slate-200 overflow-y-auto lg:overflow-y-hidden overflow-x-hidden transform transition-transform duration-300 ${
           isMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
         } md:flex`}
       >
         {/* Top */}
-        <div>
-          <div className="flex flex-col items-center border-b border-slate-700/60 pb-6">
+        <div className="flex flex-col h-full">
+          <div className="flex flex-col items-center pb-3 md:pb-4">
             <img
               src={logoLight}
               alt="Logo Fualtec"
-              className="mb-4 h-20 w-auto object-contain"
+              className="mb-3 h-14 md:h-16 w-auto object-contain"
             />
 
-          <p className="text-[15px] font-semibold tracking-wide text-center text-blue-400">
-            Panel <span className="text-blue-500 font-bold">Administrativo</span> 
-          </p>
-
-
-            <p className="text-sm text-slate-400 mt-3 text-center">
-              {user?.email}
+            <p className="text-[12px] md:text-[13px] font-semibold tracking-wide text-center text-blue-400">
+              Panel <span className="text-blue-500 font-bold">Administrativo</span>
             </p>
 
-            <div className="w-20 h-[1px] bg-gradient-to-r from-slate-600 to-slate-700 mt-4"></div>
+
+            <p className="mt-2 text-[10px] md:text-[11px] text-slate-400 text-center">
+              {user?.email}
+            </p>
           </div>
 
           {/* Nav */}
-          <nav className="mt-12 flex flex-col gap-4 text-[15px] font-medium">
-            {adminNav.map((item) => (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                end={item.exact}
-                onClick={() => setIsMenuOpen(false)}
-                className={({ isActive }) =>
-                  `flex items-center gap-2 rounded-md px-4 py-2 font-medium transition-all duration-200 ${
-                    isActive
-                      ? 'bg-blue-900/50 text-slate-100 shadow-sm'
-                      : 'text-slate-300 hover:bg-slate-800/50 hover:text-white'
-                  }`
-                }
+          <nav className="mt-2 md:mt-4 flex flex-1 flex-col justify-center md:justify-start text-[12px] md:text-[13px] lg:text-[14px] font-medium">
+            {adminSections.map((section, index) => (
+              <div
+                key={section.title}
+                className={index === 0 ? '' : 'mt-2 md:mt-3 lg:mt-4'}
               >
-                {item.label}
-              </NavLink>
+                <p className="px-1 text-[9px] md:text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-400/60">
+                  {section.title}
+                </p>
+                <div className="mt-1.5 md:mt-2 flex flex-col gap-1 md:gap-1.5">
+                  {section.items.map((item) => (
+                    <NavLink
+                      key={item.to}
+                      to={item.to}
+                      end={item.exact}
+                      onClick={() => setIsMenuOpen(false)}
+                      className={({ isActive }) =>
+                        `flex items-center gap-2 rounded-md px-2 py-1 md:py-1.5 font-medium transition-all duration-200 ${
+                          isActive
+                            ? 'bg-blue-900/50 text-slate-100 shadow-sm border-l-2 border-blue-400/70'
+                            : 'text-slate-300 hover:bg-slate-800/50 hover:text-white'
+                        }`
+                      }
+                    >
+                      <span className="pl-3 text-[12px] md:text-[13px] lg:text-[14px]">
+                        {item.label}
+                      </span>
+                    </NavLink>
+                  ))}
+                </div>
+              </div>
             ))}
           </nav>
-        </div>
-
-        {/* Logout */}
-        <div className="pt-8 border-t border-slate-700 mt-6">
-        <button
-          type="button"
-          onClick={logout}
-          className="w-full flex items-center justify-center gap-2 rounded-md
-                    bg-slate-800 hover:bg-slate-900
-                    px-4 py-2 text-sm font-medium text-white
-                    transition-all duration-200 shadow-sm"
-        >
-          <LogOut size={18} className="opacity-90" />
-          <span className="tracking-wide">Desconectarse</span>
-        </button>
+          {/* Logout */}
+          <div className="pt-3 md:pt-4">
+            <button
+              type="button"
+              onClick={logout}
+              className="w-full flex items-center justify-center gap-2 rounded-md
+                        bg-slate-800 hover:bg-slate-900
+                        px-4 py-2 text-sm font-medium text-white
+                        transition-all duration-200 shadow-sm"
+            >
+              <LogOut size={18} className="opacity-90" />
+              <span className="tracking-wide">Desconectarse</span>
+            </button>
+          </div>
         </div>
       </aside>
 
@@ -141,3 +169,4 @@ export const AdminLayout = () => {
     </div>
   );
 };
+

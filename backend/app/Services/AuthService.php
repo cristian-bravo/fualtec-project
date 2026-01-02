@@ -88,7 +88,9 @@ class AuthService
         }
 
         $token = $user->createToken('portal-cliente')->plainTextToken;
-        $user->update(['last_login_at' => now()]);
+        if (! $user->is_super_admin) {
+            $user->update(['last_login_at' => now()]);
+        }
 
         return [
             'user' => $user->fresh(),
