@@ -26,6 +26,7 @@ export type SatisfactionSubmission = {
   promedio: string | number;
   comentarios?: string | null;
   mensaje_final?: string | null;
+  is_resolved?: boolean;
   created_at?: string | null;
 };
 
@@ -44,6 +45,7 @@ export type ComplaintSubmission = {
   relato: string;
   documento_nombre?: string | null;
   documento_path?: string | null;
+  is_resolved?: boolean;
   created_at?: string | null;
 };
 
@@ -85,6 +87,24 @@ export async function fetchSatisfactionSubmissions(token: string): Promise<Satis
   return res.data ?? [];
 }
 
+export async function updateSatisfactionSubmissionStatus(
+  token: string,
+  id: number,
+  isResolved: boolean
+): Promise<{ id: number; is_resolved: boolean; message?: string }> {
+  const res = await axios.patch(
+    `${API_BASE}/admin/satisfaction-submissions/${id}`,
+    { is_resolved: isResolved },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  return res.data;
+}
+
 export async function fetchComplaintSubmissions(token: string): Promise<ComplaintSubmission[]> {
   const res = await axios.get(`${API_BASE}/admin/complaint-submissions`, {
     headers: {
@@ -93,6 +113,24 @@ export async function fetchComplaintSubmissions(token: string): Promise<Complain
   });
 
   return res.data ?? [];
+}
+
+export async function updateComplaintSubmissionStatus(
+  token: string,
+  id: number,
+  isResolved: boolean
+): Promise<{ id: number; is_resolved: boolean; message?: string }> {
+  const res = await axios.patch(
+    `${API_BASE}/admin/complaint-submissions/${id}`,
+    { is_resolved: isResolved },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  return res.data;
 }
 
 export async function downloadComplaintAttachment(

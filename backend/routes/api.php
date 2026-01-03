@@ -111,7 +111,9 @@ Route::middleware(['auth:sanctum', 'role:admin'])
         Route::get('contact-submissions', [AdminContactSubmissionController::class, 'index']);
         Route::patch('contact-submissions/{contactSubmission}', [AdminContactSubmissionController::class, 'update']);
         Route::get('satisfaction-submissions', [AdminSatisfactionSubmissionController::class, 'index']);
+        Route::patch('satisfaction-submissions/{satisfactionSubmission}', [AdminSatisfactionSubmissionController::class, 'update']);
         Route::get('complaint-submissions', [AdminComplaintSubmissionController::class, 'index']);
+        Route::patch('complaint-submissions/{complaint}', [AdminComplaintSubmissionController::class, 'update']);
         Route::get('complaint-submissions/{complaint}/attachment', [AdminComplaintSubmissionController::class, 'downloadAttachment']);
     });
 

@@ -1,14 +1,15 @@
-import { Download } from 'lucide-react';
+import { Eye } from 'lucide-react';
 import { Tooltip } from '../../../components/ui/tooltip';
 import { ComplaintSubmission } from '../services/publicSubmissionsService';
+import { ContactStatusToggle } from './contact-status-toggle';
 
 type ComplaintSubmissionsCardsProps = {
   items: ComplaintSubmission[];
   loading: boolean;
   emptyMessage: string;
   onSelect: (item: ComplaintSubmission) => void;
-  onDownload: (item: ComplaintSubmission) => void;
-  downloadingId: number | null;
+  onToggleResolved: (item: ComplaintSubmission, nextValue: boolean) => void;
+  updatingId: number | null;
   formatDate: (value?: string | null) => string;
 };
 
@@ -17,8 +18,8 @@ export const ComplaintSubmissionsCards = ({
   loading,
   emptyMessage,
   onSelect,
-  onDownload,
-  downloadingId,
+  onToggleResolved,
+  updatingId,
   formatDate,
 }: ComplaintSubmissionsCardsProps) => {
   if (loading) {
@@ -45,12 +46,29 @@ export const ComplaintSubmissionsCards = ({
           onClick={() => onSelect(item)}
           className="cursor-pointer rounded-lg border bg-white p-4 shadow-sm transition hover:bg-slate-50"
         >
-          <h3 className="font-semibold text-slate-900 truncate" title={item.empresa}>
-            {item.empresa}
-          </h3>
-          <p className="text-sm text-slate-600 truncate" title={item.nombre}>
-            {item.nombre}
-          </p>
+          <div className="flex items-start justify-between gap-4">
+            <div className="min-w-0">
+              <h3 className="font-semibold text-slate-900 truncate" title={item.empresa}>
+                {item.empresa}
+              </h3>
+              <p className="text-sm text-slate-600 truncate" title={item.nombre}>
+                {item.nombre}
+              </p>
+            </div>
+            <div className="flex flex-col items-end gap-1">
+              <Tooltip
+                content={
+                  item.is_resolved ? 'Marcar como pendiente' : 'Marcar como resuelto'
+                }
+              >
+                <ContactStatusToggle
+                  checked={Boolean(item.is_resolved)}
+                  disabled={updatingId === item.id}
+                  onChange={(next) => onToggleResolved(item, next)}
+                />
+              </Tooltip>
+            </div>
+          </div>
 
           <div className="mt-3 space-y-1 text-sm text-slate-600">
             <p className="truncate" title={`${item.tipo_inconformidad} / ${item.tipo_queja}`}>
@@ -73,22 +91,22 @@ export const ComplaintSubmissionsCards = ({
             >
               {item.anexa_documento ? 'Adjunto' : 'Sin adjunto'}
             </span>
-            {item.anexa_documento && item.documento_path && (
-              <Tooltip content="Descargar adjunto">
-                <button
-                  type="button"
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    onDownload(item);
-                  }}
-                  disabled={downloadingId === item.id}
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-slate-200 text-slate-600 transition hover:bg-slate-900 hover:text-white disabled:opacity-60"
-                  aria-label="Descargar adjunto"
-                >
-                  <Download className="h-4 w-4" />
-                </button>
-              </Tooltip>
-            )}
+          </div>
+
+          <div className="mt-3 flex items-center justify-end">
+            <Tooltip content="Ver queja">
+              <button
+                type="button"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  onSelect(item);
+                }}
+                className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-blue-200 text-blue-600 transition hover:bg-blue-600 hover:text-white"
+                aria-label="Ver queja"
+              >
+                <Eye className="h-4 w-4" />
+              </button>
+            </Tooltip>
           </div>
         </div>
       ))}

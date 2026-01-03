@@ -25,10 +25,12 @@ class ComplaintSubmission extends Model
         'documento_nombre',
         'documento_mime',
         'documento_size',
+        'is_resolved',
     ];
 
     protected $casts = [
         'fecha_presentacion' => 'date',
         'anexa_documento' => 'boolean',
+        'is_resolved' => 'boolean',
     ];
 }

@@ -21,9 +21,11 @@ class SatisfactionSubmission extends Model
         'promedio',
         'comentarios',
         'mensaje_final',
+        'is_resolved',
     ];
 
     protected $casts = [
         'promedio' => 'decimal:2',
+        'is_resolved' => 'boolean',
     ];
 }

@@ -1,15 +1,16 @@
+import { Eye } from 'lucide-react';
 import { Table } from '../../../components/ui/table';
 import { Tooltip } from '../../../components/ui/tooltip';
-import { Download } from 'lucide-react';
 import { ComplaintSubmission } from '../services/publicSubmissionsService';
+import { ContactStatusToggle } from './contact-status-toggle';
 
 type ComplaintSubmissionsTableProps = {
   items: ComplaintSubmission[];
   loading: boolean;
   emptyMessage: string;
   onSelect: (item: ComplaintSubmission) => void;
-  onDownload: (item: ComplaintSubmission) => void;
-  downloadingId: number | null;
+  onToggleResolved: (item: ComplaintSubmission, nextValue: boolean) => void;
+  updatingId: number | null;
   formatDate: (value?: string | null) => string;
 };
 
@@ -18,21 +19,21 @@ export const ComplaintSubmissionsTable = ({
   loading,
   emptyMessage,
   onSelect,
-  onDownload,
-  downloadingId,
+  onToggleResolved,
+  updatingId,
   formatDate,
 }: ComplaintSubmissionsTableProps) => (
-  <div className="hidden md:block overflow-x-auto rounded-lg border bg-white">
+  <div className="hidden md:block overflow-hidden">
     <Table
-      headers={['Empresa', 'Solicitante', 'Tipo', 'Fecha', 'Adjunto']}
+      headers={['Empresa', 'Solicitante', 'Tipo', 'Fecha', 'Acciones']}
       className="overflow-visible"
       colgroup={
         <>
-          <col className="w-[24%]" />
-          <col className="w-[20%]" />
+          <col className="w-[26%]" />
+          <col className="w-[22%]" />
           <col className="w-[26%]" />
           <col className="w-[14%]" />
-          <col className="w-[16%]" />
+          <col className="w-[12%]" />
         </>
       }
     >
@@ -70,36 +71,35 @@ export const ComplaintSubmissionsTable = ({
                 {item.tipo_inconformidad} / {item.tipo_queja}
               </div>
             </td>
-            <td className="px-6 py-4 text-slate-500">
+            <td className="px-6 py-4 text-slate-500 whitespace-nowrap">
               {formatDate(item.fecha_presentacion)}
             </td>
             <td className="px-6 py-4">
-              <div className="flex items-center gap-2">
-                <span
-                  className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${
-                    item.anexa_documento
-                      ? 'bg-emerald-50 text-emerald-700'
-                      : 'bg-slate-100 text-slate-600'
-                  }`}
+              <div className="flex w-full items-center justify-end gap-2">
+                <Tooltip content="Ver queja">
+                  <button
+                    type="button"
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      onSelect(item);
+                    }}
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-blue-200 text-blue-600 transition hover:bg-blue-600 hover:text-white"
+                    aria-label="Ver queja"
+                  >
+                    <Eye className="h-4 w-4" />
+                  </button>
+                </Tooltip>
+                <Tooltip
+                  content={
+                    item.is_resolved ? 'Marcar como pendiente' : 'Marcar como resuelto'
+                  }
                 >
-                  {item.anexa_documento ? 'Si' : 'No'}
-                </span>
-                {item.anexa_documento && item.documento_path && (
-                  <Tooltip content="Descargar adjunto">
-                    <button
-                      type="button"
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        onDownload(item);
-                      }}
-                      disabled={downloadingId === item.id}
-                      className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-slate-200 text-slate-600 transition hover:bg-slate-900 hover:text-white disabled:opacity-60"
-                      aria-label="Descargar adjunto"
-                    >
-                      <Download className="h-4 w-4" />
-                    </button>
-                  </Tooltip>
-                )}
+                  <ContactStatusToggle
+                    checked={Boolean(item.is_resolved)}
+                    disabled={updatingId === item.id}
+                    onChange={(next) => onToggleResolved(item, next)}
+                  />
+                </Tooltip>
               </div>
             </td>
           </tr>

@@ -6,6 +6,8 @@ import { SearchBar } from '../components/search-bar';
 import { PaginationControls } from '../components/pagination-controls';
 import { ComplaintSubmissionsTable } from '../components/complaint-submissions-table';
 import { ComplaintSubmissionsCards } from '../components/complaint-submissions-cards';
+import { Tooltip } from '../../../components/ui/tooltip';
+import { ContactStatusToggle } from '../components/contact-status-toggle';
 
 const formatDate = (value?: string | null) => {
   if (!value) return '-';
@@ -31,14 +33,25 @@ export const AdminComplaintSubmissionsPage = () => {
     setSearchInput,
     applySearch,
     search,
+    statusFilter,
+    applyFilter,
+    updatingId,
+    toggleResolved,
     downloadingId,
     handleDownload,
   } = useComplaintSubmissions();
   const [selected, setSelected] = useState<ComplaintSubmission | null>(null);
-  const hasSearch = Boolean(search.trim());
-  const emptyMessage = hasSearch
-    ? 'No hay resultados para la busqueda.'
+  const hasFilters = statusFilter !== 'all' || Boolean(search.trim());
+  const emptyMessage = hasFilters
+    ? 'No hay resultados para los filtros aplicados.'
     : 'No hay registros disponibles.';
+
+  const handleToggleResolved = (item: ComplaintSubmission, nextValue: boolean) => {
+    setSelected((prev) =>
+      prev && prev.id === item.id ? { ...prev, is_resolved: nextValue } : prev
+    );
+    toggleResolved(item, nextValue);
+  };
 
   return (
     <div className="space-y-6">
@@ -50,13 +63,35 @@ export const AdminComplaintSubmissionsPage = () => {
           </div>
           <p className="text-sm text-slate-600">Registros formales recibidos desde el portal.</p>
         </div>
-        <div className="w-full sm:min-w-[360px] sm:w-auto">
+        <div className="flex w-full flex-col gap-3 sm:w-auto sm:min-w-[360px]">
           <SearchBar
             value={searchInput}
             onChange={setSearchInput}
             onSearch={applySearch}
             placeholder="Buscar por empresa o solicitante"
           />
+          <div className="flex gap-1 rounded-lg bg-slate-100 p-1">
+            {[
+              { id: 'all', label: 'Todos' },
+              { id: 'resolved', label: 'Resueltos' },
+              { id: 'pending', label: 'Pendientes' },
+            ].map((option) => (
+              <button
+                key={option.id}
+                type="button"
+                onClick={() =>
+                  applyFilter(option.id as 'all' | 'resolved' | 'pending')
+                }
+                className={`px-3 py-1 text-sm rounded-md transition ${
+                  statusFilter === option.id
+                    ? 'bg-blue-600 text-white shadow'
+                    : 'text-slate-600 hover:bg-white'
+                }`}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -71,8 +106,8 @@ export const AdminComplaintSubmissionsPage = () => {
         loading={loading}
         emptyMessage={emptyMessage}
         onSelect={setSelected}
-        onDownload={handleDownload}
-        downloadingId={downloadingId}
+        onToggleResolved={handleToggleResolved}
+        updatingId={updatingId}
         formatDate={formatDate}
       />
 
@@ -81,8 +116,8 @@ export const AdminComplaintSubmissionsPage = () => {
         loading={loading}
         emptyMessage={emptyMessage}
         onSelect={setSelected}
-        onDownload={handleDownload}
-        downloadingId={downloadingId}
+        onToggleResolved={handleToggleResolved}
+        updatingId={updatingId}
         formatDate={formatDate}
       />
 
@@ -92,6 +127,21 @@ export const AdminComplaintSubmissionsPage = () => {
         isOpen={Boolean(selected)}
         title="Detalle de queja"
         onClose={() => setSelected(null)}
+        actions={
+          selected ? (
+            <Tooltip
+              content={
+                selected.is_resolved ? 'Marcar como pendiente' : 'Marcar como resuelto'
+              }
+            >
+              <ContactStatusToggle
+                checked={Boolean(selected.is_resolved)}
+                disabled={updatingId === selected.id}
+                onChange={(next) => handleToggleResolved(selected, next)}
+              />
+            </Tooltip>
+          ) : null
+        }
         rows={
           selected
             ? [
@@ -105,6 +155,34 @@ export const AdminComplaintSubmissionsPage = () => {
                 {
                   label: 'Tipo',
                   value: `${selected.tipo_inconformidad} / ${selected.tipo_queja}`,
+                },
+                {
+                  label: 'Adjunto',
+                  value: selected.anexa_documento ? (
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm text-slate-800">
+                        {selected.documento_nombre || 'Documento adjunto'}
+                      </span>
+                      {selected.documento_path && (
+                        <Tooltip content="Descargar adjunto">
+                          <button
+                            type="button"
+                            onClick={() => handleDownload(selected)}
+                            disabled={downloadingId === selected.id}
+                            className="inline-flex items-center rounded-md border border-slate-200 px-2 py-1 text-xs font-semibold text-slate-700 transition hover:bg-slate-900 hover:text-white disabled:opacity-60"
+                          >
+                            Descargar
+                          </button>
+                        </Tooltip>
+                      )}
+                    </div>
+                  ) : (
+                    'Sin adjunto'
+                  ),
+                },
+                {
+                  label: 'Estado',
+                  value: selected.is_resolved ? 'Resuelto' : 'Pendiente',
                 },
                 { label: 'Relato', value: selected.relato },
               ]

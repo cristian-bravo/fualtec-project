@@ -1,10 +1,15 @@
+import { Eye } from 'lucide-react';
+import { Tooltip } from '../../../components/ui/tooltip';
 import { SatisfactionSubmission } from '../services/publicSubmissionsService';
+import { ContactStatusToggle } from './contact-status-toggle';
 
 type SatisfactionSubmissionsCardsProps = {
   items: SatisfactionSubmission[];
   loading: boolean;
   emptyMessage: string;
   onSelect: (item: SatisfactionSubmission) => void;
+  onToggleResolved: (item: SatisfactionSubmission, nextValue: boolean) => void;
+  updatingId: number | null;
   formatDate: (value?: string | null) => string;
   formatPromedio: (value: string | number) => string;
 };
@@ -14,6 +19,8 @@ export const SatisfactionSubmissionsCards = ({
   loading,
   emptyMessage,
   onSelect,
+  onToggleResolved,
+  updatingId,
   formatDate,
   formatPromedio,
 }: SatisfactionSubmissionsCardsProps) => {
@@ -41,12 +48,29 @@ export const SatisfactionSubmissionsCards = ({
           onClick={() => onSelect(item)}
           className="cursor-pointer rounded-lg border bg-white p-4 shadow-sm transition hover:bg-slate-50"
         >
-          <h3 className="font-semibold text-slate-900 truncate" title={item.nombre}>
-            {item.nombre}
-          </h3>
-          <p className="text-sm text-slate-600 truncate" title={item.email}>
-            {item.email}
-          </p>
+          <div className="flex items-start justify-between gap-4">
+            <div className="min-w-0">
+              <h3 className="font-semibold text-slate-900 truncate" title={item.nombre}>
+                {item.nombre}
+              </h3>
+              <p className="text-sm text-slate-600 truncate" title={item.email}>
+                {item.email}
+              </p>
+            </div>
+            <div className="flex flex-col items-end gap-1">
+              <Tooltip
+                content={
+                  item.is_resolved ? 'Marcar como pendiente' : 'Marcar como resuelto'
+                }
+              >
+                <ContactStatusToggle
+                  checked={Boolean(item.is_resolved)}
+                  disabled={updatingId === item.id}
+                  onChange={(next) => onToggleResolved(item, next)}
+                />
+              </Tooltip>
+            </div>
+          </div>
 
           <div className="mt-3 space-y-1 text-sm text-slate-600">
             <p className="truncate" title={item.servicio}>
@@ -60,6 +84,22 @@ export const SatisfactionSubmissionsCards = ({
 
           <div className="mt-3 text-xs text-slate-500">
             {formatDate(item.created_at)}
+          </div>
+
+          <div className="mt-3 flex items-center justify-end">
+            <Tooltip content="Ver evaluacion">
+              <button
+                type="button"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  onSelect(item);
+                }}
+                className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-blue-200 text-blue-600 transition hover:bg-blue-600 hover:text-white"
+                aria-label="Ver evaluacion"
+              >
+                <Eye className="h-4 w-4" />
+              </button>
+            </Tooltip>
           </div>
         </div>
       ))}
