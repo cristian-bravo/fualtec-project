@@ -350,6 +350,7 @@ export const ComplaintFormSection = ({
                   >
                     <input
                       type="file"
+                      accept=".pdf,.doc,.docx,.png,.jpg,.jpeg"
                       onChange={(event) => {
                         setFieldValue('documento', event.currentTarget.files?.[0] || null);
                         setFieldTouched('documento', true, false);

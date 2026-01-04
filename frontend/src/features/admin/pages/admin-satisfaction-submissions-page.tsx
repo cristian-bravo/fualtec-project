@@ -1,12 +1,11 @@
 import { useState } from 'react';
-import { SubmissionDetailsModal } from '../components/submission-details-modal';
+import { SatisfactionDetailsModal } from '../components/satisfaction-details-modal';
 import { SatisfactionSubmission } from '../services/publicSubmissionsService';
 import { SearchBar } from '../components/search-bar';
 import { PaginationControls } from '../components/pagination-controls';
 import { SatisfactionSubmissionsTable } from '../components/satisfaction-submissions-table';
 import { SatisfactionSubmissionsCards } from '../components/satisfaction-submissions-cards';
 import { useSatisfactionSubmissions } from '../hooks/useSatisfactionSubmissions';
-import { SatisfactionRating } from '../components/satisfaction-rating';
 
 const formatDate = (value?: string | null) => {
   if (!value) return '-';
@@ -50,54 +49,6 @@ export const AdminSatisfactionSubmissionsPage = () => {
   const emptyMessage = hasFilters
     ? 'No hay resultados para los filtros aplicados.'
     : 'No hay evaluaciones registradas.';
-  const headerRows = selected
-    ? [
-        {
-          label: 'Nombre',
-          value: (
-            <div className="grid gap-3 sm:grid-cols-2">
-              <div className="text-sm text-slate-800">{selected.nombre}</div>
-              <div className="text-sm text-slate-800">{selected.email}</div>
-            </div>
-          ),
-        },
-        {
-          label: 'Servicio',
-          value: (
-            <div className="grid gap-3 sm:grid-cols-2">
-              <div className="text-sm text-slate-800">{selected.servicio}</div>
-              <div className="text-sm text-slate-800">
-                {formatPromedio(selected.promedio)}
-              </div>
-            </div>
-          ),
-        },
-      ]
-    : [];
-  const questionRows = selected
-    ? [
-        {
-          label: '1. Los servicios entregados cumplieron con tus expectativas y estandares?',
-          value: <SatisfactionRating value={selected.p1} />,
-        },
-        {
-          label: '2. Como calificarias nuestra capacidad para resolver problemas y responder a tus necesidades?',
-          value: <SatisfactionRating value={selected.p2} />,
-        },
-        {
-          label: '3. Como calificarias el profesionalismo y competencia tecnica de nuestro personal?',
-          value: <SatisfactionRating value={selected.p3} />,
-        },
-        {
-          label: '4. Que tan satisfecho estas con la rapidez de nuestra respuesta a consultas?',
-          value: <SatisfactionRating value={selected.p4} />,
-        },
-        {
-          label: '5. Que tan satisfecho estas con las medidas de seguridad en el servicio?',
-          value: <SatisfactionRating value={selected.p5} />,
-        },
-      ]
-    : [];
 
   return (
     <div className="space-y-6">
@@ -175,25 +126,12 @@ export const AdminSatisfactionSubmissionsPage = () => {
 
       <PaginationControls page={page} totalPages={totalPages} onPageChange={setPage} />
 
-      <SubmissionDetailsModal
+      <SatisfactionDetailsModal
         isOpen={Boolean(selected)}
-        title="Detalle de evaluacion"
+        submission={selected}
         onClose={() => setSelected(null)}
-        rows={
-          selected
-            ? [
-                ...headerRows,
-                ...questionRows,
-                { label: 'Comentarios', value: selected.comentarios || '-' },
-                { label: 'Mensaje final', value: selected.mensaje_final || '-' },
-                {
-                  label: 'Estado',
-                  value: selected.is_resolved ? 'Resuelto' : 'Pendiente',
-                },
-                { label: 'Fecha', value: formatDate(selected.created_at) },
-              ]
-            : []
-        }
+        formatDate={formatDate}
+        formatPromedio={formatPromedio}
       />
     </div>
   );

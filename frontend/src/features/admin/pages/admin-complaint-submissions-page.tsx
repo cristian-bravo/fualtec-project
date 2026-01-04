@@ -1,13 +1,11 @@
 import { useState } from 'react';
-import { SubmissionDetailsModal } from '../components/submission-details-modal';
+import { ComplaintDetailsModal } from '../components/complaint-details-modal';
 import { ComplaintSubmission } from '../services/publicSubmissionsService';
 import { useComplaintSubmissions } from '../hooks/useComplaintSubmissions';
 import { SearchBar } from '../components/search-bar';
 import { PaginationControls } from '../components/pagination-controls';
 import { ComplaintSubmissionsTable } from '../components/complaint-submissions-table';
 import { ComplaintSubmissionsCards } from '../components/complaint-submissions-cards';
-import { Tooltip } from '../../../components/ui/tooltip';
-import { ContactStatusToggle } from '../components/contact-status-toggle';
 
 const formatDate = (value?: string | null) => {
   if (!value) return '-';
@@ -123,71 +121,21 @@ export const AdminComplaintSubmissionsPage = () => {
 
       <PaginationControls page={page} totalPages={totalPages} onPageChange={setPage} />
 
-      <SubmissionDetailsModal
+      <ComplaintDetailsModal
         isOpen={Boolean(selected)}
-        title="Detalle de queja"
+        complaint={selected}
         onClose={() => setSelected(null)}
-        actions={
-          selected ? (
-            <Tooltip
-              content={
-                selected.is_resolved ? 'Marcar como pendiente' : 'Marcar como resuelto'
-              }
-            >
-              <ContactStatusToggle
-                checked={Boolean(selected.is_resolved)}
-                disabled={updatingId === selected.id}
-                onChange={(next) => handleToggleResolved(selected, next)}
-              />
-            </Tooltip>
-          ) : null
-        }
-        rows={
-          selected
-            ? [
-                { label: 'Empresa', value: selected.empresa },
-                { label: 'Solicitante', value: selected.nombre },
-                { label: 'Cargo', value: selected.cargo },
-                { label: 'Telefono', value: selected.telefono },
-                { label: 'Correo', value: selected.email },
-                { label: 'Direccion', value: selected.direccion },
-                { label: 'Fecha', value: formatDate(selected.fecha_presentacion) },
-                {
-                  label: 'Tipo',
-                  value: `${selected.tipo_inconformidad} / ${selected.tipo_queja}`,
-                },
-                {
-                  label: 'Adjunto',
-                  value: selected.anexa_documento ? (
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm text-slate-800">
-                        {selected.documento_nombre || 'Documento adjunto'}
-                      </span>
-                      {selected.documento_path && (
-                        <Tooltip content="Descargar adjunto">
-                          <button
-                            type="button"
-                            onClick={() => handleDownload(selected)}
-                            disabled={downloadingId === selected.id}
-                            className="inline-flex items-center rounded-md border border-slate-200 px-2 py-1 text-xs font-semibold text-slate-700 transition hover:bg-slate-900 hover:text-white disabled:opacity-60"
-                          >
-                            Descargar
-                          </button>
-                        </Tooltip>
-                      )}
-                    </div>
-                  ) : (
-                    'Sin adjunto'
-                  ),
-                },
-                {
-                  label: 'Estado',
-                  value: selected.is_resolved ? 'Resuelto' : 'Pendiente',
-                },
-                { label: 'Relato', value: selected.relato },
-              ]
-            : []
-        }
+        onToggleResolved={(next) => {
+          if (!selected) return;
+          handleToggleResolved(selected, next);
+        }}
+        onDownload={() => {
+          if (!selected) return;
+          handleDownload(selected);
+        }}
+        downloading={Boolean(selected && downloadingId === selected.id)}
+        updating={Boolean(selected && updatingId === selected.id)}
+        formatDate={formatDate}
       />
     </div>
   );

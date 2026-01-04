@@ -3,9 +3,6 @@ import { storage } from '../storage';
 
 const apiClient = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
-  headers: {
-    'Content-Type': 'application/json'
-  },
   withCredentials: true
 });
 
@@ -13,6 +10,13 @@ apiClient.interceptors.request.use((config) => {
   const token = storage.get('midominio_token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
+  }
+  if (config.data instanceof FormData && config.headers) {
+    if (typeof (config.headers as any).delete === 'function') {
+      (config.headers as any).delete('Content-Type');
+    } else {
+      delete (config.headers as Record<string, string>)['Content-Type'];
+    }
   }
   return config;
 });

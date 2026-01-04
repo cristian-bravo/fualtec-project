@@ -22,6 +22,24 @@ export type ComplaintFormValues = {
   relato: string;
 };
 
+const allowedDocumentTypes = [
+  'application/pdf',
+  'application/msword',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  'image/png',
+  'image/jpeg',
+];
+
+const allowedDocumentExtensions = ['pdf', 'doc', 'docx', 'png', 'jpg', 'jpeg'];
+
+const isAllowedDocument = (file: File) => {
+  if (file.type && allowedDocumentTypes.includes(file.type)) {
+    return true;
+  }
+  const extension = file.name.split('.').pop()?.toLowerCase();
+  return extension ? allowedDocumentExtensions.includes(extension) : false;
+};
+
 const complaintSchema = yup.object({
   empresa: yup.string().required('Ingrese la empresa.').max(255, 'Maximo 255 caracteres.'),
   nombre: yup.string().required('Ingrese el nombre.').max(255, 'Maximo 255 caracteres.'),
@@ -48,9 +66,18 @@ const complaintSchema = yup.object({
     .required('Seleccione si adjunta documento.'),
   documento: yup
     .mixed<File>()
+    .nullable()
+    .when('anexaDocumento', {
+      is: 'SI',
+      then: (schema) => schema.required('Adjunte el documento.'),
+    })
     .test('doc-size', 'El documento no debe superar 10 MB.', (value) => {
       if (!value) return true;
       return value.size <= 10 * 1024 * 1024;
+    })
+    .test('doc-type', 'Formato de documento no permitido.', (value) => {
+      if (!value) return true;
+      return isAllowedDocument(value);
     }),
   relato: yup
     .string()
@@ -86,6 +113,7 @@ export const useComplaintForm = () => {
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const successTimerRef = useRef<number | null>(null);
+  const submittingRef = useRef(false);
 
   const initialValues = useMemo<ComplaintFormValues>(
     () => ({
@@ -121,11 +149,12 @@ export const useComplaintForm = () => {
     values: ComplaintFormValues,
     actions: FormikHelpers<ComplaintFormValues>
   ) => {
-    if (loading) {
+    if (loading || submittingRef.current) {
       actions.setSubmitting(false);
       return;
     }
 
+    submittingRef.current = true;
     setLoading(true);
     setSubmitError(null);
     setSubmitted(false);
@@ -185,6 +214,7 @@ export const useComplaintForm = () => {
       });
     } finally {
       setLoading(false);
+      submittingRef.current = false;
       actions.setSubmitting(false);
     }
   };

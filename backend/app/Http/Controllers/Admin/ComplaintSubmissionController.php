@@ -27,7 +27,11 @@ class ComplaintSubmissionController extends Controller
 
         $filename = $complaint->documento_nombre ?: 'documento';
 
-        return Storage::disk('public')->download($complaint->documento_path, $filename);
+        $disk = str_starts_with($complaint->documento_path, 'complaints/')
+            ? 'local'
+            : 'public';
+
+        return Storage::disk($disk)->download($complaint->documento_path, $filename);
     }
 
     public function update(Request $request, ComplaintSubmission $complaint): JsonResponse

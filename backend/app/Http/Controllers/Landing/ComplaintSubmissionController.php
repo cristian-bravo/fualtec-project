@@ -7,6 +7,7 @@ use App\Models\ComplaintSubmission;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -23,6 +24,10 @@ class ComplaintSubmissionController extends Controller
         }
         RateLimiter::hit($rateKey, 86400);
 
+        if (! $request->hasFile('documento')) {
+            $request->request->remove('documento');
+        }
+
         $validator = Validator::make($request->all(), [
             'empresa' => ['required', 'string', 'max:255'],
             'nombre' => ['required', 'string', 'max:255'],
@@ -36,6 +41,7 @@ class ComplaintSubmissionController extends Controller
             'anexa_documento' => ['required', Rule::in(['SI', 'NO'])],
             'documento' => [
                 'nullable',
+                'required_if:anexa_documento,SI',
                 'file',
                 'max:10240',
                 'mimes:pdf,doc,docx,png,jpg,jpeg',
@@ -63,6 +69,7 @@ class ComplaintSubmissionController extends Controller
             'tipo_inconformidad.in' => 'Seleccione un tipo de inconformidad valido.',
             'anexa_documento.required' => 'Seleccione si adjunta documento.',
             'anexa_documento.in' => 'Seleccione una opcion valida.',
+            'documento.required_if' => 'Adjunte el documento.',
             'documento.file' => 'El documento adjunto no es valido.',
             'documento.mimes' => 'Formato de documento no permitido.',
             'documento.max' => 'El documento no debe superar 10 MB.',
@@ -90,14 +97,20 @@ class ComplaintSubmissionController extends Controller
         $documentoSize = 0;
 
         if ($request->hasFile('documento')) {
+            $file = $request->file('documento');
             try {
-                $file = $request->file('documento');
-                $documentoPath = $file->store('pdf', 'public');
+                $documentoPath = $file->store('complaints', 'local');
+                if (! $documentoPath) {
+                    throw new \RuntimeException('No se pudo guardar el documento adjunto.');
+                }
                 $documentoNombre = $this->sanitizeText($file->getClientOriginalName());
                 $documentoMime = $file->getClientMimeType();
                 $documentoSize = $file->getSize();
             } catch (\Throwable $exception) {
                 report($exception);
+                return response()->json([
+                    'message' => 'No se pudo guardar el documento adjunto.',
+                ], 500);
             }
         }
 
@@ -121,6 +134,9 @@ class ComplaintSubmissionController extends Controller
             ]);
         } catch (\Throwable $exception) {
             report($exception);
+            if ($documentoPath) {
+                Storage::disk('local')->delete($documentoPath);
+            }
             return response()->json([
                 'message' => 'No se pudo procesar la solicitud. Intente nuevamente.',
             ], 500);
