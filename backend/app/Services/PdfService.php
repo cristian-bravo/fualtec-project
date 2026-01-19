@@ -152,7 +152,7 @@ public function storePdf($file, $user, array $data)
     {
         if (! $group->publicado) {
             throw ValidationException::withMessages([
-                'group' => 'El grupo ya esta en borrador.',
+                'group' => 'El grupo ya está en borrador.',
             ]);
         }
 

@@ -87,7 +87,7 @@ export const SatisfactionSubmissionsCards = ({
           </div>
 
           <div className="mt-3 flex items-center justify-end">
-            <Tooltip content="Ver evaluacion">
+            <Tooltip content="Ver evaluación">
               <button
                 type="button"
                 onClick={(event) => {
@@ -95,7 +95,7 @@ export const SatisfactionSubmissionsCards = ({
                   onSelect(item);
                 }}
                 className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-blue-200 text-blue-600 transition hover:bg-blue-600 hover:text-white"
-                aria-label="Ver evaluacion"
+                aria-label="Ver evaluación"
               >
                 <Eye className="h-4 w-4" />
               </button>

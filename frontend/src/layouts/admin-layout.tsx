@@ -29,7 +29,7 @@ const adminSections = [
     title: 'Soporte',
     items: [
       { to: '/client-access/admin/contactos', label: 'Contactos' },
-      { to: '/client-access/admin/satisfaccion', label: 'Satisfaccion' },
+      { to: '/client-access/admin/satisfaccion', label: 'Satisfacción' },
       { to: '/client-access/admin/quejas', label: 'Quejas' },
     ],
   },

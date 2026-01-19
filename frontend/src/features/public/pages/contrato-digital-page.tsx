@@ -4,13 +4,13 @@ export const ContratoDigitalPage = () => (
   <ContentPageLayout
     eyebrow="Legal y políticas"
     title="Contrato digital"
-    subtitle="Informacion sobre acuerdos digitales, firmas electrónicas y validación documental."
+    subtitle="Información sobre acuerdos digitales, firmas electrónicas y validación documental."
     sections={[
       {
         title: 'Validez',
         body: [
           'Los acuerdos digitales tienen la misma validez que los documentos físicos cuando cumplen la normativa aplicable.',
-          'Se registran fecha, hora y evidencia de aceptación para fines de auditoria.',
+          'Se registran fecha, hora y evidencia de aceptación para fines de auditoría.',
         ],
       },
       {

@@ -65,7 +65,7 @@ export const useAdminPublications = () => {
       const data = await fetchPublicationDetail(token, groupId);
       setDetail(data);
     } catch {
-      setDetailError('No se pudo cargar el detalle de la publicacion.');
+      setDetailError('No se pudo cargar el detalle de la publicación.');
     } finally {
       setDetailLoading(false);
     }

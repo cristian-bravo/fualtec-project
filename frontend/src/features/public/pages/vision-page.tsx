@@ -17,9 +17,9 @@ export const VisionPage = () => (
       subtitle="Ser el socio técnico líder en inspección NDT y gestión documental en la region Amazónica."
       sections={[
         {
-          title: 'Direccion estratégica',
+          title: 'Dirección estratégica',
           body: [
-            'Impulsamos innovación y estándares de excelencia para operaciones cada vez mas seguras.',
+            'Impulsamos innovación y estándares de excelencia para operaciones cada vez más seguras.',
             'Nuestro crecimiento se basa en confianza, resultados medibles y relaciones de largo plazo.',
           ],
         },

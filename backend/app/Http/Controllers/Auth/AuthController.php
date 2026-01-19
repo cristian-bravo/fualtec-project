@@ -57,7 +57,7 @@ class AuthController extends Controller
 
         $this->authService->sendPasswordReset($data['email']);
 
-        return response()->json(['message' => 'Se ha enviado un enlace de recuperacion.']);
+        return response()->json(['message' => 'Se ha enviado un enlace de recuperación.']);
     }
 
     public function reset(ResetPasswordRequest $request): JsonResponse
@@ -65,7 +65,7 @@ class AuthController extends Controller
         $data = $request->validated();
         $this->authService->resetPassword($data['token'], $data['email'], $data['password']);
 
-        return response()->json(['message' => 'Contrasena actualizada correctamente.']);
+        return response()->json(['message' => 'Contraseña actualizada correctamente.']);
     }
 
     public function verifyEmail(VerifyEmailRequest $request): JsonResponse
@@ -84,14 +84,14 @@ class AuthController extends Controller
     {
         $request->user()->currentAccessToken()?->delete();
 
-        return response()->json(['message' => 'Sesion finalizada']);
+        return response()->json(['message' => 'Sesión finalizada']);
     }
 
     private function validateCaptcha(string $token, string $answer): void
     {
         if (! $this->captchaService->verify($token, $answer)) {
             throw ValidationException::withMessages([
-                'captcha' => ['Captcha invalido.'],
+                'captcha' => ['Captcha inválido.'],
             ]);
         }
     }

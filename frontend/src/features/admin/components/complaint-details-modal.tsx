@@ -87,13 +87,13 @@ export const ComplaintDetailsModal = ({
           <div className="space-y-6">
             <section className="border-b border-slate-100 pb-5">
               <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-                Informacion general
+                Información general
               </h3>
               <div className="mt-3 grid gap-x-6 gap-y-3 sm:grid-cols-2">
                 <DetailItem label="Empresa" value={complaint.empresa} />
                 <DetailItem label="Solicitante" value={complaint.nombre} />
                 <DetailItem label="Cargo" value={complaint.cargo} />
-                <DetailItem label="Telefono" value={complaint.telefono} />
+                <DetailItem label="Teléfono" value={complaint.telefono} />
               </div>
             </section>
 
@@ -112,7 +112,7 @@ export const ComplaintDetailsModal = ({
 
             <section className="border-b border-slate-100 pb-5">
               <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-                Direccion
+                Dirección
               </h3>
               <p className="mt-3 text-sm text-slate-800">{complaint.direccion}</p>
             </section>

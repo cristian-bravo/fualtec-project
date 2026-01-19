@@ -18,7 +18,7 @@ export const PublicationsCards = ({
   if (loading) {
     return (
       <p className="md:hidden text-center text-sm text-slate-500">
-        Cargando informacion de la publicacion.
+        Cargando información de la publicación.
       </p>
     );
   }

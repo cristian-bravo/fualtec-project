@@ -9,7 +9,7 @@ export const TerminosPage = () => (
       {
         title: 'Uso del portal',
         body: [
-          'El acceso al portal implica la aceptación de estas condiciones y el uso responsable de la informacion.',
+          'El acceso al portal implica la aceptación de estas condiciones y el uso responsable de la información.',
           'El contenido puede actualizarse sin previo aviso para mantener su vigencia.',
         ],
       },

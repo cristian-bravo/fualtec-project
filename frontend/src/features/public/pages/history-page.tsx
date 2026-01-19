@@ -9,12 +9,12 @@ export const HistoryPage = () => (
       alt="Nuestra historia corporativa"
       eyebrow="Nuestra empresa"
       title="Nuestra historia"
-      subtitle="Mas de dos décadas acompañando operaciones petroleras con soluciones técnicas confiables."
+      subtitle="Más de dos décadas acompañando operaciones petroleras con soluciones técnicas confiables."
     />
     <ContentPageLayout
       eyebrow="Nuestra empresa"
       title="Nuestra historia"
-      subtitle="Mas de dos décadas acompañando operaciones petroleras con soluciones técnicas confiables."
+      subtitle="Más de dos décadas acompañando operaciones petroleras con soluciones técnicas confiables."
       sections={[
         {
           title: 'Trayectoria',

@@ -98,7 +98,7 @@ export const DownloadsPage = () => {
           </h2>
 
           <p className="mt-8 text-base md:text-lg text-slate-200 leading-relaxed">
-            Acceda a informacion institucional, fichas técnicas y lineamientos generales
+            Acceda a información institucional, fichas técnicas y lineamientos generales
             de nuestros servicios. Explore, visualice y descargue archivos oficiales con facilidad.
           </p>
         </header>

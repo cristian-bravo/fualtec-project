@@ -44,13 +44,13 @@ const complaintSchema = yup.object({
   empresa: yup.string().required('Ingrese la empresa.').max(255, 'Máximo 255 caracteres.'),
   nombre: yup.string().required('Ingrese el nombre.').max(255, 'Máximo 255 caracteres.'),
   cargo: yup.string().required('Ingrese el cargo.').max(255, 'Máximo 255 caracteres.'),
-  telefono: yup.string().required('Ingrese el telefono.').max(60, 'Máximo 60 caracteres.'),
+  telefono: yup.string().required('Ingrese el teléfono.').max(60, 'Máximo 60 caracteres.'),
   email: yup
     .string()
     .email('Correo invalido.')
     .required('Ingrese el correo.')
     .max(255, 'Máximo 255 caracteres.'),
-  direccion: yup.string().required('Ingrese la direccion.').max(255, 'Máximo 255 caracteres.'),
+  direccion: yup.string().required('Ingrese la dirección.').max(255, 'Máximo 255 caracteres.'),
   fecha: yup.string().required('Ingrese la fecha.'),
   tipoQueja: yup
     .mixed<TipoQueja>()
@@ -203,13 +203,13 @@ export const useComplaintForm = () => {
         setSubmitError(null);
       } else {
         const message =
-          err?.response?.data?.message || 'No se pudo enviar la queja o apelacion.';
+          err?.response?.data?.message || 'No se pudo enviar la queja o apelación.';
         setSubmitError(message);
       }
       showToast({
         title: 'No se pudo enviar',
         description:
-          err?.response?.data?.message || 'No se pudo enviar la queja o apelacion.',
+          err?.response?.data?.message || 'No se pudo enviar la queja o apelación.',
         tone: 'error',
       });
     } finally {

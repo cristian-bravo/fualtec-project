@@ -19,11 +19,11 @@ const QUESTIONS: Array<{ name: RatingKey; label: string }> = [
   },
   {
     name: 'p2',
-    label: '2. Como calificarías nuestra capacidad para resolver problemas y responder a tus necesidades?',
+    label: '2. ¿Cómo calificarías nuestra capacidad para resolver problemas y responder a tus necesidades?',
   },
   {
     name: 'p3',
-    label: '3. Como calificarías el profesionalismo y competencia técnica de nuestro personal?',
+    label: '3. ¿Cómo calificarías el profesionalismo y competencia técnica de nuestro personal?',
   },
   {
     name: 'p4',
@@ -119,7 +119,7 @@ export const SatisfactionFormSection = ({
                     <option value="">Seleccione una opción</option>
                     <option value="inspección">inspección integral</option>
                     <option value="integridad">Integridad de ductos</option>
-                    <option value="auditoria">Auditoria operativa</option>
+                    <option value="auditoria">Auditoría operativa</option>
                   </Field>
                 </Tooltip>
               </div>

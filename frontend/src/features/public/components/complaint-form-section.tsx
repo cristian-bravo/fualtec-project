@@ -24,7 +24,7 @@ const radios = {
   ],
   anexa: [
     { key: 'NO', label: 'No' },
-    { key: 'SI', label: 'Si' },
+    { key: 'SI', label: 'Sí' },
   ],
 };
 
@@ -45,7 +45,7 @@ export const ComplaintFormSection = ({
           Datos generales del afectado
         </h2>
         <p className="mt-2 text-sm text-slate-600">
-          Completa la informacion para registrar formalmente tu queja o apelacion.
+          Completa la información para registrar formalmente tu queja o apelación.
         </p>
       </div>
 
@@ -81,7 +81,7 @@ export const ComplaintFormSection = ({
             <div className="grid gap-6 md:grid-cols-2">
               <div>
                 <label className="block text-sm font-medium text-slate-800">
-                  Nombre de la persona que presenta la queja y/o apelacion
+                  Nombre de la persona que presenta la queja y/o apelación
                 </label>
                 <Tooltip
                   content={touched.nombre || submitCount > 0 ? errors.nombre : undefined}
@@ -119,7 +119,7 @@ export const ComplaintFormSection = ({
 
             <div className="grid gap-6 md:grid-cols-3">
               <div>
-                <label className="block text-sm font-medium text-slate-800">Telefono</label>
+                <label className="block text-sm font-medium text-slate-800">Teléfono</label>
                 <Tooltip
                   content={
                     touched.telefono || submitCount > 0 ? errors.telefono : undefined
@@ -178,7 +178,7 @@ export const ComplaintFormSection = ({
 
             <div>
               <label className="block text-sm font-medium text-slate-800">
-                Fecha de presentación de la queja y/o apelacion
+                Fecha de presentación de la queja y/o apelación
               </label>
               <Tooltip
                 content={touched.fecha || submitCount > 0 ? errors.fecha : undefined}
@@ -376,7 +376,7 @@ export const ComplaintFormSection = ({
 
             <div>
               <label className="block text-sm font-medium text-slate-800">
-                Relato claro de la queja y/o apelacion
+                Relato claro de la queja y/o apelación
               </label>
               <Tooltip
                 content={touched.relato || submitCount > 0 ? errors.relato : undefined}
@@ -407,7 +407,7 @@ export const ComplaintFormSection = ({
                 disabled={loading}
                 className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#0A1F44] px-5 py-2.5 text-sm font-semibold text-white shadow-md transition hover:opacity-95 disabled:opacity-70"
               >
-                {loading ? 'Enviando...' : 'Enviar queja y/o apelacion'}
+                {loading ? 'Enviando...' : 'Enviar queja y/o apelación'}
               </button>
             </Tooltip>
           </Form>

@@ -145,7 +145,7 @@ export const AdminUserEditPage = () => {
               </dd>
             </div>
             {/* <div className="flex items-center justify-between">
-              <dt className="font-medium text-slate-500">Ultimo acceso</dt>
+              <dt className="font-medium text-slate-500">Último acceso</dt>
               <dd className="text-slate-800">
                 {formatDate(user?.last_login_at)}
               </dd>

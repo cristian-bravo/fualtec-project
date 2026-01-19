@@ -29,7 +29,7 @@ class RegisterRequest extends FormRequest
                 function (string $attribute, mixed $value, \Closure $fail) {
                     $cedula = (string) $value;
                     if (! $this->isValidEcuadorId($cedula)) {
-                        $fail('Cedula o RUC ecuatoriano invalido.');
+                        $fail('Cédula o RUC ecuatoriano inválido.');
                     }
                 },
             ],
@@ -42,7 +42,7 @@ class RegisterRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'email.unique' => 'El correo ya esta registrado.',
+            'email.unique' => 'El correo ya está registrado.',
         ];
     }
 

@@ -25,7 +25,7 @@ export const MisionPage = () => (
         {
           title: 'Valor para el cliente',
           body: [
-            'Acompañamos la toma de decisiones con informacion clara, trazable y oportuna.',
+            'Acompañamos la toma de decisiones con información clara, trazable y oportuna.',
           ],
         },
       ]}

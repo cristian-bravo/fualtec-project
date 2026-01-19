@@ -9,6 +9,6 @@ export const HERO_INDUSTRIAL_SLIDE_INDEX = 2;
 
 export const HERO_SLIDES = [
   { src: hero1, alt: 'Lineas de transmision' },
-  { src: hero3, alt: 'Inspeccion tecnica' },
+  { src: hero3, alt: 'Inspección técnica' },
   { src: hero2, alt: 'Plataforma petrolera' },
 ];

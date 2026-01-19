@@ -57,12 +57,12 @@ class ComplaintSubmissionController extends Controller
             'telefono.required' => 'Ingrese el telefono.',
             'telefono.max' => 'El telefono no debe superar 60 caracteres.',
             'email.required' => 'Ingrese el correo.',
-            'email.email' => 'Correo invalido.',
+            'email.email' => 'Correo inválido.',
             'email.max' => 'El correo no debe superar 255 caracteres.',
             'direccion.required' => 'Ingrese la direccion.',
             'direccion.max' => 'La direccion no debe superar 255 caracteres.',
             'fecha.required' => 'Ingrese la fecha de presentacion.',
-            'fecha.date' => 'Fecha invalida.',
+            'fecha.date' => 'Fecha inválida.',
             'tipo_queja.required' => 'Seleccione el tipo de queja.',
             'tipo_queja.in' => 'Seleccione un tipo de queja valido.',
             'tipo_inconformidad.required' => 'Seleccione el tipo de inconformidad.',
@@ -81,7 +81,7 @@ class ComplaintSubmissionController extends Controller
         if ($validator->fails()) {
             $errors = [];
             foreach ($validator->errors()->messages() as $field => $messages) {
-                $errors[$field] = $messages[0] ?? 'Valor invalido.';
+                $errors[$field] = $messages[0] ?? 'Valor inválido.';
             }
             return response()->json([
                 'message' => 'Validation failed',

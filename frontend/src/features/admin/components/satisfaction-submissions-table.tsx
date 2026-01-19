@@ -82,7 +82,7 @@ export const SatisfactionSubmissionsTable = ({
             </td>
             <td className="px-6 py-4">
               <div className="flex w-full items-center justify-end gap-2">
-                <Tooltip content="Ver evaluacion">
+                <Tooltip content="Ver evaluación">
                   <button
                     type="button"
                     onClick={(event) => {
@@ -90,7 +90,7 @@ export const SatisfactionSubmissionsTable = ({
                       onSelect(item);
                     }}
                     className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-blue-200 text-blue-600 transition hover:bg-blue-600 hover:text-white"
-                    aria-label="Ver evaluacion"
+                    aria-label="Ver evaluación"
                   >
                     <Eye className="h-4 w-4" />
                   </button>

@@ -128,7 +128,7 @@ export const ClientDashboardPage = () => {
           value={groupsCount.toString()}
           description={
             groupNames.length
-              ? `Ultimos grupos: ${groupNames.join(", ")}`
+              ? `Últimos grupos: ${groupNames.join(", ")}`
               : "Aún no se han publicado grupos a su nombre."
           }
         />

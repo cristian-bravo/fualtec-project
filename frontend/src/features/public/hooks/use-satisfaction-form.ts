@@ -124,14 +124,14 @@ export const useSatisfactionForm = () => {
       } else {
         const message =
           err?.response?.data?.message ||
-          'No se pudo enviar la evaluacion.';
+          'No se pudo enviar la evaluación.';
         setSubmitError(message);
       }
       showToast({
         title: 'No se pudo enviar',
         description:
           err?.response?.data?.message ||
-          'No se pudo enviar la evaluacion.',
+          'No se pudo enviar la evaluación.',
         tone: 'error',
       });
     } finally {

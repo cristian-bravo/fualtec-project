@@ -27,7 +27,7 @@ export const QuienesSomosPage = () => (
           title: 'Nuestro enfoque',
           body: [
             'Combinamos análisis técnico, cumplimiento normativo y una comunicación clara con el cliente.',
-            'Cada proyecto se documenta de forma trazable para auditorias internas y externas.',
+            'Cada proyecto se documenta de forma trazable para auditorías internas y externas.',
           ],
         },
       ]}

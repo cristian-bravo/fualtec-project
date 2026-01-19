@@ -24,7 +24,7 @@ class AuthService
             if ($existingByEmail) {
                 if ($existingByEmail->estado !== 'rechazado') {
                     throw ValidationException::withMessages([
-                        'email' => ['El correo ya esta registrado.'],
+                        'email' => ['El correo ya está registrado.'],
                     ]);
                 }
 
@@ -72,15 +72,15 @@ class AuthService
         $user = User::where('email', $credentials['email'])->first();
 
         if (! $user || ! Hash::check($credentials['password'], $user->password)) {
-            throw new AuthenticationException('Credenciales invalidas');
+            throw new AuthenticationException('Credenciales inválidas');
         }
 
         if ($user->estado === 'inactivo') {
-            throw new AuthenticationException('Cuenta deshabilitada. Consulte con administracion.');
+            throw new AuthenticationException('Cuenta deshabilitada. Consulte con administración.');
         }
 
         if ($user->estado !== 'aprobado') {
-            throw new AuthenticationException('Cuenta pendiente de aprobacion');
+            throw new AuthenticationException('Cuenta pendiente de aprobación');
         }
 
         if (! $user->email_verified_at) {
@@ -104,7 +104,7 @@ class AuthService
 
         if (! $exists) {
             throw ValidationException::withMessages([
-                'email' => 'El correo no esta registrado. Registrese para continuar.',
+                'email' => 'El correo no está registrado. Regístrese para continuar.',
             ]);
         }
 
@@ -142,14 +142,14 @@ class AuthService
 
         if (! $record) {
             throw ValidationException::withMessages([
-                'token' => 'El enlace de verificacion no es valido.',
+                'token' => 'El enlace de verificación no es válido.',
             ]);
         }
 
         if ($record->expires_at->isPast()) {
             $record->delete();
             throw ValidationException::withMessages([
-                'token' => 'El enlace de verificacion ha expirado.',
+                'token' => 'El enlace de verificación ha expirado.',
             ]);
         }
 

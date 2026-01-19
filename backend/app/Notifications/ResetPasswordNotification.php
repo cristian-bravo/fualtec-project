@@ -22,10 +22,10 @@ class ResetPasswordNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Restablecer contrasena')
+            ->subject('Restablecer contraseña')
             ->greeting('Hola ' . ($notifiable->nombre ?? ''))
             ->line('Recibimos una solicitud para restablecer tu acceso.')
-            ->action('Crear nueva contrasena', $this->resetUrl)
+            ->action('Crear nueva contraseña', $this->resetUrl)
             ->line('Si no solicitaste este cambio, ignora este mensaje.');
     }
 }

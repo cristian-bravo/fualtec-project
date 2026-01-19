@@ -33,7 +33,7 @@ export const PublicationsTable = ({
       {loading ? (
         <tr>
           <td colSpan={5} className="px-6 py-4 text-center text-sm text-slate-500">
-            Cargando informacion de la publicacion.
+            Cargando información de la publicación.
           </td>
         </tr>
       ) : items.length === 0 ? (

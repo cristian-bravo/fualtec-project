@@ -38,7 +38,7 @@ class SatisfactionSubmissionController extends Controller
         if ($validator->fails()) {
             $errors = [];
             foreach ($validator->errors()->messages() as $field => $messages) {
-                $errors[$field] = $messages[0] ?? 'Valor invalido.';
+                $errors[$field] = $messages[0] ?? 'Valor inválido.';
             }
             return response()->json([
                 'message' => 'Validation failed',

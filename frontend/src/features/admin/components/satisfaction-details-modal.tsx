@@ -61,12 +61,12 @@ export const SatisfactionDetailsModal = ({
     },
     {
       label:
-        '2. Como calificarias nuestra capacidad para resolver problemas y responder a tus necesidades?',
+        '2. ¿Cómo calificarías nuestra capacidad para resolver problemas y responder a tus necesidades?',
       value: submission.p2,
     },
     {
       label:
-        '3. Como calificarias el profesionalismo y competencia tecnica de nuestro personal?',
+        '3. ¿Cómo calificarías el profesionalismo y competencia técnica de nuestro personal?',
       value: submission.p3,
     },
     {
@@ -84,7 +84,7 @@ export const SatisfactionDetailsModal = ({
       className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 px-4 py-8"
       role="dialog"
       aria-modal="true"
-      aria-label="Detalle de evaluacion"
+      aria-label="Detalle de evaluación"
       onClick={(event) => {
         if (event.target === event.currentTarget) {
           onClose();
@@ -98,7 +98,7 @@ export const SatisfactionDetailsModal = ({
       >
         <header className="flex items-start justify-between border-b border-slate-200 px-6 py-4">
           <div>
-            <h2 className="text-lg font-semibold text-slate-900">Detalle de evaluacion</h2>
+            <h2 className="text-lg font-semibold text-slate-900">Detalle de evaluación</h2>
           </div>
           <Tooltip content="Cerrar" side="bottom">
             <button
@@ -116,11 +116,11 @@ export const SatisfactionDetailsModal = ({
           <div className="space-y-6">
             <section className="border-b border-slate-100 pb-5">
               <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-                Informacion general
+                Información general
               </h3>
               <div className="mt-3 grid gap-x-8 gap-y-3 sm:grid-cols-2">
                 <InfoItem label="Nombre del cliente" value={submission.nombre} />
-                <InfoItem label="Correo electronico" value={submission.email} />
+                <InfoItem label="Correo electrónico" value={submission.email} />
                 <InfoItem label="Servicio evaluado" value={submission.servicio} />
                 <InfoItem label="Puntaje promedio" value={formatPromedio(submission.promedio)} />
               </div>
@@ -156,7 +156,7 @@ export const SatisfactionDetailsModal = ({
               </h3>
               <p className="mt-3 text-sm text-slate-800">
                 {messageFinal || (
-                  <span className="text-slate-400">No se registro mensaje final</span>
+                  <span className="text-slate-400">No se registró mensaje final</span>
                 )}
               </p>
             </section>

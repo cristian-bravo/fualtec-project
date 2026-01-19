@@ -21,7 +21,7 @@ export const SatisfactionAside = () => (
     </div>
 
     <div className="rounded-2xl border border-slate-200 bg-white p-6">
-      <h4 className="text-sm font-semibold text-slate-900">Necesitas algo ahora mismo?</h4>
+      <h4 className="text-sm font-semibold text-slate-900">¿Necesitas algo ahora mismo?</h4>
       <p className="mt-2 text-sm text-slate-700">
         Si es urgente, escríbenos por WhatsApp o envíanos un correo.
       </p>

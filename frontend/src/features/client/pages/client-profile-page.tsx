@@ -11,7 +11,7 @@ export const ClientProfilePage = () => {
       <div className="flex flex-col gap-2">
         <h1 className="text-2xl font-bold text-slate-900">Perfil del cliente</h1>
         <p className="text-sm text-slate-600">
-          Informacion general asociada a su cuenta. Para actualizaciones, solicite
+          Información general asociada a su cuenta. Para actualizaciones, solicite
           el cambio al administrador.
         </p>
       </div>
@@ -50,7 +50,7 @@ export const ClientProfilePage = () => {
         description="Solicite una actualización de credenciales."
       >
         <p className="text-sm text-slate-600">
-          Por seguridad, el restablecimiento se gestiona desde la sección "Olvide
+          Por seguridad, el restablecimiento se gestiona desde la sección "Olvidé
           mi contraseña". Asegúrese de tener acceso al correo corporativo registrado.
         </p>
         <Link to="/client-access/forgot" className="inline-block mt-4">
