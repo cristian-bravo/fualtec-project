@@ -129,7 +129,7 @@ export const AdminGroupsManagePdfsPage = () => {
   const handleRemoveFromGroup = async (pdf: PdfItem) => {
     if (!token || !numericGroupId) return;
     const confirmed = window.confirm(
-      `Quitar "${pdf.title || pdf.filename}" del grupo? El archivo seguira disponible.`
+      `Quitar "${pdf.title || pdf.filename}" del grupo? El archivo seguirá disponible.`
     );
     if (!confirmed) return;
 
@@ -320,7 +320,7 @@ export const AdminGroupsManagePdfsPage = () => {
   if (!isAuthenticated) {
     return (
       <div className="px-4 py-8 text-center text-sm text-slate-600">
-        Debe iniciar sesion para gestionar PDFs.
+        Debe iniciar sesión para gestionar PDFs.
       </div>
     );
   }

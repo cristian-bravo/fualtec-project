@@ -6,20 +6,20 @@ export const VisionPage = () => (
   <>
     <PageHero
       src={visionHero}
-      alt="Vision corporativa"
+      alt="Visión corporativa"
       eyebrow="Nuestra empresa"
-      title="Nuestra vision"
-      subtitle="Ser el socio tecnico lider en inspeccion NDT y gestion documental en la region Amazonica."
+      title="Nuestra visión"
+      subtitle="Ser el socio técnico líder en inspección NDT y gestión documental en la region Amazónica."
     />
     <ContentPageLayout
       eyebrow="Nuestra empresa"
-      title="Nuestra vision"
-      subtitle="Ser el socio tecnico lider en inspeccion NDT y gestion documental en la region Amazonica."
+      title="Nuestra visión"
+      subtitle="Ser el socio técnico líder en inspección NDT y gestión documental en la region Amazónica."
       sections={[
         {
-          title: 'Direccion estrategica',
+          title: 'Direccion estratégica',
           body: [
-            'Impulsamos innovacion y estandares de excelencia para operaciones cada vez mas seguras.',
+            'Impulsamos innovación y estándares de excelencia para operaciones cada vez mas seguras.',
             'Nuestro crecimiento se basa en confianza, resultados medibles y relaciones de largo plazo.',
           ],
         },

@@ -6,27 +6,27 @@ export const QuienesSomosPage = () => (
   <>
     <PageHero
       src={quienesSomosHero}
-      alt="Equipo de inspeccion NDT"
+      alt="Equipo de inspección NDT"
       eyebrow="Nuestra empresa"
       title="Quiénes somos"
-      subtitle="Equipo multidisciplinario con enfoque en inspeccion NDT, integridad de activos y control documental."
+      subtitle="Equipo multidisciplinario con enfoque en inspección NDT, integridad de activos y control documental."
     />
     <ContentPageLayout
       eyebrow="Nuestra empresa"
       title="Quiénes somos"
-      subtitle="Equipo multidisciplinario con enfoque en inspeccion NDT, integridad de activos y control documental."
+      subtitle="Equipo multidisciplinario con enfoque en inspección NDT, integridad de activos y control documental."
       sections={[
         {
           title: 'Nuestro equipo',
           body: [
             'Contamos con especialistas certificados en ensayos no destructivos, integridad y HSE.',
-            'La experiencia en campo nos permite responder con precision y criterio tecnico.',
+            'La experiencia en campo nos permite responder con precision y criterio técnico.',
           ],
         },
         {
           title: 'Nuestro enfoque',
           body: [
-            'Combinamos analisis tecnico, cumplimiento normativo y una comunicacion clara con el cliente.',
+            'Combinamos análisis técnico, cumplimiento normativo y una comunicación clara con el cliente.',
             'Cada proyecto se documenta de forma trazable para auditorias internas y externas.',
           ],
         },

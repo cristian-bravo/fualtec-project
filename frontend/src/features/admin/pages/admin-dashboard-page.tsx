@@ -61,7 +61,7 @@ export const AdminDashboardPage = () => {
   if (!isAuthenticated) {
     return (
       <div className="px-4 py-8 text-center text-sm text-slate-600">
-        Debe iniciar sesion para ver el panel.
+        Debe iniciar sesión para ver el panel.
       </div>
     );
   }
@@ -95,7 +95,7 @@ export const AdminDashboardPage = () => {
           <MetricCard
             label="Por aprobar"
             value={formatCount(stats?.pending_users)}
-            description="Solicitudes pendientes de revision."
+            description="Solicitudes pendientes de revisión."
             tone="amber"
           />
         </div>
@@ -127,7 +127,7 @@ export const AdminDashboardPage = () => {
             <h3 className="text-sm font-semibold text-slate-900">
               Almacenamiento utilizado
             </h3>
-            <p className="text-xs text-slate-500">Maximo permitido: 50 GB.</p>
+            <p className="text-xs text-slate-500">Máximo permitido: 50 GB.</p>
           </div>
           <div className="text-right text-sm text-slate-600">
             <p>

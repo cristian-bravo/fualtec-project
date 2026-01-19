@@ -31,7 +31,7 @@ export const CreateGroupModal = ({
               Crear nuevo grupo
             </h2>
             <p className="text-sm text-slate-500">
-              Defina nombre y periodo del paquete de documentos.
+              Defina nombre y período del paquete de documentos.
             </p>
           </div>
           <Tooltip content="Cerrar">

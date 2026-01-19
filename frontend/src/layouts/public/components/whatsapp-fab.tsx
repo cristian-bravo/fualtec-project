@@ -4,7 +4,7 @@ export const WhatsAppFab = () => (
   <div className="fixed right-5 bottom-5 z-[60]">
     <Tooltip content="WhatsApp">
       <a
-        href="https://wa.me/593999999999"
+        href="https://wa.me/593994342217"
         target="_blank"
         rel="noopener"
         aria-label="WhatsApp"

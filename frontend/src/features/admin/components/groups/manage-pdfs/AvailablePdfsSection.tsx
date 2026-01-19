@@ -116,7 +116,7 @@ export const AvailablePdfsSection = ({
 
 
       <Table
-        headers={["", "Titulo", "Grupo", "Estado", ""]}
+        headers={["", "Título", "Grupo", "Estado", ""]}
         colgroup={
           <>
             <col className="w-[40px]" />

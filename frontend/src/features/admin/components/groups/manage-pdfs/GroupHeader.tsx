@@ -19,12 +19,12 @@ export const GroupHeader = ({ loadingGroup, group, onBack, actions }: Props) => 
           &lt; Volver a grupos
         </button>
         <h1 className="text-2xl font-bold text-slate-900">
-          Gesti? de PDFs del grupo
+          Gestión de PDFs del grupo
         </h1>
         <div className="text-sm text-slate-600">
           {loadingGroup
             ? "Cargando grupo..."
-            : `${group?.name || "Grupo"} ? ${group?.periodo || "Sin periodo"}`}
+            : `${group?.name || "Grupo"} ? ${group?.periodo || "Sin período"}`}
         </div>
         {group && (
           <div className="flex items-center gap-3">

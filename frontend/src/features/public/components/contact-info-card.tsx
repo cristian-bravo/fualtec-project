@@ -1,6 +1,6 @@
 export const ContactInfoCard = () => (
   <article className="rounded-2xl border border-white/10 bg-[#0b244f]/90 backdrop-blur-md p-6 transition hover:-translate-y-1 hover:shadow-2xl hover:border-white/20">
-    <h2 className="text-lg font-semibold text-white mb-4">Informacion de contacto</h2>
+    <h2 className="text-lg font-semibold text-white mb-4">Información de contacto</h2>
     <ul className="space-y-4 text-sm text-slate-200/90">
       <li className="flex gap-3">
         <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-white/10 ring-1 ring-white/15">
@@ -10,7 +10,7 @@ export const ContactInfoCard = () => (
         </span>
         <div>
           <p className="font-medium text-white">Dirección</p>
-          <p className="text-slate-300">Av. Quito y Av. Amazonas, Lago Agrio, Sucumbios - Ecuador</p>
+          <p className="text-slate-300">Kilómetro 7 ½ de la vía Lago Agrio, frente a CYFOIL, Orellana - Ecuador</p>
         </div>
       </li>
       <li className="flex gap-3">
@@ -20,8 +20,8 @@ export const ContactInfoCard = () => (
           </svg>
         </span>
         <div>
-          <p className="font-medium text-white">Telefonos</p>
-          <p className="text-slate-300">+593 99 434 2217 / +593 98 456 7891</p>
+          <p className="font-medium text-white">Teléfonos</p>
+          <p className="text-slate-300">+593 99 434 2217 / +593 98 733 3978</p>
         </div>
       </li>
       <li className="flex gap-3">
@@ -44,7 +44,7 @@ export const ContactInfoCard = () => (
 
     <div className="mt-6 flex flex-wrap gap-3">
       <a
-        href="https://wa.me/593984567890"
+        href="https://wa.me/593994342217"
         target="_blank"
         rel="noreferrer"
         className="inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold text-white bg-white/10 hover:bg-white/20 ring-1 ring-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30 transition"

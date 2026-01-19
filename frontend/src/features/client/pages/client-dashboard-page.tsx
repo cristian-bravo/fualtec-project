@@ -68,7 +68,7 @@ export const ClientDashboardPage = () => {
   if (!isAuthenticated) {
     return (
       <div className="px-4 py-8 text-center text-sm text-slate-600">
-        Debe iniciar sesion para revisar sus publicaciones.
+        Debe iniciar sesión para revisar sus publicaciones.
       </div>
     );
   }
@@ -79,7 +79,7 @@ export const ClientDashboardPage = () => {
         <div>
           <h1 className="text-2xl font-bold text-slate-900">Resumen general</h1>
           <p className="text-sm text-slate-600">
-            Informacion relevante de los grupos publicados a su nombre.
+            Información relevante de los grupos publicados a su nombre.
           </p>
         </div>
         <div className="flex items-center gap-3">
@@ -100,7 +100,7 @@ export const ClientDashboardPage = () => {
         </Card>
         <Card>
           <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-            Ultima publicacion
+            Última publicación
           </p>
           <p className="mt-2 text-xl font-semibold text-slate-900">
             {latestPublication?.group?.name ?? "Sin publicaciones"}
@@ -129,20 +129,20 @@ export const ClientDashboardPage = () => {
           description={
             groupNames.length
               ? `Ultimos grupos: ${groupNames.join(", ")}`
-              : "Aun no se han publicado grupos a su nombre."
+              : "Aún no se han publicado grupos a su nombre."
           }
         />
         <StatCard
           label="PDFs asignados"
           value={documentsCount.toString()}
-          description="Documentacion disponible para descarga."
+          description="Documentación disponible para descarga."
         />
       </div>
 
-      <Card title="Recordatorio de seguridad" description="Proteccion y uso responsable.">
+      <Card title="Recordatorio de seguridad" description="Protección y uso responsable.">
         <p>
           Mantenga sus credenciales seguras y evite compartir enlaces de descarga.
-          Cada acceso queda registrado con trazabilidad completa y auditoria.
+          Cada acceso queda registrado con trazabilidad completa y auditoría.
         </p>
       </Card>
     </div>

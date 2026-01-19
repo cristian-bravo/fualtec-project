@@ -108,7 +108,7 @@ export const AdminGroupsPage = () => {
             : item
         )
       );
-      alertSuccess("Grupo ocultar correctamente.");
+      alertSuccess("Grupo ocultado correctamente.");
     } catch (error: any) {
       console.error(error);
       const message =
@@ -122,7 +122,7 @@ export const AdminGroupsPage = () => {
   if (!isAuthenticated) {
     return (
       <div className="px-4 py-8 text-center text-sm text-slate-600">
-        Debe iniciar sesion para gestionar grupos.
+        Debe iniciar sesión para gestionar grupos.
       </div>
     );
   }
@@ -132,10 +132,10 @@ export const AdminGroupsPage = () => {
       <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
         <div>
           <h1 className="text-2xl font-bold text-slate-900">
-            Grupos de publicaciones
+            Grupos de publicaciónes
           </h1>
           <p className="text-sm text-slate-600">
-            Cree agrupaciones de PDFs y programe la publicacion para distintos
+            Cree agrupaciones de PDFs y programe la publicación para distintos
             clientes o segmentos.
           </p>
         </div>
@@ -241,7 +241,7 @@ export const AdminGroupsPage = () => {
             Anterior
           </Button>
           <span>
-            Pagina {page} de {totalPages}
+            Página {page} de {totalPages}
           </span>
           <Button
             variant="secondary"

@@ -125,13 +125,13 @@ export const LoginPage = () => {
                   if (normalized.includes('deshabilitada')) {
                     showToast({
                       title: 'Cuenta deshabilitada',
-                      description: 'Consulte con administracion.',
+                      description: 'Consulte con administración.',
                       tone: 'error',
                     });
                   } else if (normalized.includes('pendiente')) {
                     showToast({
-                      title: 'Cuenta pendiente de aprobacion',
-                      description: 'Espere la aprobacion del administrador.',
+                      title: 'Cuenta pendiente de aprobación',
+                      description: 'Espere la aprobación del administrador.',
                       tone: 'error',
                     });
                   } else if (normalized.includes('no verificado')) {
@@ -142,7 +142,7 @@ export const LoginPage = () => {
                     });
                   } else {
                     showToast({
-                      title: 'Credenciales invalidas',
+                      title: 'Credenciales inválidas',
                       description: 'Revise los datos ingresados',
                       tone: 'error',
                     });
@@ -181,10 +181,10 @@ export const LoginPage = () => {
                         className="w-full rounded-md border border-white/20 bg-white/10 px-3 py-2 pr-10 text-white placeholder-slate-300 outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-400/30"
                       />
                       <div className="absolute right-2 top-1/2 -translate-y-1/2">
-                        <Tooltip content={showPassword ? 'Ocultar contrasena' : 'Mostrar contrasena'}>
+                        <Tooltip content={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}>
                           <button
                             type="button"
-                            aria-label={showPassword ? 'Ocultar contrasena' : 'Mostrar contrasena'}
+                            aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
                             onClick={() => setShowPassword((s) => !s)}
                             className="rounded p-1 text-slate-300 transition hover:text-white"
                           >

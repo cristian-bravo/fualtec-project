@@ -41,16 +41,16 @@ const isAllowedDocument = (file: File) => {
 };
 
 const complaintSchema = yup.object({
-  empresa: yup.string().required('Ingrese la empresa.').max(255, 'Maximo 255 caracteres.'),
-  nombre: yup.string().required('Ingrese el nombre.').max(255, 'Maximo 255 caracteres.'),
-  cargo: yup.string().required('Ingrese el cargo.').max(255, 'Maximo 255 caracteres.'),
-  telefono: yup.string().required('Ingrese el telefono.').max(60, 'Maximo 60 caracteres.'),
+  empresa: yup.string().required('Ingrese la empresa.').max(255, 'Máximo 255 caracteres.'),
+  nombre: yup.string().required('Ingrese el nombre.').max(255, 'Máximo 255 caracteres.'),
+  cargo: yup.string().required('Ingrese el cargo.').max(255, 'Máximo 255 caracteres.'),
+  telefono: yup.string().required('Ingrese el telefono.').max(60, 'Máximo 60 caracteres.'),
   email: yup
     .string()
     .email('Correo invalido.')
     .required('Ingrese el correo.')
-    .max(255, 'Maximo 255 caracteres.'),
-  direccion: yup.string().required('Ingrese la direccion.').max(255, 'Maximo 255 caracteres.'),
+    .max(255, 'Máximo 255 caracteres.'),
+  direccion: yup.string().required('Ingrese la direccion.').max(255, 'Máximo 255 caracteres.'),
   fecha: yup.string().required('Ingrese la fecha.'),
   tipoQueja: yup
     .mixed<TipoQueja>()

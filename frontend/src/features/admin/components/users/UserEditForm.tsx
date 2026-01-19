@@ -47,7 +47,7 @@ export const UserEditForm = ({ values, onChange, onSubmit, isSaving }: Props) =>
           autoComplete="email"
         />
         <Input
-          label="Cedula"
+          label="Cédula"
           value={values.cedula}
           onChange={(event) => onChange("cedula", event.target.value)}
           placeholder="0102030405"
@@ -74,10 +74,10 @@ export const UserEditForm = ({ values, onChange, onSubmit, isSaving }: Props) =>
           <option value="inactivo">Deshabilitado</option>
         </Select>
         <Input
-          label="Nueva contrasena"
+          label="Nueva contraseña"
           value={values.password}
           onChange={(event) => onChange("password", event.target.value)}
-          placeholder="Dejar vacio para mantener"
+          placeholder="Dejar vacío para mantener"
           type="password"
           autoComplete="new-password"
           hint="Deje en blanco si no desea cambiarla."

@@ -72,7 +72,7 @@ export const AdminUserEditPage = () => {
   if (!Number.isFinite(userId)) {
     return (
       <div className="px-4 py-8 text-center text-sm text-slate-600">
-        Usuario invalido.
+        Usuario inválido.
       </div>
     );
   }
@@ -104,7 +104,7 @@ export const AdminUserEditPage = () => {
           )}
           {!isLoading && !user && (
             <div className="py-10 text-center text-sm text-slate-500">
-              No se encontro el usuario solicitado.
+              No se encontró el usuario solicitado.
             </div>
           )}
           {!isLoading && user && (
@@ -119,7 +119,7 @@ export const AdminUserEditPage = () => {
 
         <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
           <h2 className="text-sm font-semibold text-slate-900">
-            Informacion general
+            Información general
           </h2>
           <dl className="mt-4 space-y-3 text-sm text-slate-600">
             <div className="flex items-center justify-between">
@@ -133,13 +133,13 @@ export const AdminUserEditPage = () => {
               </dd>
             </div>
             <div className="flex items-center justify-between">
-              <dt className="font-medium text-slate-500">Verificacion</dt>
+              <dt className="font-medium text-slate-500">Verificación</dt>
               <dd className="text-slate-800">
                 {user?.email_verified_at ? "Verificado" : "Sin verificar"}
               </dd>
             </div>
             <div className="flex items-center justify-between">
-              <dt className="font-medium text-slate-500">Creacion</dt>
+              <dt className="font-medium text-slate-500">Creación</dt>
               <dd className="text-slate-800">
                 {formatDate(user?.created_at)}
               </dd>

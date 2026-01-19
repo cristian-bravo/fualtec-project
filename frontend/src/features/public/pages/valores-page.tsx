@@ -23,15 +23,15 @@ export const ValoresPage = () => (
           ],
         },
         {
-          title: 'Calidad tecnica',
+          title: 'Calidad técnica',
           body: [
-            'Aplicamos buenas practicas y metodologias certificadas para asegurar resultados confiables.',
+            'Aplicamos buenas practicas y metodologías certificadas para asegurar resultados confiables.',
           ],
         },
         {
           title: 'Integridad',
           body: [
-            'Actuamos con etica, trazabilidad y cumplimiento normativo en cada entrega.',
+            'Actuamos con ética, trazabilidad y cumplimiento normativo en cada entrega.',
           ],
         },
         {

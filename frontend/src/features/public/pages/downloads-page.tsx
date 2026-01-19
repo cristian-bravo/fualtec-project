@@ -27,7 +27,7 @@ const resolveMeta = (filename: string): Omit<DownloadItem, 'url'> => {
   if (name.includes('alcances')) {
     return {
       title: 'Alcances de acreditación OI',
-      date: '20/12/2024',
+      date: '18/01/2026',
       size: '0.22 MB',
     };
   }
@@ -35,12 +35,12 @@ const resolveMeta = (filename: string): Omit<DownloadItem, 'url'> => {
   if (name.includes('certificado')) {
     return {
       title: 'Certificado de acreditación',
-      date: '18/12/2024',
+      date: '18/12/2025',
       size: '0.86 MB',
     };
   }
 
-  if (name.includes('resolucion')) {
+  if (name.includes('resolución')) {
     return {
       title: 'Resolución  ARCERNNR 2024',
       date: '05/12/2024',
@@ -50,7 +50,7 @@ const resolveMeta = (filename: string): Omit<DownloadItem, 'url'> => {
 
   return {
     title: formatTitle(filename),
-    date: 'Actualizado recientemente',
+    date: 'recientemente',
   };
 };
 
@@ -83,13 +83,13 @@ export const DownloadsPage = () => {
   }, [previewDoc]);
 
   return (
-    <section className="relative min-h-screen bg-[#0A1F44] flex flex-col justify-between">
+    <section className="relative bg-[#0A1F44] flex flex-col justify-between">
       <div className="pointer-events-none absolute inset-0 opacity-20 [background-image:radial-gradient(80rem_40rem_at_-10%_-10%,rgba(59,130,246,0.18),transparent),radial-gradient(60rem_30rem_at_110%_-10%,rgba(16,185,129,0.12),transparent)]" />
 
       <div className="relative mx-auto w-full max-w-[90rem] px-8 py-20 flex-1">
         <header className="max-w-3xl text-center mx-auto">
           <p className="text-sm font-semibold uppercase tracking-[0.15em] text-blue-200 mb-4">
-            Documentos publicos
+            Documentos públicos
           </p>
 
           <h2 className="relative inline-block text-4xl md:text-5xl font-bold text-white leading-tight">
@@ -98,7 +98,7 @@ export const DownloadsPage = () => {
           </h2>
 
           <p className="mt-8 text-base md:text-lg text-slate-200 leading-relaxed">
-            Acceda a informacion institucional, fichas tecnicas y lineamientos generales
+            Acceda a informacion institucional, fichas técnicas y lineamientos generales
             de nuestros servicios. Explore, visualice y descargue archivos oficiales con facilidad.
           </p>
         </header>

@@ -2,11 +2,11 @@ import { Link } from 'react-router-dom';
 
 export const EnergySection = () => (
   <section className="relative overflow-hidden bg-gradient-to-b from-[#081a35] via-[#0A1F44] to-[#071326]">
-    {/* lÇðneas/luces sutiles */}
+    {/* luces sutiles */}
     <div className="pointer-events-none absolute inset-0 opacity-20 [background-image:radial-gradient(80rem_40rem_at_-10%_-10%,rgba(59,130,246,0.18),transparent),radial-gradient(60rem_30rem_at_110%_-10%,rgba(16,185,129,0.12),transparent)]" />
 
     <div className="relative mx-auto w-full max-w-7xl px-6 py-20">
-      {/* Texto estilo ƒ?omodeloƒ?? */}
+      {/* Texto estilo */}
       <div className="grid items-start gap-12 lg:grid-cols-2">
         <div className="space-y-6">
           <p className="text-sm font-semibold uppercase tracking-wide text-blue-300">
@@ -14,11 +14,11 @@ export const EnergySection = () => (
           </p>
           <h2 className="text-4xl font-semibold leading-tight text-white sm:text-5xl">
             Inspección y <span className="text-sky-300">ensayos no destructivos</span> para
-            operaciones petroleras <span className="text-sky-300">seguras</span>
+            el sector industrial y <span className="text-sky-300">petrolero</span>
           </h2>
           <p className="max-w-xl text-lg text-slate-300">
-            Ensayos no destructivos, inspección en campo y gestión de evidencias técnicas
-            alineadas a normas API, ASME e ISO para activos críticos.
+          Garantizar los servicios de inspección, ensayos no destructivos, 
+          inspección en campo y gestión de evidencias técnicas, alineados con las normas API, ASME e ISO para activos críticos.
           </p>
           <div className="flex flex-col gap-3 sm:flex-row">
             <Link

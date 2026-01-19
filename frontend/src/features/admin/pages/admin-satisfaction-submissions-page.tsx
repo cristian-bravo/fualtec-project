@@ -56,7 +56,7 @@ export const AdminSatisfactionSubmissionsPage = () => {
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-bold text-slate-900">
-              Formulario de satisfaccion
+              Formulario de satisfacción
             </h1>
             <span className="text-sm text-slate-500">({items.length})</span>
           </div>

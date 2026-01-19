@@ -33,7 +33,7 @@ export const PdfTable: React.FC<PdfTableProps> = ({
   return (
     <div className="hidden sm:block overflow-x-auto rounded-lg border bg-white">
       <Table
-        headers={["", "Titulo", "Grupo", "Estado", ""]}
+        headers={["", "Título", "Grupo", "Estado", ""]}
         className="overflow-visible"
         colgroup={
           <>

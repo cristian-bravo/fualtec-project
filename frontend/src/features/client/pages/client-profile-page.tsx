@@ -31,7 +31,7 @@ export const ClientProfilePage = () => {
             </dd>
           </div>
           <div>
-            <dt className="text-xs uppercase tracking-wide text-slate-500">Cedula</dt>
+            <dt className="text-xs uppercase tracking-wide text-slate-500">Cédula</dt>
             <dd className="text-sm font-semibold text-slate-900">
               {user?.cedula ?? "No registrada"}
             </dd>
@@ -46,12 +46,12 @@ export const ClientProfilePage = () => {
       </Card>
 
       <Card
-        title="Actualizacion de contrasena"
-        description="Solicite una actualizacion de credenciales."
+        title="Actualización de contraseña"
+        description="Solicite una actualización de credenciales."
       >
         <p className="text-sm text-slate-600">
-          Por seguridad, el restablecimiento se gestiona desde la seccion "Olvide
-          mi contrasena". Asegurese de tener acceso al correo corporativo registrado.
+          Por seguridad, el restablecimiento se gestiona desde la sección "Olvide
+          mi contraseña". Asegúrese de tener acceso al correo corporativo registrado.
         </p>
         <Link to="/client-access/forgot" className="inline-block mt-4">
           <Button>Solicitar cambio</Button>

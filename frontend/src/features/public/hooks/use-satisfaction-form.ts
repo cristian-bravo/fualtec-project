@@ -34,8 +34,8 @@ const satisfactionSchema = yup.object({
   p3: parseNum(),
   p4: parseNum(),
   p5: parseNum(),
-  comentarios: yup.string().max(500, 'Maximo 500 caracteres'),
-  mensajeFinal: yup.string().max(500, 'Maximo 500 caracteres').optional(),
+  comentarios: yup.string().max(500, 'Máximo 500 caracteres'),
+  mensajeFinal: yup.string().max(500, 'Máximo 500 caracteres').optional(),
 });
 
 const initialValues: SatisfactionFormValues = {

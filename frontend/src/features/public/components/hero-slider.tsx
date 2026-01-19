@@ -48,7 +48,7 @@ export const HeroSlider = () => {
           to="/servicios"
           className="rounded-full bg-white/10 px-4 py-2 text-sm font-medium text-white backdrop-blur transition hover:bg-white/20"
         >
-          Conoce nuestros servicios ƒÅ'
+          Conoce nuestros servicios '
         </Link>
       </div> */}
 
@@ -56,15 +56,18 @@ export const HeroSlider = () => {
       {index === HERO_MAIN_SLIDE_INDEX && (
         <div className="relative z-10 mx-auto flex h-full w-full max-w-7xl items-center px-6">
           <div className="max-w-2xl space-y-5 text-white">
-            <h1 className="text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl">
-              Alta Tecnologia
-              <br />
-              en Servicios
-              <br />
-              de Inspeccion
-            </h1>
+        <h1 className="text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl text-white">
+          Alta Tecnología
+          <br />
+          aplicada a la Inspección{" "}
+          <span className="relative inline-block">
+            NDT
+            <span className="absolute left-0 -bottom-1 h-[2px] w-full bg-red-600"></span>
+          </span>
+        </h1>
+
             <p className="max-w-xl text-lg text-white/85">
-              Confianza y precision en ensayos no destructivos para la industria
+              Confianza y precisión en ensayos no destructivos para la industria
               petrolera.
             </p>
             <Link
@@ -147,17 +150,14 @@ export const HeroSlider = () => {
               </div>
             ))}
           </div>
-
           <Link
             to="/contacto"
             className="mt-5 inline-flex items-center justify-center rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white shadow-lg transition hover:opacity-90"
           >
             Contáctanos
           </Link>
-
         </div>
       </div>
-
     </div>
   </div>
 )}

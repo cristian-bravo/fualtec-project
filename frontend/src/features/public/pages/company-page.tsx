@@ -3,27 +3,27 @@ import { ContentPageLayout } from '../components/content-page-layout';
 export const CompanyPage = () => (
   <ContentPageLayout
     eyebrow="Nuestra empresa"
-    title="Fualtec en el sector energetico"
-    subtitle="Somos un aliado tecnico para operaciones petroleras que demandan seguridad, trazabilidad y cumplimiento."
+    title="Fualtec en el sector petrolero"
+    subtitle="Somos un aliado técnico para operaciones petroleras que demandan seguridad, trazabilidad y cumplimiento."
     sections={[
       {
         title: 'Perfil corporativo',
         body: [
-          'Integramos ingenieria, inspeccion y gestion documental para apoyar decisiones criticas en campo.',
-          'Nuestro enfoque combina tecnologia, personal certificado y procesos auditables.',
+          'Integramos ingeniería, inspección y gestión documental para apoyar decisiones criticas en campo.',
+          'Nuestro enfoque combina tecnología, personal certificado y procesos auditables.',
         ],
       },
       {
         title: 'Cobertura operativa',
         body: [
-          'Atendemos proyectos en zona Oriente y operaciones de tierra firme con respuesta agil y equipos propios.',
+          'Atendemos proyectos en zona Oriente y operaciones de tierra firme con respuesta ágil y equipos propios.',
           'El modelo operativo se adapta al riesgo y al ciclo de vida de los activos.',
         ],
       },
       {
         title: 'Compromiso',
         body: [
-          'Priorizamos la seguridad, la calidad tecnica y la transparencia en cada entrega.',
+          'Priorizamos la seguridad, la calidad técnica y la transparencia en cada entrega.',
         ],
       },
     ]}

@@ -284,7 +284,7 @@ export const ClientGroupDocumentsPage = () => {
       </div>
 
       <Table
-        headers={["Seleccion", "Documento", "Categoria", "Publicado", "Acciones"]}
+        headers={["Selección", "Documento", "Categoría", "Publicado", "Acciones"]}
         className="overflow-visible"
         colgroup={
           <>

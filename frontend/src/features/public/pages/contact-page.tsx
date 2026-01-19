@@ -16,11 +16,11 @@ export const ContactPage = () => {
             Contacto directo
           </p>
           <h1 className="relative inline-block text-4xl md:text-5xl font-bold text-white leading-tight">
-            Coordinemos su proximo proyecto
+            Coordinemos su próximo proyecto
             <span className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[3px] w-28 rounded-full bg-gradient-to-r from-[#8B0000] to-blue-400 mt-2 animate-pulse" />
           </h1>
           <p className="mt-8 text-base md:text-lg text-slate-200 leading-relaxed">
-            Nuestro equipo puede agendar una reunion presencial o virtual para analizar
+            Nuestro equipo puede agendar una reunión presencial o virtual para analizar
             sus necesidades en operaciones petroleras.
           </p>
         </header>

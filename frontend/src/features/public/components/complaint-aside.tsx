@@ -10,7 +10,7 @@ export const ComplaintAside = () => (
     <div className="rounded-2xl border border-slate-200 bg-white p-6">
       <h4 className="text-sm font-semibold text-slate-900">Soporte</h4>
       <p className="mt-2 text-sm text-slate-700">
-        Si requieres asistencia para completar el formulario, contactanos.
+        Si requieres asistencia para completar el formulario, contáctenos.
       </p>
       <div className="mt-3 flex flex-wrap gap-2">
         <a

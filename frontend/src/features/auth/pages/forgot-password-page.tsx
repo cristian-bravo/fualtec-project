@@ -26,7 +26,7 @@ const CaptchaTokenSync = ({ token }: { token: string }) => {
 };
 
 const schema = yup.object({
-  email: yup.string().email("Correo invalido").required("Ingrese su correo"),
+  email: yup.string().email("Correo inválido").required("Ingrese su correo"),
   captcha_token: yup.string().required("Complete el captcha"),
   captcha_answer: yup.string().required("Complete el captcha"),
 });
@@ -86,7 +86,7 @@ export const ForgotPasswordPage = () => {
       </Link>
       {/* <Link
         to="/client-access/login"
-        title="Volver al inicio de sesion"
+        title="Volver al inicio de sesión"
         className="absolute left-6 top-6 z-20 flex items-center gap-2 rounded-full border border-[#FFC107]/70 bg-transparent px-3 py-2 text-[#FFC107] transition hover:bg-[#FFC107]/10"
 
       >
@@ -117,7 +117,7 @@ export const ForgotPasswordPage = () => {
 
         <div className="relative bg-white p-8 md:p-10 flex flex-col">
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#0A1F44]/70">Portal seguro</p>
-          <h1 className="mt-2 text-3xl font-bold text-[#0A1F44]">Recuperar contrasena</h1>
+          <h1 className="mt-2 text-3xl font-bold text-[#0A1F44]">Recuperar contraseña</h1>
           <p className="mt-1 text-sm text-slate-600">
             Ingrese su correo electrónico. Le enviaremos un enlace para restablecer su acceso.
           </p>

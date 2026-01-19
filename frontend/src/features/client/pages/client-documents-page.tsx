@@ -49,7 +49,7 @@ export const ClientDocumentsPage = () => {
   if (!isAuthenticated) {
     return (
       <div className="px-4 py-8 text-center text-sm text-slate-600">
-        Debe iniciar sesion para revisar documentos.
+        Debe iniciar sesión para revisar documentos.
       </div>
     );
   }

@@ -68,7 +68,7 @@ export const RegisterForm = ({
       </label>
 
       <label className="flex flex-col gap-1">
-        <span className="font-semibold text-white">Contrasena</span>
+        <span className="font-semibold text-white">contraseña</span>
         <div className="relative">
           <Field
             name="password"
@@ -79,12 +79,12 @@ export const RegisterForm = ({
           />
           <div className="absolute right-2 top-1/2 -translate-y-1/2">
             <Tooltip
-              content={showPassword ? "Ocultar contrasena" : "Mostrar contrasena"}
+              content={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
             >
               <button
                 type="button"
                 onClick={onTogglePassword}
-                aria-label={showPassword ? "Ocultar contrasena" : "Mostrar contrasena"}
+                aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
                 className="rounded p-1 text-slate-300 transition hover:text-white"
               >
                 {showPassword ? (
@@ -105,7 +105,7 @@ export const RegisterForm = ({
       </label>
 
       <label className="flex flex-col gap-1">
-        <span className="font-semibold text-white">Confirmar contrasena</span>
+        <span className="font-semibold text-white">Confirmar contraseña</span>
         <Field
           name="confirmPassword"
           type={showPassword ? "text" : "password"}
@@ -128,7 +128,7 @@ export const RegisterForm = ({
       />
 
       <p className="text-xs text-slate-300/90">
-        Al registrarse, acepta nuestra politica de privacidad y el tratamiento de datos conforme a la normativa vigente.
+        Al registrarse, acepta nuestra política de privacidad y el tratamiento de datos conforme a la normativa vigente.
       </p>
 
       <button
@@ -140,7 +140,7 @@ export const RegisterForm = ({
       </button>
 
       <p className="text-center text-sm text-slate-300">
-        Ya tiene una cuenta?{" "}
+        ¿Ya tiene una cuenta?{" "}
         <Link to="/client-access/login" className="text-blue-300 hover:text-blue-200 hover:underline">
           Ingresar
         </Link>

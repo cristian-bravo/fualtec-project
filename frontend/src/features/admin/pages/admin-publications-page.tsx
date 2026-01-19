@@ -46,7 +46,7 @@ export const AdminPublicationsPage = () => {
 
   const hasSearch = Boolean(search.trim());
   const emptyMessage = hasSearch
-    ? 'No hay resultados para la busqueda.'
+    ? 'No hay resultados para la búsqueda.'
     : 'No hay publicaciones registradas.';
 
   const detailCreator = detail?.creator?.nombre || detail?.creator?.email || '-';
@@ -57,7 +57,7 @@ export const AdminPublicationsPage = () => {
   if (!isAuthenticated) {
     return (
       <div className="px-4 py-8 text-center text-sm text-slate-600">
-        Debe iniciar sesion para ver las publicaciones.
+        Debe iniciar sesión para ver las publicaciones.
       </div>
     );
   }
@@ -81,7 +81,7 @@ export const AdminPublicationsPage = () => {
             value={searchInput}
             onChange={setSearchInput}
             onSearch={applySearch}
-            placeholder="Buscar por grupo o periodo"
+            placeholder="Buscar por grupo o período"
           />
         </div>
       </div>
@@ -113,13 +113,13 @@ export const AdminPublicationsPage = () => {
       <Modal
         isOpen={detailOpen}
         onClose={() => setDetailOpen(false)}
-        title={detail?.name || 'Detalle de publicacion'}
+        title={detail?.name || 'Detalle de publicación'}
         description={
           detail
-            ? `Periodo ${detail.periodo || 'Sin periodo'} - Publicado ${formatDate(
+            ? `Período ${detail.periodo || 'Sin período'} - Publicado ${formatDate(
                 detail.published_at
               )}`
-            : 'Cargando informacion de la publicacion.'
+            : 'Cargando información de la publicación.'
         }
       >
         {detailError && (
@@ -177,7 +177,7 @@ export const AdminPublicationsPage = () => {
               )}
             </div>
 
-            <Table headers={['Titulo', '']}>
+            <Table headers={['Título', '']}>
               {detail.pdfs.length === 0 && (
                 <tr>
                   <td

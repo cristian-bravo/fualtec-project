@@ -49,22 +49,22 @@ export const VerifyEmailPage = () => {
           <>
             <h1 className="text-xl font-bold text-white">Correo verificado</h1>
             <p className="mt-2 text-sm text-slate-300">
-              Tu correo fue confirmado. Ahora espera la aprobacion del administrador.
+              Tu correo fue confirmado. Ahora espera la aprobación del administrador.
             </p>
             <Link
               to="/client-access/login"
               className="mt-6 inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow transition hover:bg-blue-700"
             >
-              Ir al inicio de sesion
+              Ir al inicio de sesión
             </Link>
           </>
         )}
 
         {status === "error" && (
           <>
-            <h1 className="text-xl font-bold text-white">Enlace invalido</h1>
+            <h1 className="text-xl font-bold text-white">Enlace inválido</h1>
             <p className="mt-2 text-sm text-slate-300">
-              El enlace de verificacion no es valido o ya expiro.
+              El enlace de verificación no es válido o ya expiró.
             </p>
             <Link
               to="/client-access/register"

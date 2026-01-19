@@ -6,7 +6,7 @@ export const SatisfactionAside = () => (
         Tu experiencia es valiosa. Leemos cada comentario para tomar mejores decisiones.
       </p>
       <p className="mt-3 text-xs text-slate-500">
-        Pequenas mejoras generan grandes resultados con el tiempo.
+        Pequeñas mejoras generan grandes resultados con el tiempo.
       </p>
     </div>
 
@@ -23,11 +23,11 @@ export const SatisfactionAside = () => (
     <div className="rounded-2xl border border-slate-200 bg-white p-6">
       <h4 className="text-sm font-semibold text-slate-900">Necesitas algo ahora mismo?</h4>
       <p className="mt-2 text-sm text-slate-700">
-        Si es urgente, escribenos por WhatsApp o envianos un correo.
+        Si es urgente, escríbenos por WhatsApp o envíanos un correo.
       </p>
       <div className="mt-3 flex flex-wrap gap-2">
         <a
-          href="https://wa.me/593984567890"
+          href="https://wa.me/593994342217"
           target="_blank"
           rel="noreferrer"
           className="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-semibold text-white bg-[#0A1F44] hover:opacity-95"

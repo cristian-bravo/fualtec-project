@@ -16,20 +16,20 @@ export const RegisterHero = () => (
         <p className="text-xs font-semibold uppercase tracking-[0.25em] text-blue-200 text-center">Portal seguro</p>
         <h1 className="mt-2 mb-4 text-4xl font-extrabold text-white text-center">Registro</h1>
         <p className="mt-2 text-slate-100">
-          Crea tu cuenta corporativa. Un administrador validara tu informacion para habilitar el acceso.
+          Crea tu cuenta corporativa. Un administrador validará tu información para habilitar el acceso.
         </p>
         <ul className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-2 text-slate-200/90 text-sm">
           <li className="flex items-center gap-2">
             <span className="inline-block h-1.5 w-1.5 rounded-full bg-blue-400" />
-            Descargas tecnicas privadas
+            Descargas técnicas privadas
           </li>
           <li className="flex items-center gap-2">
             <span className="inline-block h-1.5 w-1.5 rounded-full bg-blue-400" />
-            Auditorias y reportes
+            Auditorías y reportes
           </li>
           <li className="flex items-center gap-2">
             <span className="inline-block h-1.5 w-1.5 rounded-full bg-blue-400" />
-            Comunicacion con inspeccion
+            Comunicación con inspección
           </li>
           <li className="flex items-center gap-2">
             <span className="inline-block h-1.5 w-1.5 rounded-full bg-blue-400" />

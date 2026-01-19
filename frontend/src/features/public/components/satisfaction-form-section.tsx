@@ -15,15 +15,15 @@ type RatingKey = 'p1' | 'p2' | 'p3' | 'p4' | 'p5';
 const QUESTIONS: Array<{ name: RatingKey; label: string }> = [
   {
     name: 'p1',
-    label: '1. Los servicios entregados cumplieron con tus expectativas y estandares?',
+    label: '1. Los servicios entregados cumplieron con tus expectativas y estándares?',
   },
   {
     name: 'p2',
-    label: '2. Como calificarias nuestra capacidad para resolver problemas y responder a tus necesidades?',
+    label: '2. Como calificarías nuestra capacidad para resolver problemas y responder a tus necesidades?',
   },
   {
     name: 'p3',
-    label: '3. Como calificarias el profesionalismo y competencia tecnica de nuestro personal?',
+    label: '3. Como calificarías el profesionalismo y competencia técnica de nuestro personal?',
   },
   {
     name: 'p4',
@@ -48,10 +48,10 @@ export const SatisfactionFormSection = ({
       <div className="flex items-start justify-between gap-4">
         <div>
           <h2 className="text-2xl md:text-3xl font-bold text-slate-900">
-            Evalua tu experiencia
+            Evalúa tu experiencia
           </h2>
           <p className="mt-2 text-sm text-slate-600">
-            Tu opinion es valiosa para seguir elevando la calidad de nuestro servicio.
+            Tu opinión es valiosa para seguir elevando la calidad de nuestro servicio.
           </p>
         </div>
         <div className="hidden sm:flex select-none items-center justify-center rounded-xl bg-slate-50 px-3 py-2 ring-1 ring-slate-200">
@@ -63,7 +63,7 @@ export const SatisfactionFormSection = ({
 
       {submitted && (
         <div className="mt-6 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700 text-center">
-          Gracias. Tu evaluacion fue enviada correctamente.
+          Gracias. Tu evaluación fue enviada correctamente.
         </div>
       )}
 
@@ -116,8 +116,8 @@ export const SatisfactionFormSection = ({
                         : 'border-slate-300 focus:border-blue-600 focus:ring-blue-200'
                     }`}
                   >
-                    <option value="">Seleccione una opcion</option>
-                    <option value="inspeccion">Inspeccion integral</option>
+                    <option value="">Seleccione una opción</option>
+                    <option value="inspección">inspección integral</option>
                     <option value="integridad">Integridad de ductos</option>
                     <option value="auditoria">Auditoria operativa</option>
                   </Field>
@@ -158,7 +158,7 @@ export const SatisfactionFormSection = ({
                               ? 'bg-[#0A1F44]/15 ring-[#0A1F44]'
                               : 'bg-slate-50 ring-slate-200 hover:bg-slate-100 hover:ring-[#0A1F44]/40'
                           }`}
-                          aria-label={`Calificacion ${level} de 5`}
+                          aria-label={`Calificación ${level} de 5`}
                         >
                           <svg
                             width="20"
@@ -197,7 +197,7 @@ export const SatisfactionFormSection = ({
 
             <div>
               <label className="block text-sm font-medium text-slate-800">
-                6. Que aspectos podriamos mejorar para aumentar tu satisfaccion?
+                6. Que aspectos podríamos mejorar para aumentar tu satisfacción?
               </label>
               <Tooltip content={touched.comentarios ? errors.comentarios : undefined} className="w-full">
                 <Field
@@ -209,7 +209,7 @@ export const SatisfactionFormSection = ({
                       ? 'border-red-300 focus:border-red-500 focus:ring-red-200'
                       : 'border-slate-300 focus:border-blue-600 focus:ring-blue-200'
                   }`}
-                  placeholder="Escribe aqui tus sugerencias o comentarios"
+                  placeholder="Escribe aquí tus sugerencias o comentarios"
                 />
               </Tooltip>
               <p className="mt-2 text-[11px] text-slate-500">Max. 500 caracteres</p>
@@ -217,7 +217,7 @@ export const SatisfactionFormSection = ({
 
             <div>
               <label className="block text-sm font-medium text-slate-800">
-                7. Si deseas, deja un mensaje final o recomendacion personal
+                7. Si deseas, deja un mensaje final o recomendación personal
               </label>
               <Tooltip
                 content={touched.mensajeFinal ? errors.mensajeFinal : undefined}
@@ -243,12 +243,12 @@ export const SatisfactionFormSection = ({
                 disabled={loading || isSubmitting}
                 className="mt-2 inline-flex items-center justify-center gap-2 rounded-lg bg-[#0A1F44] px-5 py-2.5 text-sm font-semibold text-white shadow-md transition hover:opacity-95 disabled:opacity-70"
               >
-                {loading || isSubmitting ? 'Enviando...' : 'Enviar evaluacion'}
+                {loading || isSubmitting ? 'Enviando...' : 'Enviar evaluación'}
               </button>
             </Tooltip>
 
             <p className="text-xs text-slate-500">
-              Siempre leemos cada comentario que recibimos. Tu opinion es parte de nuestro crecimiento.
+              Siempre leemos cada comentario que recibimos. Tu opinión es parte de nuestro crecimiento.
             </p>
           </Form>
         )}

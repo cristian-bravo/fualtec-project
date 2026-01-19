@@ -55,7 +55,7 @@ export const AdminContactSubmissionsPage = () => {
             <span className="text-sm text-slate-500">({items.length})</span>
           </div>
           <p className="text-sm text-slate-600">
-            Solicitudes recibidas desde el portal publico.
+            Solicitudes recibidas desde el portal público.
           </p>
         </div>
         <div className="flex w-full flex-col gap-3 sm:w-auto sm:min-w-[360px]">

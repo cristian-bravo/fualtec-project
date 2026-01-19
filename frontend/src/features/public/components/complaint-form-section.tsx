@@ -20,7 +20,7 @@ const radios = {
   ],
   inconformidad: [
     { key: 'Queja', label: 'Queja' },
-    { key: 'Apelacion', label: 'Apelacion' },
+    { key: 'Apelacion', label: 'Apelación' },
   ],
   anexa: [
     { key: 'NO', label: 'No' },
@@ -156,7 +156,7 @@ export const ComplaintFormSection = ({
                 </Tooltip>
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-800">Direccion</label>
+                <label className="block text-sm font-medium text-slate-800">dirección</label>
                 <Tooltip
                   content={
                     touched.direccion || submitCount > 0 ? errors.direccion : undefined
@@ -164,7 +164,7 @@ export const ComplaintFormSection = ({
                   className="w-full"
                 >
                   <Field
-                    name="direccion"
+                    name="dirección"
                     className={classNames(
                       'mt-1 w-full rounded-lg border bg-white px-3 py-2 shadow-sm focus:ring',
                       (touched.direccion || submitCount > 0) && errors.direccion
@@ -178,7 +178,7 @@ export const ComplaintFormSection = ({
 
             <div>
               <label className="block text-sm font-medium text-slate-800">
-                Fecha de presentacion de la queja y/o apelacion
+                Fecha de presentación de la queja y/o apelacion
               </label>
               <Tooltip
                 content={touched.fecha || submitCount > 0 ? errors.fecha : undefined}
@@ -300,7 +300,7 @@ export const ComplaintFormSection = ({
                 align="start"
               >
                 <span className="block text-sm font-semibold text-slate-900">
-                  Anexa algun documento?
+                  Anexa algún documento?
                 </span>
               </Tooltip>
               <div className="mt-3 flex flex-wrap gap-2">
@@ -342,12 +342,14 @@ export const ComplaintFormSection = ({
               {values.anexaDocumento === 'SI' && (
                 <div className="mt-3">
                   <label className="block text-sm font-medium text-slate-800">Adjuntar archivo</label>
-                  <Tooltip
-                    content={
-                      touched.documento || submitCount > 0 ? errors.documento : undefined
-                    }
-                    className="w-full"
-                  >
+                <Tooltip
+                  content={
+                    (touched.documento || submitCount > 0) && typeof errors.documento === 'string'
+                      ? errors.documento
+                      : undefined
+                  }
+                >
+
                     <input
                       type="file"
                       accept=".pdf,.doc,.docx,.png,.jpg,.jpeg"
@@ -396,7 +398,7 @@ export const ComplaintFormSection = ({
             </div>
 
             <p className="text-xs text-slate-500">
-              Daremos seguimiento en un plazo no mayor a 15 dias y recibiras notificacion por los medios indicados.
+              Daremos seguimiento en un plazo no mayor a 15 días y recibirás notificación por los medios indicados.
             </p>
 
             <Tooltip content={submitError}>

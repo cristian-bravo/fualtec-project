@@ -9,14 +9,14 @@ export const RegisterSuccess = () => (
       <div>
         <p className="font-semibold text-emerald-200">Registro enviado</p>
         <p className="text-sm text-emerald-100/90">
-          Tu cuenta fue registrada. Revisa tu correo para verificar la direccion y espera la aprobacion del
+          Tu cuenta fue registrada. Revisa tu correo para verificar la dirección y espera la aprobación del
           administrador.
         </p>
       </div>
     </div>
     <div className="mt-4 flex items-center justify-between text-sm">
       <Link to="/client-access/login" className="text-blue-300 hover:text-blue-200 hover:underline">
-        Ir al inicio de sesion
+        Ir al inicio de sesión
       </Link>
       <Link to="/" className="text-blue-300 hover:text-blue-200 hover:underline">
         Volver al sitio

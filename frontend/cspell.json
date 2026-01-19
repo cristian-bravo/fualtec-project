@@ -1,0 +1,28 @@
+{
+  "version": "0.2",
+  "language": "es",
+
+  "words": [
+    "border",
+    "focus",
+    "hover",
+    "ring",
+    "shadow",
+    "rounded",
+    "grid",
+    "cols",
+    "span",
+    "flex",
+    "items",
+    "justify",
+      "direccion",
+  "telefono",
+  "informacion",
+  "apelacion"
+  ],
+
+  "ignoreRegExpList": [
+    "className\\s*=\\s*\"[^\"]+\"",
+    "className\\s*=\\s*\\{[^}]+\\}"
+  ]
+}

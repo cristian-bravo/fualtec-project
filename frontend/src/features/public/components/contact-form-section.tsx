@@ -27,14 +27,14 @@ export const ContactFormSection = ({
       <div className="mx-auto w-full max-w-[90rem] px-8 py-16">
         <div className="mx-auto max-w-3xl text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#0A1F44]">
-            Escribenos
+            Escríbenos
           </p>
           <h2 className="relative inline-block mt-2 text-3xl md:text-4xl font-bold text-slate-900">
-            Envie un mensaje
+            Envía un mensaje
             <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 h-[3px] w-24 rounded-full bg-gradient-to-r from-[#8B0000] to-blue-500" />
           </h2>
           <p className="mt-6 text-slate-600">
-            Respondemos en menos de 24 horas habiles. Prioridad para clientes con SLA activo.
+            Respondemos en menos de 24 horas hábiles. Prioridad para clientes con SLA activo.
           </p>
         </div>
 
@@ -109,7 +109,7 @@ export const ContactFormSection = ({
           </button>
 
           <p className="text-xs text-slate-500">
-            Al enviar este formulario aceptas nuestra politica de privacidad. Nunca compartimos tus datos con terceros.
+            Al enviar este formulario aceptas nuestra política de privacidad. Nunca compartimos tus datos con terceros.
           </p>
         </form>
       </div>

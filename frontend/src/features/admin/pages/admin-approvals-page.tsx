@@ -89,7 +89,7 @@ export const AdminApprovalsPage = () => {
   if (!isAuthenticated) {
     return (
       <div className="px-4 py-8 text-center text-sm text-slate-600">
-        Debe iniciar sesion para revisar solicitudes.
+        Debe iniciar sesión para revisar solicitudes.
       </div>
     );
   }
@@ -104,7 +104,7 @@ export const AdminApprovalsPage = () => {
           Revise y apruebe los registros enviados por clientes.
         </p>
       </div>
-      <Table headers={["Nombre", "Correo", "Cedula", "Verificacion", "Acciones"]}>
+      <Table headers={["Nombre", "Correo", "Cédula", "Verificación", "Acciones"]}>
         {isLoading && (
           <tr>
             <td

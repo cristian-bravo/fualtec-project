@@ -14,7 +14,7 @@ export const ResetPasswordForm = ({
 }: Props) => (
   <Form className="mt-6 flex flex-col gap-4 text-sm">
     <label className="flex flex-col gap-1">
-      <span className="font-semibold text-[#0A1F44]">Nueva contrasena</span>
+      <span className="font-semibold text-[#0A1F44]">Nueva contraseña</span>
       <div className="relative">
         <Field
           name="password"
@@ -23,12 +23,12 @@ export const ResetPasswordForm = ({
         />
         <div className="absolute right-2 top-1/2 -translate-y-1/2">
           <Tooltip
-            content={showPassword ? "Ocultar contrasena" : "Mostrar contrasena"}
+            content={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
           >
             <button
               type="button"
               onClick={onTogglePassword}
-              aria-label={showPassword ? "Ocultar contrasena" : "Mostrar contrasena"}
+              aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
               className="rounded p-1 text-slate-400 transition hover:text-slate-600"
             >
               {showPassword ? (
@@ -49,7 +49,7 @@ export const ResetPasswordForm = ({
     </label>
 
     <label className="flex flex-col gap-1">
-      <span className="font-semibold text-[#0A1F44]">Confirmar contrasena</span>
+      <span className="font-semibold text-[#0A1F44]">Confirmar contraseña</span>
       <Field
         name="confirmPassword"
         type={showPassword ? "text" : "password"}
@@ -67,7 +67,7 @@ export const ResetPasswordForm = ({
       disabled={isSubmitting}
       className="w-full rounded-md bg-[#0A7CC4] px-4 py-2 text-sm font-semibold text-white shadow transition hover:bg-[#096aaa] disabled:opacity-60"
     >
-      Actualizar contrasena
+      Actualizar contraseña
     </button>
   </Form>
 );

@@ -1,12 +1,94 @@
-export const WHATSAPP_PHONE = '593984567890';
+export const WHATSAPP_PHONE = '593994342217';
 
 export const services = [
-  { id: 1, slug: 'inspeccion-visual-dimensional-hidrocarburos', title: 'Inspecci\u00f3n Visual y Dimensional', short: 'Evaluaci\u00f3n visual y dimensional de tuber\u00edas, recipientes y estructuras cr\u00edticas.', full: 'Inspecci\u00f3n visual y dimensional aplicada a accesorios, tuber\u00edas, herramientas, estructuras met\u00e1licas y recipientes, con verificaci\u00f3n documental, instrumental y visual para detectar discontinuidades, deformaciones y condiciones fuera de norma.', standards: 'ASME V, Art. 9 (2021) \u2013 Visual Examination', whatsappMessage: 'Hola, me interesa cotizar el servicio de Inspecci\u00f3n Visual y Dimensional (Sector Hidrocarburos). \u00bfPodr\u00edan indicarme disponibilidad y requisitos?', image: new URL('../../../assets/images/services/inspection-visual-dimensional-hidrocarburos.webp', import.meta.url).toString() },
-  { id: 2, slug: 'ultrasonido-medicion-espesores-hidrocarburos', title: 'Ultrasonido (UT) \u2013 Medici\u00f3n de Espesores', short: 'Medici\u00f3n de espesores por ultrasonido para control de corrosi\u00f3n y p\u00e9rdida de pared.', full: 'Inspecci\u00f3n por ensayos no destructivos mediante ultrasonido para medici\u00f3n de espesores en accesorios, estructuras met\u00e1licas, herramientas, tuber\u00edas y recipientes. Incluye revisi\u00f3n documental, instrumental y verificaci\u00f3n visual del proceso.', standards: 'ASTM E-797 (2021) \u2013 Measuring Thickness by Manual Ultrasonic Pulse-Echo Contact Method', whatsappMessage: 'Hola, me interesa cotizar Ultrasonido (UT) \u2013 Medici\u00f3n de Espesores (Sector Hidrocarburos). \u00bfPodr\u00edan enviarme una propuesta?', image: new URL('../../../assets/images/services/ultrasonic-thickness-measurement-hidrocarburos.webp', import.meta.url).toString() },
-  { id: 3, slug: 'particulas-magneticas-mt-hidrocarburos', title: 'Part\u00edculas Magn\u00e9ticas (MT)', short: 'Detecci\u00f3n de discontinuidades en materiales ferromagn\u00e9ticos (superficiales/subsuperficiales).', full: 'Inspecci\u00f3n por ensayos no destructivos con part\u00edculas magn\u00e9ticas para identificar discontinuidades en accesorios, herramientas, estructuras met\u00e1licas, tuber\u00edas y recipientes. Incluye soporte documental, instrumental y verificaci\u00f3n visual.', standards: 'ASME V Art. 7 (2021) / ASTM E 709 (2021) \u2013 Magnetic Particle Testing', whatsappMessage: 'Hola, me interesa cotizar Part\u00edculas Magn\u00e9ticas (MT) (Sector Hidrocarburos). \u00bfQu\u00e9 informaci\u00f3n necesitan para iniciar?', image: new URL('../../../assets/images/services/magnetic-particle-testing-hidrocarburos.webp', import.meta.url).toString() },
-  { id: 4, slug: 'liquidos-penetrantes-pt-hidrocarburos', title: 'L\u00edquidos Penetrantes (PT)', short: 'Detecci\u00f3n de fisuras y poros superficiales en componentes met\u00e1licos.', full: 'Inspecci\u00f3n por l\u00edquidos penetrantes para detecci\u00f3n de discontinuidades superficiales en estructuras met\u00e1licas, recipientes, tuber\u00edas, herramientas y accesorios. Incluye control instrumental, documental y evaluaci\u00f3n visual.', standards: 'ASME V Art. 6 (2021) / ASTM E165 (2018) \u2013 Liquid Penetrant Examination', whatsappMessage: 'Hola, me interesa cotizar L\u00edquidos Penetrantes (PT) (Sector Hidrocarburos). \u00bfPodemos coordinar una visita t\u00e9cnica?', image: new URL('../../../assets/images/services/liquid-penetrant-testing-hidrocarburos.webp', import.meta.url).toString() },
-  { id: 5, slug: 'inspeccion-visual-dimensional-industrial', title: 'Inspecci\u00f3n Visual y Dimensional (Industrial)', short: 'Inspecci\u00f3n visual y dimensional en activos industriales para control y verificaci\u00f3n.', full: 'Inspecci\u00f3n visual y dimensional aplicada a accesorios, recipientes, tuber\u00edas, herramientas y estructuras met\u00e1licas en el sector industrial, con enfoque documental, instrumental y visual para control de calidad e integridad.', standards: 'ASME V, Art. 9 (2021) \u2013 Visual Examination', whatsappMessage: 'Hola, me interesa cotizar Inspecci\u00f3n Visual y Dimensional (Sector Industrial). \u00bfQu\u00e9 tiempos de ejecuci\u00f3n manejan?', image: new URL('../../../assets/images/services/inspection-visual-dimensional-industrial.webp', import.meta.url).toString() },
-  { id: 6, slug: 'particulas-magneticas-mt-industrial', title: 'Part\u00edculas Magn\u00e9ticas (MT) (Industrial)', short: 'Ensayos MT para control de integridad en estructuras y componentes industriales.', full: 'Inspecci\u00f3n con part\u00edculas magn\u00e9ticas en accesorios, estructuras met\u00e1licas, tuber\u00edas, herramientas y recipientes del sector industrial, incluyendo revisi\u00f3n documental, instrumental y evaluaci\u00f3n visual.', standards: 'ASME V Art. 7 (2021) / ASTM E 709 (2021) \u2013 Magnetic Particle Testing', whatsappMessage: 'Hola, me interesa cotizar Part\u00edculas Magn\u00e9ticas (MT) (Sector Industrial). \u00bfPodr\u00edan indicarme costos referenciales?', image: new URL('../../../assets/images/services/magnetic-particle-testing-industrial.webp', import.meta.url).toString() },
-  { id: 7, slug: 'liquidos-penetrantes-pt-industrial', title: 'L\u00edquidos Penetrantes (PT) (Industrial)', short: 'Ensayos PT para detectar discontinuidades superficiales en activos industriales.', full: 'Inspecci\u00f3n por l\u00edquidos penetrantes aplicada a accesorios, herramientas, estructuras met\u00e1licas, recipientes y tuber\u00edas del sector industrial, con evaluaci\u00f3n documental, instrumental y visual.', standards: 'ASME V Art. 6 (2021) / ASTM E165 (2018) \u2013 Liquid Penetrant Examination', whatsappMessage: 'Hola, me interesa cotizar L\u00edquidos Penetrantes (PT) (Sector Industrial). \u00bfMe ayudan con el procedimiento para agendar?', image: new URL('../../../assets/images/services/liquid-penetrant-testing-industrial.webp', import.meta.url).toString() },
-  { id: 8, slug: 'ultrasonido-medicion-espesores-industrial', title: 'Ultrasonido (UT) \u2013 Medici\u00f3n de Espesores (Industrial)', short: 'Medici\u00f3n UT para control de p\u00e9rdida de espesor e integridad en industria.', full: 'Inspecci\u00f3n por ultrasonido para medici\u00f3n de espesores en accesorios, estructuras met\u00e1licas, herramientas, tuber\u00edas y recipientes del sector industrial. Incluye soporte documental, instrumental y verificaci\u00f3n visual del proceso.', standards: 'ASTM E-797 (2021) \u2013 Measuring Thickness by Manual Ultrasonic Pulse-Echo Contact Method', whatsappMessage: 'Hola, me interesa cotizar Ultrasonido (UT) \u2013 Medici\u00f3n de Espesores (Sector Industrial). \u00bfPodemos coordinar una cotizaci\u00f3n?', image: new URL('../../../assets/images/services/ultrasonic-thickness-measurement-industrial.webp', import.meta.url).toString() },
+  {
+    id: 1,
+    slug: 'ultrasonido-arreglo-de-fases',
+    title: 'Ultrasonido arreglo de fases (Phased Array)',
+    short:
+      'Evaluación visual y dimensional de tuberías, recipientes y estructuras críticas.',
+    full: 
+    'Inspección por ultrasonido con arreglo de fases (Phased Array) orientada a la detección, caracterización y dimensionamiento de discontinuidades internas y superficiales en componentes y estructuras. El servicio incluye la planificación del barrido, configuración de equipos avanzados, análisis de señales, interpretación de imágenes sectoriales y comparación con criterios normativos aplicables, permitiendo una evaluación precisa de la integridad del material y la generación de registros técnicos trazables.',
+    standards:
+      'ASME V, Art. 9 (2021) – Visual Examination',
+    whatsappMessage:
+      'Hola, me interesa cotizar el servicio de Inspección Visual y Dimensional (Sector Hidrocarburos). ¿Podrían indicarme disponibilidad y requisitos?',
+    image: new URL(
+      '../../../assets/images/services/fualtec_ndt_amazonia.webp',
+      import.meta.url
+    ).toString(),
+  },
+
+  {
+    id: 2,
+    slug: 'inspeccion-con-ultrasonido',
+    title: 'Inspección con ultrasonido (medición de espesores)',
+    short:
+      'Método de ensayo no destructivo que determina el espesor de materiales mediante ondas ultrasónicas.',
+    full: 
+    'Inspección por ultrasonido para medición de espesores enfocada en la evaluación de pérdida de pared, corrosión y variaciones de espesor en tuberías, recipientes, estructuras metálicas y componentes industriales. El proceso contempla el uso de equipos calibrados, verificación de condiciones de superficie, toma sistemática de lecturas y contraste con valores de diseño y criterios técnicos, dejando evidencia documentada para el control de integridad del activo.', 
+    standards:
+      'ASTM E-797 (2021) – Measuring Thickness by Manual Ultrasonic Pulse-Echo Contact Method',
+    whatsappMessage:
+      'Hola, me interesa cotizar Ultrasonido (UT) – Medición de Espesores (Sector Hidrocarburos). ¿Podrían enviarme una propuesta?',
+    image: new URL(
+      '../../../assets/images/services/ultrasonic-thickness-measurement-hidrocarburos.webp',
+      import.meta.url
+    ).toString(),
+  },
+
+  {
+    id: 3,
+    slug: 'inspeccion-con-partículas-magnética',
+    title: 'Inspección con partículas magnética',
+    short:
+      'Método de ensayo no destructivo para detectar discontinuidades superficiales y subsuperficiales en materiales ferromagnéticos mediante la aplicación de un campo magnético.',
+    full: 
+    'Inspección mediante partículas magnéticas destinada a la detección de discontinuidades superficiales y subsuperficiales en materiales ferromagnéticos. El servicio comprende la preparación de superficie, aplicación de campos magnéticos adecuados, uso de partículas secas o húmedas, evaluación visual de indicaciones y análisis de resultados conforme a criterios normativos, con el fin de identificar defectos que puedan afectar la seguridad y desempeño del componente.',
+
+    standards:
+      'ASME V Art. 7 (2021) / ASTM E 709 (2021) – Magnetic Particle Testing',
+    whatsappMessage:
+      'Hola, me interesa cotizar Partículas Magnéticas (MT) (Sector Hidrocarburos). ¿Qué información necesitan para iniciar?',
+    image: new URL(
+      '../../../assets/images/services/magnetic-particle-testing-industrial.webp',
+      import.meta.url
+    ).toString(),
+  },
+
+  {
+    id: 4,
+    slug: 'inspeccion-por-liquidos-penetrantes',
+    title: 'Inspección por líquidos penetrantes',
+    short:
+      'Método de ensayo no destructivo que permite detectar discontinuidades superficiales mediante la aplicación de un líquido penetrante..',
+    full: 
+    'Inspección por líquidos penetrantes orientada a la identificación de discontinuidades superficiales abiertas en materiales no porosos. El proceso incluye limpieza previa, aplicación controlada del penetrante, remoción del exceso, revelado y evaluación visual de indicaciones, permitiendo detectar fisuras, poros o defectos superficiales. Los resultados se documentan y comparan con criterios de aceptación para asegurar la integridad del componente inspeccionado.',
+    standards:
+      'ASME V Art. 6 (2021) / ASTM E165 (2018) – Liquid Penetrant Examination',
+    whatsappMessage:
+      'Hola, me interesa cotizar Líquidos Penetrantes (PT) (Sector Hidrocarburos). ¿Podemos coordinar una visita técnica?',
+    image: new URL(
+      '../../../assets/images/services/fualtec_helmet_logo.webp',
+      import.meta.url
+    ).toString(),
+  },
+
+  {
+    id: 5,
+    slug: 'inspeccion-visual-dimensional',
+    title: 'Inspección visual dimensional',
+    short:
+      'Verificación visual y de medidas para confirmar que un componente cumple con las dimensiones y condiciones especificadas.',
+    full:
+    'Inspección visual y dimensional orientada a verificar el cumplimiento de medidas, geometría, alineación y estado superficial de componentes, equipos y estructuras. El servicio contempla la evaluación directa en campo, el uso de instrumentos de medición calibrados (cintas métricas, calibradores, micrómetros, reglas y galgas), y la comparación de resultados con planos, especificaciones técnicas y tolerancias establecidas. Asimismo, se identifican deformaciones, desgastes, daños visibles, desviaciones dimensionales y condiciones fuera de norma que puedan comprometer la integridad, seguridad o funcionalidad del activo, dejando registro técnico y evidencias documentales del proceso de inspección.',
+    standards:
+      'ASME V, Art. 9 (2021) – Visual Examination',
+    whatsappMessage:
+      'Hola, me interesa cotizar Inspección Visual y Dimensional (Sector Industrial). ¿Qué tiempos de ejecución manejan?',
+    image: new URL(
+      '../../../assets/images/services/inspection-visual-dimensional-industrial.webp',
+      import.meta.url
+    ).toString(),
+  },
 ];

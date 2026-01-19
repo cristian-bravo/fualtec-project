@@ -84,11 +84,11 @@ export const ResetPasswordPage = () => {
             Portal seguro
           </p>
           <h1 className="mt-2 text-3xl font-bold text-[#0A1F44]">
-            {isInvalid ? "Enlace invalido" : "Restablecer contrasena"}
+            {isInvalid ? "Enlace inválido" : "Restablecer contraseña"}
           </h1>
           <p className="mt-1 text-sm text-slate-600">
             {isInvalid
-              ? "El enlace de recuperacion no es valido. Solicite un nuevo enlace."
+              ? "El enlace de recuperación no es válido. Solicite un nuevo enlace."
               : `Actualice el acceso para ${email}.`}
           </p>
 
@@ -104,7 +104,7 @@ export const ResetPasswordPage = () => {
                 to="/client-access/login"
                 className="text-center text-sm font-semibold text-[#0A7CC4] hover:underline"
               >
-                Volver al inicio de sesion
+                Volver al inicio de sesión
               </Link>
             </div>
           ) : (
@@ -115,14 +115,14 @@ export const ResetPasswordPage = () => {
                 try {
                   await authApi.reset({ token, email, password: values.password });
                   showToast({
-                    title: "Contrasena actualizada",
-                    description: "Ya puede ingresar con su nueva contrasena.",
+                    title: "contraseña actualizada",
+                    description: "Ya puede ingresar con su nueva contraseña.",
                     tone: "success",
                   });
                   navigate("/client-access/login");
                 } catch (error: any) {
                   showToast({
-                    title: "No fue posible actualizar la contrasena",
+                    title: "No fue posible actualizar la contraseña",
                     description:
                       error?.response?.data?.message ||
                       "Verifique el enlace utilizado",
@@ -145,12 +145,12 @@ export const ResetPasswordPage = () => {
 
           {!isInvalid && (
             <p className="mt-6 text-center text-sm text-slate-500">
-              Recordo su contrasena?{" "}
+              ¿Recordó su contraseña?{" "}
               <Link
                 to="/client-access/login"
                 className="text-[#0A7CC4] hover:underline"
               >
-                Regresar al inicio de sesion
+                Regresar al inicio de sesión
               </Link>
             </p>
           )}

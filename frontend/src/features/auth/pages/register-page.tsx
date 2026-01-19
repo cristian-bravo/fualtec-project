@@ -60,9 +60,9 @@ export const RegisterPage = () => {
 
       {/* <Link
         to="/client-access/login"
-        title="Volver al inicio de sesion"
+        title="Volver al inicio de sesión"
         className="absolute left-6 top-6 z-20 flex items-center gap-2 rounded-full border border-[#FFC107]/70 bg-transparent px-3 py-2 text-[#FFC107] transition hover:bg-[#FFC107]/10"
-        aria-label="Volver al inicio de sesion"
+        aria-label="Volver al inicio de sesión"
       >
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
           <path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
@@ -102,7 +102,7 @@ export const RegisterPage = () => {
                       });
                       showToast({
                         title: "Registro enviado",
-                        description: "Revisa tu correo para verificar la direccion.",
+                        description: "Revisa tu correo para verificar la dirección.",
                         tone: "success",
                       });
                       setSent(true);
