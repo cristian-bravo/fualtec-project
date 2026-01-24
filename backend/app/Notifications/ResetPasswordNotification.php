@@ -21,11 +21,17 @@ class ResetPasswordNotification extends Notification
 
     public function toMail(object $notifiable): MailMessage
     {
+        $name = trim((string) ($notifiable->nombre ?? ''));
+        if ($name === '') {
+            $name = 'Cliente';
+        }
+
         return (new MailMessage)
-            ->subject('Restablecer contraseña')
-            ->greeting('Hola ' . ($notifiable->nombre ?? ''))
-            ->line('Recibimos una solicitud para restablecer tu acceso.')
-            ->action('Crear nueva contraseña', $this->resetUrl)
-            ->line('Si no solicitaste este cambio, ignora este mensaje.');
+            ->subject('Restablecer contrasena')
+            ->from(config('mail.from.address'), 'FUALTEC')
+            ->view('emails.reset-password', [
+                'name' => $name,
+                'resetUrl' => $this->resetUrl,
+            ]);
     }
 }

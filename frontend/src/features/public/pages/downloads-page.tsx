@@ -11,8 +11,10 @@ type DownloadItem = {
 
 const docFiles = import.meta.glob('../../../assets/documents/*.pdf', {
   eager: true,
-  as: 'url',
+  query: '?url',
+  import: 'default',
 }) as Record<string, string>;
+
 
 const formatTitle = (filename: string) =>
   filename
@@ -40,7 +42,7 @@ const resolveMeta = (filename: string): Omit<DownloadItem, 'url'> => {
     };
   }
 
-  if (name.includes('resolución')) {
+  if (name.includes('resolucion')) {
     return {
       title: 'Resolución  ARCERNNR 2024',
       date: '05/12/2024',
@@ -126,12 +128,42 @@ export const DownloadsPage = () => {
 
               <div className="p-6">
                 <div className="flex items-start gap-4">
-                  <div className="shrink-0 rounded-xl ring-1 ring-white/15 p-3 bg-white/5 group-hover:bg-white/10 transition">
-                    <svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true" className="text-white">
-                      <path fill="currentColor" d="M14 2H6a2 2 0 0 0-2 2v16c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2V8l-6-6Zm1 7V3.5L18.5 9H15Z" />
-                      <path fill="currentColor" d="M8 14h2.2c.9 0 1.8.8 1.8 1.9s-.9 1.9-1.8 1.9H8V14Zm1.4 2.9h.7c.5 0 .9-.4.9-.9s-.4-1-.9-1h-.7v1.9ZM13.5 14h2.7v1.1h-1.5v.6h1.4v1.1h-1.4v1h1.6V19h-2.8V14Z" />
-                    </svg>
-                  </div>
+                <div className="group/icon shrink-0 flex h-12 w-12 items-center justify-center rounded-xl bg-white/5 ring-1 ring-white/15 transition-all duration-300 hover:bg-white/10">
+                  <svg
+                    width="26"
+                    height="26"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                    className="text-blue-300 transition-transform duration-300 group-hover/icon:-translate-y-0.5 group-hover/icon:scale-105"
+                    fill="none"
+                  >
+                    {/* Hoja */}
+                    <path
+                      d="M14 2H6a2 2 0 0 0-2 2v16c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2V8l-6-6Z"
+                      fill="currentColor"
+                      fillOpacity="0.85"
+                    />
+                    {/* Pliegue */}
+                    <path
+                      d="M14 2v6h6"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeOpacity="0.6"
+                    />
+                    {/* Texto PDF */}
+                    <text
+                      x="12"
+                      y="16.2"
+                      textAnchor="middle"
+                      fontSize="6.5"
+                      fontWeight="700"
+                      fill="#0A1F44"
+                    >
+                      PDF
+                    </text>
+                  </svg>
+                </div>
                   <div className="min-w-0">
                     <h3 className="text-lg font-semibold text-white leading-snug">{doc.title}</h3>
                     <p className="mt-1 text-xs uppercase tracking-wide text-slate-300">

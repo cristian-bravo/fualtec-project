@@ -8,7 +8,7 @@ const companyItems = [
 
 const socialLinks = [
   {
-    href: 'https://www.tiktok.com/@fualtec',
+    href: 'https://www.tiktok.com/@fualtec.sa?_r=1&_t=ZM-9355vDzF2a0',
     label: 'TikTok',
     viewBox: '0 0 24 24',
     svg: (
@@ -51,7 +51,7 @@ const socialLinks = [
     ),
   },
   {
-    href: 'https://www.facebook.com/fualtec',
+    href: 'https://www.facebook.com/profile.php?id=61581025268807&locale=es_LA',
     label: 'Facebook',
     viewBox: '0 0 24 24',
     svg: (
