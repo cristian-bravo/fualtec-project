@@ -111,10 +111,18 @@ export const LoginPage = () => {
               validationSchema={schema}
               onSubmit={async (values, actions) => {
                 try {
-                  await login(values.email, values.password);
+                  const profile = await login(values.email, values.password);
                   clearReloadTimer();
                   showToast({ title: 'Inicio de sesión exitoso', tone: 'success' });
-                  const redirect = (location.state?.from as any)?.pathname ?? '/client-access/app';
+                  const isAdmin = profile.rol === 'admin' || Boolean(profile.is_super_admin);
+                  const fallback = isAdmin ? '/client-access/admin' : '/client-access/app';
+                  const fromPath = (location.state?.from as any)?.pathname as string | undefined;
+                  const isValidFrom = fromPath
+                    ? isAdmin
+                      ? fromPath.startsWith('/client-access/admin')
+                      : fromPath.startsWith('/client-access/app')
+                    : false;
+                  const redirect = isValidFrom ? fromPath : fallback;
                   navigate(redirect, { replace: true });
                 } catch (error: any) {
                   const message = error?.response?.data?.message as

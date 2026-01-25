@@ -9,6 +9,7 @@ export type AdminUser = {
   email: string;
   cedula?: string | null;
   rol?: string | null;
+  is_super_admin?: boolean | null;
   estado?: string | null;
   email_verified_at?: string | null;
   last_login_at?: string | null;

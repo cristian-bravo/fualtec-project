@@ -7,6 +7,7 @@ import {
   updateUser,
   UpdateUserPayload,
 } from "../services/userService";
+import { isSuperAdminUser } from "../utils/super-admin";
 
 export const useAdminUser = (userId?: number) => {
   const { token } = useAuth();
@@ -35,6 +36,10 @@ export const useAdminUser = (userId?: number) => {
   const saveUser = useCallback(
     async (payload: UpdateUserPayload) => {
       if (!token || !userId) return null;
+      if (isSuperAdminUser(user)) {
+        alertError("No se puede modificar un super administrador.");
+        return null;
+      }
       setIsSaving(true);
       try {
         const updated = await updateUser(token, userId, payload);

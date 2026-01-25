@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import { alertError, alertSuccess, confirmAction } from "@/lib/alerts";
 import { AdminUser, fetchUsers, updateUser } from "../services/userService";
+import { isSuperAdminUser } from "../utils/super-admin";
 
 const APPROVED_STATES = new Set(["aprobado", "inactivo"]);
 
@@ -37,6 +38,10 @@ export const useAdminUsers = () => {
   const toggleStatus = useCallback(
     async (user: AdminUser) => {
       if (!token) return;
+      if (isSuperAdminUser(user)) {
+        alertError("No se puede modificar un super administrador.");
+        return;
+      }
       const current = normalizeState(user.estado);
       const next = current === "inactivo" ? "aprobado" : "inactivo";
       const actionLabel = next === "inactivo" ? "desactivar" : "activar";

@@ -5,7 +5,8 @@ export interface AuthUser {
   nombre: string;
   email: string;
   cedula?: string;
-  rol: 'admin' | 'cliente';
+  rol: 'admin' | 'cliente' | 'super_admin';
+  is_super_admin?: boolean;
   estado: UserState;
   last_login_at?: string | null;
 }

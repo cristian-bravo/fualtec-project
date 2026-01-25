@@ -3,6 +3,8 @@ import { Table } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { AdminUser } from "../../services/userService";
 import { UserStatusBadge } from "./UserStatusBadge";
+import { alertError } from "@/lib/alerts";
+import { isSuperAdminUser } from "../../utils/super-admin";
 
 type Props = {
   users: AdminUser[];
@@ -14,6 +16,7 @@ type Props = {
 const roleLabels: Record<string, string> = {
   admin: "Admin",
   cliente: "Cliente",
+  super_admin: "Super Admin",
 };
 
 export const UsersTable = ({
@@ -56,7 +59,15 @@ export const UsersTable = ({
             </td>
             <td className="px-6 py-4">
               <div className="flex flex-wrap items-center justify-end gap-2">
-                <Link to={`/client-access/admin/usuarios/${user.id}`}>
+                <Link
+                  to={`/client-access/admin/usuarios/${user.id}`}
+                  onClick={(event) => {
+                    if (isSuperAdminUser(user)) {
+                      event.preventDefault();
+                      alertError("No se puede modificar un super administrador.");
+                    }
+                  }}
+                >
                   <Button variant="secondary">Editar</Button>
                 </Link>
                 <Button

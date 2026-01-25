@@ -81,7 +81,7 @@ export const ComplaintFormSection = ({
             <div className="grid gap-6 md:grid-cols-2">
               <div>
                 <label className="block text-sm font-medium text-slate-800">
-                  Nombre de la persona que presenta la queja y/o apelación
+                  Nombre de la persona
                 </label>
                 <Tooltip
                   content={touched.nombre || submitCount > 0 ? errors.nombre : undefined}
@@ -156,7 +156,7 @@ export const ComplaintFormSection = ({
                 </Tooltip>
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-800">dirección</label>
+                <label className="block text-sm font-medium text-slate-800">Dirección</label>
                 <Tooltip
                   content={
                     touched.direccion || submitCount > 0 ? errors.direccion : undefined
@@ -164,7 +164,7 @@ export const ComplaintFormSection = ({
                   className="w-full"
                 >
                   <Field
-                    name="dirección"
+                    name="direccion"
                     className={classNames(
                       'mt-1 w-full rounded-lg border bg-white px-3 py-2 shadow-sm focus:ring',
                       (touched.direccion || submitCount > 0) && errors.direccion

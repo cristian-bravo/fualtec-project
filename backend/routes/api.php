@@ -60,7 +60,7 @@ Route::prefix('public')->group(function () {
 # =====================================
 # 🛠️ RUTAS DE ADMINISTRADOR
 # =====================================
-Route::middleware(['auth:sanctum', 'role:admin'])
+Route::middleware(['auth:sanctum', 'can:admin-access'])
     ->prefix('admin')
     ->group(function () {
 
