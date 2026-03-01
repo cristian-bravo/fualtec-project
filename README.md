@@ -6,16 +6,8 @@ El sistema permite centralizar la información, automatizar procesos administrat
 
 ---
 
-## 🎓 Contexto académico
+## 🎓 Autor: Cristian Hernán Bravo Bravo  
 
-Proyecto presentado como trabajo de titulación para la obtención del título de:
-
-**Tecnólogo Superior Universitario en Sistemas y Gestión de Data**  
-Instituto Superior Tecnológico Rumiñahui – Ecuador
-
-Autor: Cristian Hernán Bravo Bravo  
-
----
 
 ## 🏢 Problema que resuelve
 
