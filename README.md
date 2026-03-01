@@ -6,7 +6,7 @@ El sistema permite centralizar la información, automatizar procesos administrat
 
 ---
 
-## 🎓 Autor: Cristian Hernán Bravo Bravo  
+## 🎓 Autor: Cristian Bravo   
 
 
 ## 🏢 Problema que resuelve
