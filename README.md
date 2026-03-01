@@ -1,6 +1,6 @@
 # Portal Web Corporativo Fualtec
 
-Plataforma web desarrollada como proyecto de titulación para la gestión integral de documentos técnicos, clientes y servicios en una empresa del sector industrial–petrolero.
+Plataforma web desarrollada como proyecto corporativo para la gestión integral de documentos técnicos, clientes y servicios en una empresa del sector industrial–petrolero.
 
 El sistema permite centralizar la información, automatizar procesos administrativos y ofrecer a los clientes un portal seguro para el acceso exclusivo a sus certificados e informes técnicos.
 
@@ -14,7 +14,6 @@ Proyecto presentado como trabajo de titulación para la obtención del título d
 Instituto Superior Tecnológico Rumiñahui – Ecuador
 
 Autor: Cristian Hernán Bravo Bravo  
-Tutor: Ing. Danny Santiago Páez Oscullo MSc.
 
 ---
 
@@ -168,6 +167,6 @@ No incluye:
 
 ## 📄 Licencia
 
-Uso académico y demostrativo.
+Uso académico y corporativo.
 
 El sistema productivo y su configuración de infraestructura pertenecen a la empresa.
