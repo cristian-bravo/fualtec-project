@@ -6,7 +6,7 @@ export const WhatsAppFab = () => (
       <a
         href="https://wa.me/593994342217"
         target="_blank"
-        rel="noopener"
+        rel="noopener noreferrer"
         aria-label="WhatsApp"
         className="inline-flex h-16 w-16 items-center justify-center transition-transform hover:scale-[1.05] focus:outline-none"
       >

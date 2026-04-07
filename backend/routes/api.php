@@ -97,6 +97,8 @@ Route::middleware(['auth:sanctum', 'can:admin-access'])
         Route::get('groups/{group}/available-pdfs', [GroupController::class, 'availablePdfs']);
         Route::post('groups/{group}/items', [GroupController::class, 'addItems']);
         Route::delete('groups/{group}/items/{pdf}', [GroupController::class, 'removeItem']);
+        Route::delete('groups/{group}', [GroupController::class, 'destroy'])
+            ->middleware('can:super-admin-access');
         Route::post('groups/{group}/publish', [GroupController::class, 'publish']);
         Route::post('groups/{group}/unpublish', [GroupController::class, 'unpublish']);
 

@@ -27,7 +27,7 @@ export const PublicFooter = () => (
                 <a
                   href={href}
                   target="_blank"
-                  rel="noopener"
+                  rel="noopener noreferrer"
                   aria-label={label}
                   className="inline-flex items-center justify-center text-[16px] leading-none text-slate-300 transition hover:text-white"
                 >

@@ -6,8 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Pdf;
 use App\Models\PdfGroup;
 use App\Services\PdfService;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Throwable;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
@@ -150,10 +153,13 @@ class GroupController extends Controller
             ], 404);
         }
 
-        $this->pdfService->detachFromGroup($group, $pdf);
+        $groupDeleted = $this->pdfService->detachFromGroup($group, $pdf);
 
         return response()->json([
-            'message' => 'PDF removido del grupo.',
+            'message' => $groupDeleted
+                ? 'PDF removido y grupo eliminado por quedar sin PDFs.'
+                : 'PDF removido del grupo.',
+            'group_deleted' => $groupDeleted,
         ]);
     }
 
@@ -208,6 +214,32 @@ class GroupController extends Controller
 
         return response()->json([
             'message' => 'Grupo despublicado correctamente.',
+        ]);
+    }
+
+    public function destroy(Request $request, int $group): JsonResponse
+    {
+        try {
+            $result = $this->pdfService->forceDeleteGroupWithPdfs($group, $request->user());
+        } catch (AuthorizationException) {
+            return response()->json([
+                'message' => 'Solo el superadmin puede eliminar grupos.',
+            ], 403);
+        } catch (ModelNotFoundException) {
+            return response()->json([
+                'message' => 'Grupo no encontrado.',
+            ], 404);
+        } catch (Throwable $e) {
+            report($e);
+
+            return response()->json([
+                'message' => 'No se pudo eliminar el grupo.',
+            ], 500);
+        }
+
+        return response()->json([
+            'message' => 'Grupo eliminado correctamente.',
+            'deleted_pdfs' => $result['pdf_count'],
         ]);
     }
 }

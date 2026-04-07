@@ -33,6 +33,21 @@ export async function confirmDelete(message: string): Promise<boolean> {
   return result.isConfirmed === true;
 }
 
+export async function confirmGroupDelete(): Promise<boolean> {
+  const result = await Swal.fire({
+    title: "¿Estás seguro de eliminar este grupo?",
+    text: "Esta acción no se puede revertir.",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#991b1b",
+    cancelButtonColor: "#3085d6",
+    confirmButtonText: "Eliminar",
+    cancelButtonText: "Cancelar",
+  });
+
+  return result.isConfirmed === true;
+}
+
 export async function confirmAction(message: string, confirmText: string) {
   const result = await Swal.fire({
     title: "Confirmar",

@@ -83,7 +83,7 @@ export const PublicHeader = () => {
                   <a
                     href={href}
                     target="_blank"
-                    rel="noopener"
+                    rel="noopener noreferrer"
                     aria-label={label}
                     className={[
                       'inline-flex items-center justify-center text-[14px] leading-none transition',

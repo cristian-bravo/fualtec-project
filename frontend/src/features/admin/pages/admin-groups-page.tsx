@@ -1,13 +1,15 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/use-auth";
-import { alertError, alertSuccess, confirmAction } from "@/lib/alerts";
+import { alertError, alertSuccess, confirmAction, confirmGroupDelete } from "@/lib/alerts";
 import { Button } from "../../../components/ui/button";
 import { Table } from "../../../components/ui/table";
 import { Tooltip } from "../../../components/ui/tooltip";
-import { CheckCircle2, Clock, FileText, UploadCloud } from "lucide-react";
+import { CheckCircle2, Clock, FileText, Trash2, UploadCloud } from "lucide-react";
+import { isSuperAdminUser } from "../utils/super-admin";
 import {
   GroupSummary,
+  deleteGroup,
   fetchGroups,
   publishGroup,
   unpublishGroup,
@@ -16,11 +18,13 @@ import { PublishGroupModal } from "../components/groups/PublishGroupModal";
 
 export const AdminGroupsPage = () => {
   const navigate = useNavigate();
-  const { token, isAuthenticated } = useAuth();
+  const { token, isAuthenticated, user } = useAuth();
+  const isSuperAdmin = isSuperAdminUser(user);
 
   const [groups, setGroups] = useState<GroupSummary[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [publishingId, setPublishingId] = useState<number | null>(null);
+  const [deletingId, setDeletingId] = useState<number | null>(null);
   const [publishModalOpen, setPublishModalOpen] = useState(false);
   const [publishTarget, setPublishTarget] = useState<GroupSummary | null>(null);
 
@@ -119,6 +123,27 @@ export const AdminGroupsPage = () => {
     }
   };
 
+  const handleDelete = async (group: GroupSummary) => {
+    if (!token || !isSuperAdmin) return;
+
+    const confirmed = await confirmGroupDelete();
+    if (!confirmed) return;
+
+    setDeletingId(group.id);
+    try {
+      await deleteGroup(token, group.id);
+      setGroups((prev) => prev.filter((item) => item.id !== group.id));
+      alertSuccess("Grupo eliminado correctamente.");
+    } catch (error: any) {
+      console.error(error);
+      const message =
+        error?.response?.data?.message || "No se pudo eliminar el grupo.";
+      alertError(message);
+    } finally {
+      setDeletingId(null);
+    }
+  };
+
   if (!isAuthenticated) {
     return (
       <div className="px-4 py-8 text-center text-sm text-slate-600">
@@ -191,9 +216,36 @@ export const AdminGroupsPage = () => {
               </td>
               <td className="px-6 py-4">
                 <div className="flex flex-col items-end gap-2 sm:flex-row sm:justify-end">
-                  <Tooltip content="Gestionar PDFs del grupo">
+                  {group.publicado ? (
+                    <Button
+                      variant="secondary"
+                      isLoading={publishingId === group.id}
+                      disabled={deletingId === group.id}
+                      onClick={() => handleUnpublish(group)}
+                      className="flex items-center gap-2"
+                    >
+                      <CheckCircle2 className="h-4 w-4" />
+                      Ocultar
+                    </Button>
+                  ) : (
                     <Button
                       variant="primary"
+                      isLoading={publishingId === group.id}
+                      disabled={deletingId === group.id}
+                      onClick={() => handlePublish(group)}
+                      className="flex items-center gap-2"
+                    >
+                      <UploadCloud className="h-4 w-4" />
+                      Publicar
+                    </Button>
+                  )}
+
+                  <Tooltip content="Gestionar PDFs del grupo">
+                    <Button
+                      variant="secondary"
+                      disabled={
+                        publishingId === group.id || deletingId === group.id
+                      }
                       onClick={() =>
                         navigate(`/client-access/admin/grupos/${group.id}/pdfs`)
                       }
@@ -204,25 +256,16 @@ export const AdminGroupsPage = () => {
                     </Button>
                   </Tooltip>
 
-                  {group.publicado ? (
+                  {isSuperAdmin && (
                     <Button
-                      variant="secondary"
-                      isLoading={publishingId === group.id}
-                      onClick={() => handleUnpublish(group)}
+                      variant="dangerSecondary"
+                      isLoading={deletingId === group.id}
+                      disabled={publishingId === group.id}
+                      onClick={() => handleDelete(group)}
                       className="flex items-center gap-2"
                     >
-                      <CheckCircle2 className="h-4 w-4" />
-                      Ocultar
-                    </Button>
-                  ) : (
-                    <Button
-                      variant="ghost"
-                      isLoading={publishingId === group.id}
-                      onClick={() => handlePublish(group)}
-                      className="flex items-center gap-2"
-                    >
-                      <UploadCloud className="h-4 w-4" />
-                      Publicar
+                      <Trash2 className="h-4 w-4" />
+                      Eliminar
                     </Button>
                   )}
                 </div>

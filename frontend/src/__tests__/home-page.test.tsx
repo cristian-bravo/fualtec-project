@@ -10,7 +10,7 @@ describe('HomePage', () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByRole('link', { name: /Conoce más/i })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: /Acceso Clientes/i })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /Conoce nuestros servicios/i })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /Ir al portal/i })).toBeInTheDocument();
   });
 });

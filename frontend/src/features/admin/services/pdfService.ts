@@ -9,6 +9,12 @@ export type PdfItem = {
   vigente?: boolean;
 };
 
+export type DeletePdfResponse = {
+  message: string;
+  deleted_empty_groups: number;
+  deleted_group_ids: number[];
+};
+
 // Usa tu base actual, con opción a env si luego quieres
 const API_BASE =
   (import.meta as any).env?.VITE_API_BASE_URL || "http://127.0.0.1:8000";
@@ -114,17 +120,22 @@ export async function getPdfBlob(token: string, id: number): Promise<Blob> {
   return new Blob([response.data], { type: "application/pdf" });
 }
 
-export async function deletePdf(token: string, id: number): Promise<void> {
-  await axios.delete(`${API_BASE}/admin/pdfs/${id}`, {
+export async function deletePdf(
+  token: string,
+  id: number
+): Promise<DeletePdfResponse> {
+  const res = await axios.delete(`${API_BASE}/admin/pdfs/${id}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
+
+  return res.data;
 }
 
 export async function deletePdfsBulk(
   token: string,
   ids: number[]
-): Promise<void> {
-await axios({
+): Promise<DeletePdfResponse> {
+const res = await axios({
   method: 'DELETE',
   url: `${API_BASE}/admin/pdfs/bulk`,
   headers: {
@@ -133,4 +144,5 @@ await axios({
   data: { ids },
 });
 
+return res.data;
 }

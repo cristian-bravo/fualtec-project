@@ -114,12 +114,14 @@ export async function removePdfFromGroup(
   token: string,
   groupId: number,
   pdfId: number
-): Promise<void> {
-  await axios.delete(`${API_BASE}/admin/groups/${groupId}/items/${pdfId}`, {
+): Promise<{ message: string; group_deleted: boolean }> {
+  const res = await axios.delete(`${API_BASE}/admin/groups/${groupId}/items/${pdfId}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
+
+  return res.data;
 }
 
 export async function publishGroup(
@@ -153,6 +155,19 @@ export async function unpublishGroup(
       },
     }
   );
+
+  return res.data;
+}
+
+export async function deleteGroup(
+  token: string,
+  groupId: number
+): Promise<{ message: string; deleted_pdfs: number }> {
+  const res = await axios.delete(`${API_BASE}/admin/groups/${groupId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
   return res.data;
 }

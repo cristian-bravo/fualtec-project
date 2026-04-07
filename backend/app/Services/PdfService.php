@@ -7,9 +7,13 @@ use App\Models\PdfGroup;
 use App\Models\PdfGroupItem;
 use App\Models\Publication;
 use App\Models\User;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use RuntimeException;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Illuminate\Validation\ValidationException;
 
@@ -109,11 +113,15 @@ public function storePdf($file, $user, array $data)
             return $added;
         }
 
-    public function detachFromGroup(PdfGroup $group, Pdf $pdf): void
+    public function detachFromGroup(PdfGroup $group, Pdf $pdf): bool
     {
-        $group->items()
-            ->where('pdf_id', $pdf->id)
-            ->delete();
+        return DB::transaction(function () use ($group, $pdf) {
+            $group->items()
+                ->where('pdf_id', $pdf->id)
+                ->delete();
+
+            return count($this->deleteEmptyGroupsWithoutPdfs([$group->id])) > 0;
+        });
     }
 
     public function publishGroup(PdfGroup $group, User $user, array $userIds): PdfGroup
@@ -168,15 +176,147 @@ public function storePdf($file, $user, array $data)
             return $group->fresh();
         });
     }
-public function deletePdf(Pdf $pdf): void
+public function deletePdf(Pdf $pdf): array
 {
+    $storagePath = $pdf->storage_path;
+
+    $deletedEmptyGroupIds = DB::transaction(function () use ($pdf) {
+        $groupIds = PdfGroupItem::where('pdf_id', $pdf->id)
+            ->pluck('group_id')
+            ->all();
+
+        $pdf->assignedClients()->detach();
+        PdfGroupItem::where('pdf_id', $pdf->id)->delete();
+        $pdf->delete();
+
+        return $this->deleteEmptyGroupsWithoutPdfs($groupIds);
+    });
+
     $disk = Storage::disk('private_pdfs');
 
-    if ($disk->exists($pdf->storage_path)) {
-        $disk->delete($pdf->storage_path);
+    if ($storagePath && $disk->exists($storagePath)) {
+        $disk->delete($storagePath);
     }
 
-    $pdf->delete();
+    return [
+        'deleted_empty_groups' => count($deletedEmptyGroupIds),
+        'deleted_group_ids' => $deletedEmptyGroupIds,
+    ];
+}
+
+public function pruneEmptyGroupsWithoutPdfs(?array $groupIds = null): array
+{
+    return DB::transaction(fn () => $this->deleteEmptyGroupsWithoutPdfs($groupIds));
+}
+
+private function deleteEmptyGroupsWithoutPdfs(?array $groupIds = null): array
+{
+    $ids = null;
+
+    if ($groupIds !== null) {
+        $ids = array_values(array_unique(array_map('intval', $groupIds)));
+
+        if (count($ids) === 0) {
+            return [];
+        }
+    }
+
+    $staleItems = PdfGroupItem::whereDoesntHave('pdf');
+    if ($ids !== null) {
+        $staleItems->whereIn('group_id', $ids);
+    }
+    $staleItems->delete();
+
+    $query = PdfGroup::withTrashed()
+        ->whereDoesntHave('items.pdf');
+
+    if ($ids !== null) {
+        $query->whereIn('id', $ids);
+    }
+
+    $groups = $query->lockForUpdate()->get();
+    $deletedGroupIds = [];
+
+    foreach ($groups as $group) {
+        Publication::where('group_id', $group->id)->delete();
+        PdfGroupItem::where('group_id', $group->id)->delete();
+        $group->forceDelete();
+
+        $deletedGroupIds[] = $group->id;
+    }
+
+    if (count($deletedGroupIds) > 0) {
+        Log::info('Grupos vacios eliminados automaticamente.', [
+            'group_ids' => $deletedGroupIds,
+        ]);
+    }
+
+    return $deletedGroupIds;
+}
+
+public function forceDeleteGroupWithPdfs(int $groupId, User $user): array
+{
+    if (! $user->is_super_admin) {
+        throw new AuthorizationException('Solo el superadmin puede eliminar grupos.');
+    }
+
+    if (! PdfGroup::withTrashed()->whereKey($groupId)->exists()) {
+        Publication::where('group_id', $groupId)->delete();
+
+        throw (new ModelNotFoundException())->setModel(PdfGroup::class, [$groupId]);
+    }
+
+    return DB::transaction(function () use ($groupId, $user) {
+        $group = PdfGroup::withTrashed()
+            ->with(['items.pdf' => fn ($query) => $query->withTrashed()])
+            ->lockForUpdate()
+            ->find($groupId);
+
+        if (! $group) {
+            throw (new ModelNotFoundException())->setModel(PdfGroup::class, [$groupId]);
+        }
+
+        $pdfs = $group->items
+            ->pluck('pdf')
+            ->filter()
+            ->unique('id')
+            ->values();
+
+        $storagePaths = $pdfs
+            ->pluck('storage_path')
+            ->filter()
+            ->unique()
+            ->values();
+
+        Publication::where('group_id', $group->id)->delete();
+
+        foreach ($pdfs as $pdf) {
+            $pdf->assignedClients()->detach();
+            PdfGroupItem::where('pdf_id', $pdf->id)->delete();
+            $pdf->forceDelete();
+        }
+
+        PdfGroupItem::where('group_id', $group->id)->delete();
+        $group->forceDelete();
+
+        $disk = Storage::disk('private_pdfs');
+        foreach ($storagePaths as $path) {
+            if ($disk->exists($path) && ! $disk->delete($path)) {
+                throw new RuntimeException("No se pudo eliminar el archivo PDF: {$path}");
+            }
+        }
+
+        Log::info('Grupo eliminado definitivamente.', [
+            'group_id' => $groupId,
+            'deleted_by' => $user->id,
+            'pdf_count' => $pdfs->count(),
+        ]);
+
+        return [
+            'group_id' => $groupId,
+            'pdf_count' => $pdfs->count(),
+        ];
+    });
 }
 
 }

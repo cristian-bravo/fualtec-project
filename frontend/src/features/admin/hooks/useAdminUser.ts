@@ -56,7 +56,7 @@ export const useAdminUser = (userId?: number) => {
         setIsSaving(false);
       }
     },
-    [token, userId]
+    [token, user, userId]
   );
 
   return {

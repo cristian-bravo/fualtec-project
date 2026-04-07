@@ -135,7 +135,13 @@ export const AdminGroupsManagePdfsPage = () => {
 
     setRemovingId(pdf.id);
     try {
-      await removePdfFromGroup(token, numericGroupId, pdf.id);
+      const result = await removePdfFromGroup(token, numericGroupId, pdf.id);
+      if (result.group_deleted) {
+        alertSuccess("PDF removido. El grupo quedo sin PDFs y fue eliminado.");
+        navigate("/client-access/admin/grupos");
+        return;
+      }
+
       setCurrentPdfs((prev) => prev.filter((item) => item.id !== pdf.id));
       setSelectedCurrentIds((prev) => prev.filter((id) => id !== pdf.id));
       await loadAvailable(searchAvailable);
@@ -166,6 +172,16 @@ export const AdminGroupsManagePdfsPage = () => {
       const removedIds = selectedCurrentIds.filter(
         (_id, index) => results[index].status === "fulfilled"
       );
+      const groupDeleted = results.some(
+        (result) =>
+          result.status === "fulfilled" && result.value.group_deleted
+      );
+
+      if (groupDeleted) {
+        alertSuccess("PDFs removidos. El grupo quedo sin PDFs y fue eliminado.");
+        navigate("/client-access/admin/grupos");
+        return;
+      }
 
       if (removedIds.length > 0) {
         setCurrentPdfs((prev) =>

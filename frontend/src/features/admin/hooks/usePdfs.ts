@@ -170,10 +170,14 @@ const loadPdfs = useCallback(
       if (!confirmed) return;
 
       try {
-        await deletePdf(token, pdf.id);
+        const result = await deletePdf(token, pdf.id);
         setPdfs((prev) => prev.filter((p) => p.id !== pdf.id));
         setSelectedIds((prev) => prev.filter((id) => id !== pdf.id));
-        alertSuccess("PDF eliminado correctamente.");
+        alertSuccess(
+          result.deleted_empty_groups > 0
+            ? `PDF eliminado correctamente. Tambien se eliminaron ${result.deleted_empty_groups} grupos vacios.`
+            : "PDF eliminado correctamente."
+        );
       } catch (err) {
         console.error(err);
         alertError("No se pudo eliminar el PDF.");
@@ -212,14 +216,18 @@ const handleBulkDelete = useCallback(async () => {
   if (!confirmed) return;
 
   try {
-    await deletePdfsBulk(token, selectedIds);
+    const result = await deletePdfsBulk(token, selectedIds);
 
     console.log("Bulk OK");
     console.log("Ids Eliminados: ", selectedIds);
 
     setPdfs(prev => prev.filter(p => !selectedIds.includes(p.id)));
     setSelectedIds([]);
-    alertSuccess("PDFs eliminados correctamente.");
+    alertSuccess(
+      result.deleted_empty_groups > 0
+        ? `PDFs eliminados correctamente. Tambien se eliminaron ${result.deleted_empty_groups} grupos vacios.`
+        : "PDFs eliminados correctamente."
+    );
   } catch (err) {
     console.error("ERROR BULK:", err);
     alertError("No se pudieron eliminar los PDFs seleccionados.");

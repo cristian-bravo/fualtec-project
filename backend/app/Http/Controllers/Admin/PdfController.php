@@ -161,10 +161,12 @@ class PdfController extends Controller
      */
     public function destroy(Pdf $pdf): JsonResponse
     {
-        $this->pdfService->deletePdf($pdf);
+        $result = $this->pdfService->deletePdf($pdf);
 
         return response()->json([
-            'message' => 'PDF eliminado correctamente'
+            'message' => 'PDF eliminado correctamente',
+            'deleted_empty_groups' => $result['deleted_empty_groups'],
+            'deleted_group_ids' => $result['deleted_group_ids'],
         ]);
     }
 
@@ -180,12 +182,22 @@ class PdfController extends Controller
 
         $pdfs = Pdf::whereIn('id', $ids)->get();
 
+        $deletedGroupIds = [];
+
         foreach ($pdfs as $pdf) {
-            $this->pdfService->deletePdf($pdf);
+            $result = $this->pdfService->deletePdf($pdf);
+            $deletedGroupIds = [
+                ...$deletedGroupIds,
+                ...$result['deleted_group_ids'],
+            ];
         }
 
+        $deletedGroupIds = array_values(array_unique($deletedGroupIds));
+
         return response()->json([
-            'message' => 'PDFs eliminados correctamente.'
+            'message' => 'PDFs eliminados correctamente.',
+            'deleted_empty_groups' => count($deletedGroupIds),
+            'deleted_group_ids' => $deletedGroupIds,
         ]);
     }
 }

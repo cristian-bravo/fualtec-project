@@ -50,8 +50,8 @@ export const ClientProfilePage = () => {
         description="Solicite una actualización de credenciales."
       >
         <p className="text-sm text-slate-600">
-          Por seguridad, el restablecimiento se gestiona desde la sección "Olvidé
-          mi contraseña". Asegúrese de tener acceso al correo corporativo registrado.
+          Por seguridad, el restablecimiento se gestiona desde la sección &quot;Olvidé
+          mi contraseña&quot;. Asegúrese de tener acceso al correo corporativo registrado.
         </p>
         <Link to="/client-access/forgot" className="inline-block mt-4">
           <Button>Solicitar cambio</Button>
